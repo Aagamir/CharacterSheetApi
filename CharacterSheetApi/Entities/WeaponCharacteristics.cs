@@ -7,6 +7,6 @@ namespace CharacterSheetApi.Entities
         public WeaponCharacteristicsId WeaponCharacteristicsId { get; set; }
         public string Name { get; set; }
 
-        //public List<WeaponCharacteristics> WeaponCharacteristic { get; set; }
+        public List<Weapon> Weapons { get; set; }
     }
 }

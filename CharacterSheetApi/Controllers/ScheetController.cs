@@ -40,13 +40,21 @@ namespace CharacterSheetApi.Controllers
             int newDescriptionId = _characterSheetService.CharacterDescriptionCreator(characterDescriptionDto);
             return Ok(newDescriptionId);
         }
-
+        
         [HttpPost("AddArmor")]
         [AllowAnonymous]
         public IActionResult AddArmor ([FromBody]CreateArmorDto armorDto)
         {
             int newArmorId = _characterSheetService.ArmorCreator(armorDto);
             return Ok(newArmorId);
+        }
+
+        [HttpPost("AddWeapon")]
+        [AllowAnonymous]
+        public IActionResult AddWeapon([FromBody]CreateWeaponDto weaponDto)
+        {
+            int newWeaponId = _characterSheetService.WeaponCreator(weaponDto);
+            return Ok(newWeaponId);
         }
 
         [HttpPost("AddBaseStats")]

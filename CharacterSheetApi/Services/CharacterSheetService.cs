@@ -93,6 +93,22 @@ namespace CharacterSheetApi.Services
             return armor.Id;
         }
 
+        public int WeaponCreator(CreateWeaponDto dto)
+        {
+            var weapon = new Weapon();
+            weapon.Name = dto.Name;
+            weapon.Weight = dto.Weight;
+            weapon.WeaponStrength = dto.WeaponStrenght;
+            weapon.Range = dto.Range;
+            weapon.ReloadTime = dto.ReloadTime;
+            weapon.WeaponCategoryId = dto.WeaponCategory;
+            //Zrobić WeaponCharacteristics bo mogą być customowe bronie
+            _context.Weapons.Add(weapon);
+            _context.SaveChanges();
+            return weapon.Id;
+
+        }
+
         public int BaseStatsCreator(int characterDescriptionId)
         {
             var baseStats = new BaseStats();
