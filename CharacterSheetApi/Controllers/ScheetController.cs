@@ -57,6 +57,22 @@ namespace CharacterSheetApi.Controllers
             return Ok(newWeaponId);
         }
 
+        [HttpPost("AddMonetaryWealth")]
+        [AllowAnonymous]
+        public IActionResult AddMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto)
+        {
+            int newMonetaryWealthId = _characterSheetService.MonetaryWealthCreator(monetaryWealthDto);
+            return Ok(newMonetaryWealthId);
+        }
+
+        [HttpPost("AddExpiriencePoints")]
+        [AllowAnonymous]
+        public IActionResult AddExpiriencePoints([FromBody] CreateExpiriencePointsDto expiriencePointsDto)
+        {
+            int newExpiriencePointsId = _characterSheetService.ExpiriencePointsCreator(expiriencePointsDto);
+            return Ok(newExpiriencePointsId);
+        }
+
         [HttpPost("AddBaseStats")]
         [AllowAnonymous]
         public IActionResult AddBaseStats([FromBody]int characterDescriptionId)

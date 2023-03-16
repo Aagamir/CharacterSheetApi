@@ -9,5 +9,7 @@ namespace CharacterSheetApi.Services
         int ArmorCreator(CreateArmorDto armorDto);
         int BaseStatsCreator(int characterDescriptionId);
         int WeaponCreator(CreateWeaponDto weaponDto);
+        int MonetaryWealthCreator(CreateMonetaryWealthDto dto);
+        int ExpiriencePointsCreator(CreateExpiriencePointsDto dto);
     }
 }

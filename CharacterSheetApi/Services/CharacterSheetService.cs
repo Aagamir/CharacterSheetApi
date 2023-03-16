@@ -106,7 +106,27 @@ namespace CharacterSheetApi.Services
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
             return weapon.Id;
+        }
 
+        public int MonetaryWealthCreator(CreateMonetaryWealthDto dto)
+        {
+            var monetaryWealth = new MonetaryWealth();
+            monetaryWealth.GoldCrowns = dto.GoldCrowns;
+            monetaryWealth.SilverShilling = dto.SilverShilling;
+            monetaryWealth.CopperPences = dto.CopperPences;
+            _context.MonetaryWealth.Add(monetaryWealth);
+            _context.SaveChanges();
+            return monetaryWealth.Id;
+        }
+
+        public int ExpiriencePointsCreator(CreateExpiriencePointsDto dto)
+        {
+            var expiriencePoints = new ExpiriencePoints();
+            expiriencePoints.CurrentPoints = dto.CurrentPoints;
+            expiriencePoints.OverallPoints = dto.OverallPoints;
+            _context.ExpiriencePoints.Add(expiriencePoints);
+            _context.SaveChanges();
+            return expiriencePoints.Id;
         }
 
         public int BaseStatsCreator(int characterDescriptionId)
