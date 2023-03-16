@@ -73,6 +73,14 @@ namespace CharacterSheetApi.Controllers
             return Ok(newExpiriencePointsId);
         }
 
+        [HttpPost("AddPlayerInfo")]
+        [AllowAnonymous]
+        public IActionResult AddPlayerInfo([FromBody] CreatePlayerInfoDto playerInfoDto)
+        {
+            int newPlayerInfoId = _characterSheetService.PlayerInfoCreator(playerInfoDto);
+            return Ok(newPlayerInfoId);
+        }
+
         [HttpPost("AddBaseStats")]
         [AllowAnonymous]
         public IActionResult AddBaseStats([FromBody]int characterDescriptionId)

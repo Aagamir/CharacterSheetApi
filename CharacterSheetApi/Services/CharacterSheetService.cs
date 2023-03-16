@@ -129,6 +129,18 @@ namespace CharacterSheetApi.Services
             return expiriencePoints.Id;
         }
 
+        public int PlayerInfoCreator(CreatePlayerInfoDto dto)
+        {
+            var playerInfo = new PlayerInfo();
+            playerInfo.PlayerName = dto.PlayerName;
+            playerInfo.GameMasterName = dto.GameMasterName;
+            playerInfo.CampaignName = dto.CampaignName;
+            playerInfo.CampaignDateTime = dto.CampaignDateTime;
+            _context.PlayerInfo.Add(playerInfo);
+            _context.SaveChanges();
+            return playerInfo.Id;
+        }
+
         public int BaseStatsCreator(int characterDescriptionId)
         {
             var baseStats = new BaseStats();
