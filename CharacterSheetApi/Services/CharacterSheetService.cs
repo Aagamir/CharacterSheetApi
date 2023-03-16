@@ -141,6 +141,17 @@ namespace CharacterSheetApi.Services
             return playerInfo.Id;
         }
 
+        public int EquipmentCreator(CreateEquipmentDto dto)
+        {
+            var equipment = new Equipment();
+            equipment.Name = dto.Name;
+            equipment.Description = dto.Description;
+            equipment.Weight = dto.Weight;
+            _context.Equipments.Add(equipment);
+            _context.SaveChanges();
+            return equipment.Id;
+        }
+
         public int BaseStatsCreator(int characterDescriptionId)
         {
             var baseStats = new BaseStats();

@@ -81,6 +81,14 @@ namespace CharacterSheetApi.Controllers
             return Ok(newPlayerInfoId);
         }
 
+        [HttpPost("AddEquipment")]
+        [AllowAnonymous]
+        public IActionResult AddEquipment([FromBody] CreateEquipmentDto equipmentDto)
+        {
+            int newEquipmentId = _characterSheetService.EquipmentCreator(equipmentDto);
+            return Ok(newEquipmentId);
+        }
+
         [HttpPost("AddBaseStats")]
         [AllowAnonymous]
         public IActionResult AddBaseStats([FromBody]int characterDescriptionId)

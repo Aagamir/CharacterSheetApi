@@ -12,5 +12,6 @@ namespace CharacterSheetApi.Services
         int MonetaryWealthCreator(CreateMonetaryWealthDto dto);
         int ExpiriencePointsCreator(CreateExpiriencePointsDto dto);
         int PlayerInfoCreator(CreatePlayerInfoDto dto);
+        int EquipmentCreator(CreateEquipmentDto dto);
     }
 }
