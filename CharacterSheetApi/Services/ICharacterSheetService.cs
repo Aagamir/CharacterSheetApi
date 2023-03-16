@@ -15,5 +15,7 @@ namespace CharacterSheetApi.Services
         int EquipmentCreator(CreateEquipmentDto dto);
         int AbilityCreator(CreateAbilityDto dto);
         int SkillCreator(CreateSkillDto dto);
+        int CurrentClassCreator(CreateCurrentClassDto dto);
+        int LastClassCreator(CreateLastClassDto dto);
     }
 }

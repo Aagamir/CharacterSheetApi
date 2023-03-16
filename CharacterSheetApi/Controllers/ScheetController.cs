@@ -105,6 +105,22 @@ namespace CharacterSheetApi.Controllers
             return Ok(newSkillId);
         }
 
+        [HttpPost("AddCurrentClass")]
+        [AllowAnonymous]
+        public IActionResult AddCurrentClass([FromBody] CreateCurrentClassDto currentClassDto)
+        {
+            int newCurrentClassId = _characterSheetService.CurrentClassCreator(currentClassDto);
+            return Ok(newCurrentClassId);
+        }
+
+        [HttpPost("AddLastClass")]
+        [AllowAnonymous]
+        public IActionResult AddLastClass([FromBody] CreateLastClassDto lastClassDto)
+        {
+            int newLastClassId = _characterSheetService.LastClassCreator(lastClassDto);
+            return Ok(newLastClassId);
+        }
+
         [HttpPost("AddBaseStats")]
         [AllowAnonymous]
         public IActionResult AddBaseStats([FromBody]int characterDescriptionId)

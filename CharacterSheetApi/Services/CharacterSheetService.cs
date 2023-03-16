@@ -172,6 +172,24 @@ namespace CharacterSheetApi.Services
             return skill.Id;
         }
 
+        public int CurrentClassCreator(CreateCurrentClassDto dto)
+        {
+            var currentClass = new CurrentClass();
+            currentClass.Name = dto.Name;
+            _context.CurrentClass.Add(currentClass);
+            _context.SaveChanges();
+            return currentClass.Id;
+        }
+
+        public int LastClassCreator(CreateLastClassDto dto)
+        {
+            var lastClass = new LastClass();
+            lastClass.Name = dto.Name;
+            _context.LastClass.Add(lastClass);
+            _context.SaveChanges();
+            return lastClass.Id;
+        }
+
         public int BaseStatsCreator(int characterDescriptionId)
         {
             var baseStats = new BaseStats();
