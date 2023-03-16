@@ -152,6 +152,26 @@ namespace CharacterSheetApi.Services
             return equipment.Id;
         }
 
+        public int AbilityCreator(CreateAbilityDto dto)
+        {
+            var ability = new Ability();
+            ability.Name = dto.Name;
+            ability.Description = dto.Description;
+            _context.Abilities.Add(ability);
+            _context.SaveChanges();
+            return ability.Id;
+        }
+
+        public int SkillCreator(CreateSkillDto dto)
+        {
+            var skill = new Skill();
+            skill.Name = dto.Name;
+            skill.SkillLevelId = dto.SkillLevelId;
+            _context.Skills.Add(skill);
+            _context.SaveChanges();
+            return skill.Id;
+        }
+
         public int BaseStatsCreator(int characterDescriptionId)
         {
             var baseStats = new BaseStats();

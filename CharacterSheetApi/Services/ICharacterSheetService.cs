@@ -13,5 +13,7 @@ namespace CharacterSheetApi.Services
         int ExpiriencePointsCreator(CreateExpiriencePointsDto dto);
         int PlayerInfoCreator(CreatePlayerInfoDto dto);
         int EquipmentCreator(CreateEquipmentDto dto);
+        int AbilityCreator(CreateAbilityDto dto);
+        int SkillCreator(CreateSkillDto dto);
     }
 }

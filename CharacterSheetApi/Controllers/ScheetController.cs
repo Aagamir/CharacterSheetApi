@@ -89,6 +89,22 @@ namespace CharacterSheetApi.Controllers
             return Ok(newEquipmentId);
         }
 
+        [HttpPost("AddAbility")]
+        [AllowAnonymous]
+        public IActionResult AddAblity([FromBody] CreateAbilityDto abilityDto)
+        {
+            int newAbilityId = _characterSheetService.AbilityCreator(abilityDto);
+            return Ok(newAbilityId);
+        }
+
+        [HttpPost("AddSkill")]
+        [AllowAnonymous]
+        public IActionResult AddSkill([FromBody] CreateSkillDto skillDto)
+        {
+            int newSkillId = _characterSheetService.SkillCreator(skillDto);
+            return Ok(newSkillId);
+        }
+
         [HttpPost("AddBaseStats")]
         [AllowAnonymous]
         public IActionResult AddBaseStats([FromBody]int characterDescriptionId)
