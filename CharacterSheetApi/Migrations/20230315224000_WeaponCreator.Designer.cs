@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterSheetApi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230315224000_WeaponCreator")]
-    partial class WeaponCreator
+    [Migration("20230315224000_CreateWeapon")]
+    partial class CreateWeapon
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

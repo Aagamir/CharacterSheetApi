@@ -14,5 +14,7 @@ namespace CharacterSheetApi.Entities
         public int ReloadTime { get; set; }
         //public WeaponCharacteristicsId WeaponCharacteristicsId { get; set; }
         public List<WeaponCharacteristics> WeaponCharacteristics { get; set; }
+        //////////////////////////////////////////////////////////////////////
+        public List<CharacterInfo> CharacterInfo { get; set; }
     }
 }

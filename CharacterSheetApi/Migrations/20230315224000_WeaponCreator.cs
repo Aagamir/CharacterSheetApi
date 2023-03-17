@@ -5,7 +5,7 @@
 namespace CharacterSheetApi.Migrations
 {
     /// <inheritdoc />
-    public partial class WeaponCreator : Migration
+    public partial class CreateWeapon : Migration //WeaponCreator
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

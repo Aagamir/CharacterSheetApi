@@ -16,7 +16,7 @@ namespace CharacterSheetApi.Services
             _userContextService = userContextService;
         }
 
-        public int SheetCreator(CreateSheetDto dto)
+        public int CreateSheet(CreateSheetDto dto)
         {
             var characterSheet = new CharacterSheet();
             characterSheet.Name = dto.Name;
@@ -30,7 +30,7 @@ namespace CharacterSheetApi.Services
             //zwróć Id
         }
 
-        public int CharacterDescriptionCreator(CreateDescriptionDto dto)
+        public int CreateCharacterDescription(CreateDescriptionDto dto)
         {
             Random random = new Random();
             var characterDescription = new CharacterDescription();
@@ -80,7 +80,7 @@ namespace CharacterSheetApi.Services
             return characterDescription.Id;
         }
 
-        public int ArmorCreator(CreateArmorDto dto)
+        public void CreateArmor(CreateArmorDto dto)
         {
             var armor = new Armor();
             armor.Name = dto.Name;
@@ -90,10 +90,9 @@ namespace CharacterSheetApi.Services
             //Zrobić BodyLocations/ponieważ mogą być robione customowe armory
             _context.Armors.Add(armor);
             _context.SaveChanges();
-            return armor.Id;
         }
 
-        public int WeaponCreator(CreateWeaponDto dto)
+        public void CreateWeapon(CreateWeaponDto dto)
         {
             var weapon = new Weapon();
             weapon.Name = dto.Name;
@@ -105,10 +104,9 @@ namespace CharacterSheetApi.Services
             //Zrobić WeaponCharacteristics bo mogą być customowe bronie
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
-            return weapon.Id;
         }
 
-        public int MonetaryWealthCreator(CreateMonetaryWealthDto dto)
+        public int CreateMonetaryWealth(CreateMonetaryWealthDto dto)
         {
             var monetaryWealth = new MonetaryWealth();
             monetaryWealth.GoldCrowns = dto.GoldCrowns;
@@ -119,7 +117,7 @@ namespace CharacterSheetApi.Services
             return monetaryWealth.Id;
         }
 
-        public int ExpiriencePointsCreator(CreateExpiriencePointsDto dto)
+        public int CreateExpiriencePoints(CreateExpiriencePointsDto dto)
         {
             var expiriencePoints = new ExpiriencePoints();
             expiriencePoints.CurrentPoints = dto.CurrentPoints;
@@ -129,7 +127,7 @@ namespace CharacterSheetApi.Services
             return expiriencePoints.Id;
         }
 
-        public int PlayerInfoCreator(CreatePlayerInfoDto dto)
+        public int CreatePlayerInfo(CreatePlayerInfoDto dto)
         {
             var playerInfo = new PlayerInfo();
             playerInfo.PlayerName = dto.PlayerName;
@@ -141,7 +139,7 @@ namespace CharacterSheetApi.Services
             return playerInfo.Id;
         }
 
-        public int EquipmentCreator(CreateEquipmentDto dto)
+        public void CreateEquipment(CreateEquipmentDto dto)
         {
             var equipment = new Equipment();
             equipment.Name = dto.Name;
@@ -149,30 +147,27 @@ namespace CharacterSheetApi.Services
             equipment.Weight = dto.Weight;
             _context.Equipments.Add(equipment);
             _context.SaveChanges();
-            return equipment.Id;
         }
 
-        public int AbilityCreator(CreateAbilityDto dto)
+        public void CreateAbility(CreateAbilityDto dto)
         {
             var ability = new Ability();
             ability.Name = dto.Name;
             ability.Description = dto.Description;
             _context.Abilities.Add(ability);
             _context.SaveChanges();
-            return ability.Id;
         }
 
-        public int SkillCreator(CreateSkillDto dto)
+        public void CreateSkill(CreateSkillDto dto)
         {
             var skill = new Skill();
             skill.Name = dto.Name;
             skill.SkillLevelId = dto.SkillLevelId;
             _context.Skills.Add(skill);
             _context.SaveChanges();
-            return skill.Id;
         }
 
-        public int CurrentClassCreator(CreateCurrentClassDto dto)
+        public int CreateCurrentClass(CreateCurrentClassDto dto)
         {
             var currentClass = new CurrentClass();
             currentClass.Name = dto.Name;
@@ -181,7 +176,7 @@ namespace CharacterSheetApi.Services
             return currentClass.Id;
         }
 
-        public int LastClassCreator(CreateLastClassDto dto)
+        public int CreateLastClass(CreateLastClassDto dto)
         {
             var lastClass = new LastClass();
             lastClass.Name = dto.Name;
@@ -190,7 +185,7 @@ namespace CharacterSheetApi.Services
             return lastClass.Id;
         }
 
-        public int BaseStatsCreator(int characterDescriptionId)
+        public int CreateBaseStats(int characterDescriptionId)
         {
             var baseStats = new BaseStats();
             var race = _context.CharacterDescriptions.FirstOrDefault(c => c.Id == characterDescriptionId).RaceId;
@@ -286,9 +281,35 @@ namespace CharacterSheetApi.Services
             return baseStats.Id;
         }
 
-        public bool dupa()
+        public int CreateCharacterInfo(CreateCharacterInfoDto dto)
         {
-            throw new NotImplementedException();
+            var characterInfo = new CharacterInfo();
+            characterInfo.PlayerInfo = _context.PlayerInfo.FirstOrDefault(c => c.Id == dto.PlayerInfoId);
+            characterInfo.ExpiriencePoints = _context.ExpiriencePoints.FirstOrDefault(c => c.Id == dto.ExpiriencePointsId);
+            characterInfo.CharacterDescription = _context.CharacterDescriptions.FirstOrDefault(c => c.Id == dto.CharacterDescriptionId);
+            characterInfo.CurrentClass = _context.CurrentClass.FirstOrDefault(c => c.Id == dto.CurrentClassId);
+            characterInfo.LastClass = _context.LastClass.FirstOrDefault(c => c.Id == dto.LastClassId);
+            characterInfo.BaseStats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.BaseStatsId);
+            characterInfo.MonetaryWealth = _context.MonetaryWealth.FirstOrDefault(c => c.Id == dto.MonetaryWealthId);
+            characterInfo.Name = dto.Name;
+            characterInfo.Weapons = new List<Weapon>(); //_context.Weapons.ToList().Join(dto.WeaponIds, c => c.Id, d => d, (c, d) => new { c.Id });
+            characterInfo.Armor = new List<Armor>(); //= _context.Armors.ToList().Join(dto.ArmorIds, c => c.Id, d => d, (c, d) => new { c.Id });
+            characterInfo.Skills = new List<Skill>(); //_context.Skills.ToList().Join(dto.SkillIds, c => c.Id, d => d, (c, d) => new { c.Id });
+            characterInfo.Abilities = new List<Ability>(); //_context.Abilities.ToList().Join(dto.AbilityIds, c => c.Id, d => d, (c, d) => new { c.Id });
+            characterInfo.Equipment = new List<Equipment>(); //_context.Equipments.ToList().Join(dto.EquipmentIds, c => c.Id, d => d, (c, d) => new { c.Id });            
+            _context.CharacterInfos.AddRange(characterInfo);
+            _context.SaveChanges();
+            return characterInfo.Id;
+        }
+
+        public void AddWeapon(AddWeaponDto dto )
+        {
+            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            //
+            List<Weapon> weapons = _context.Weapons.ToList().Join(dto.WeaponIds, c => c.Id, d => d, (c, d) => c).ToList();//_context.Weapons.FirstOrDefault(w => w.Id == dto.WeaponId);
+            //jak nie znajdzie to błąd
+            characterInfo.Weapons.AddRange(weapons);
+            _context.SaveChanges();
         }
     }
 

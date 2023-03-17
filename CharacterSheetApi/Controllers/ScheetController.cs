@@ -25,110 +25,125 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpPost("SheetCreator")]
+        [HttpPost("CreateSheet")]
         [AllowAnonymous]
         public ActionResult CreateSheet([FromBody] CreateSheetDto sheetDto)
         {
-            int newSheetId = _characterSheetService.SheetCreator(sheetDto);
+            int newSheetId = _characterSheetService.CreateSheet(sheetDto);
             return Ok(newSheetId);
         }
 
-        [HttpPost("CharacterDescriptionCreator")]
+        [HttpPost("CreateCharacterDescription")]
         [AllowAnonymous]
         public ActionResult CreateCharacterDescription([FromBody]CreateDescriptionDto characterDescriptionDto)
         {
-            int newDescriptionId = _characterSheetService.CharacterDescriptionCreator(characterDescriptionDto);
+            int newDescriptionId = _characterSheetService.CreateCharacterDescription(characterDescriptionDto);
             return Ok(newDescriptionId);
         }
         
-        [HttpPost("AddArmor")]
+        [HttpPost("CreateArmor")]
         [AllowAnonymous]
-        public IActionResult AddArmor ([FromBody]CreateArmorDto armorDto)
+        public IActionResult CreateArmor ([FromBody]CreateArmorDto armorDto)
         {
-            int newArmorId = _characterSheetService.ArmorCreator(armorDto);
-            return Ok(newArmorId);
+            _characterSheetService.CreateArmor(armorDto);
+            return Ok();
         }
 
-        [HttpPost("AddWeapon")]
+        [HttpPost("CreateWeapon")]
         [AllowAnonymous]
-        public IActionResult AddWeapon([FromBody]CreateWeaponDto weaponDto)
+        public IActionResult CreateWeapon([FromBody]CreateWeaponDto weaponDto)
         {
-            int newWeaponId = _characterSheetService.WeaponCreator(weaponDto);
-            return Ok(newWeaponId);
+            _characterSheetService.CreateWeapon(weaponDto);
+            return Ok();
         }
 
-        [HttpPost("AddMonetaryWealth")]
+        [HttpPost("CreateMonetaryWealth")]
         [AllowAnonymous]
-        public IActionResult AddMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto)
+        public IActionResult CreateMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto)
         {
-            int newMonetaryWealthId = _characterSheetService.MonetaryWealthCreator(monetaryWealthDto);
+            int newMonetaryWealthId = _characterSheetService.CreateMonetaryWealth(monetaryWealthDto);
             return Ok(newMonetaryWealthId);
         }
 
-        [HttpPost("AddExpiriencePoints")]
+        [HttpPost("CreateExpiriencePoints")]
         [AllowAnonymous]
-        public IActionResult AddExpiriencePoints([FromBody] CreateExpiriencePointsDto expiriencePointsDto)
+        public IActionResult CreateExpiriencePoints([FromBody] CreateExpiriencePointsDto expiriencePointsDto)
         {
-            int newExpiriencePointsId = _characterSheetService.ExpiriencePointsCreator(expiriencePointsDto);
+            int newExpiriencePointsId = _characterSheetService.CreateExpiriencePoints(expiriencePointsDto);
             return Ok(newExpiriencePointsId);
         }
 
-        [HttpPost("AddPlayerInfo")]
+        [HttpPost("CreatePlayerInfo")]
         [AllowAnonymous]
-        public IActionResult AddPlayerInfo([FromBody] CreatePlayerInfoDto playerInfoDto)
+        public IActionResult CreatePlayerInfo([FromBody] CreatePlayerInfoDto playerInfoDto)
         {
-            int newPlayerInfoId = _characterSheetService.PlayerInfoCreator(playerInfoDto);
+            int newPlayerInfoId = _characterSheetService.CreatePlayerInfo(playerInfoDto);
             return Ok(newPlayerInfoId);
         }
 
-        [HttpPost("AddEquipment")]
+        [HttpPost("CreateEquipment")]
         [AllowAnonymous]
-        public IActionResult AddEquipment([FromBody] CreateEquipmentDto equipmentDto)
+        public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
-            int newEquipmentId = _characterSheetService.EquipmentCreator(equipmentDto);
-            return Ok(newEquipmentId);
+            _characterSheetService.CreateEquipment(equipmentDto);
+            return Ok();
         }
 
-        [HttpPost("AddAbility")]
+        [HttpPost("CreateAbility")]
         [AllowAnonymous]
-        public IActionResult AddAblity([FromBody] CreateAbilityDto abilityDto)
+        public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
-            int newAbilityId = _characterSheetService.AbilityCreator(abilityDto);
-            return Ok(newAbilityId);
+            _characterSheetService.CreateAbility(abilityDto);
+            return Ok();
         }
 
-        [HttpPost("AddSkill")]
+        [HttpPost("CreateSkill")]
         [AllowAnonymous]
-        public IActionResult AddSkill([FromBody] CreateSkillDto skillDto)
+        public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
-            int newSkillId = _characterSheetService.SkillCreator(skillDto);
-            return Ok(newSkillId);
+            _characterSheetService.CreateSkill(skillDto);
+            return Ok();
         }
 
-        [HttpPost("AddCurrentClass")]
+        [HttpPost("CreateCurrentClass")]
         [AllowAnonymous]
-        public IActionResult AddCurrentClass([FromBody] CreateCurrentClassDto currentClassDto)
+        public IActionResult CreateCurrentClass([FromBody] CreateCurrentClassDto currentClassDto)
         {
-            int newCurrentClassId = _characterSheetService.CurrentClassCreator(currentClassDto);
+            int newCurrentClassId = _characterSheetService.CreateCurrentClass(currentClassDto);
             return Ok(newCurrentClassId);
         }
 
-        [HttpPost("AddLastClass")]
+        [HttpPost("CreateLastClass")]
         [AllowAnonymous]
-        public IActionResult AddLastClass([FromBody] CreateLastClassDto lastClassDto)
+        public IActionResult CreateLastClass([FromBody] CreateLastClassDto lastClassDto)
         {
-            int newLastClassId = _characterSheetService.LastClassCreator(lastClassDto);
+            int newLastClassId = _characterSheetService.CreateLastClass(lastClassDto);
             return Ok(newLastClassId);
         }
 
-        [HttpPost("AddBaseStats")]
+        [HttpPost("CreateBaseStats")]
         [AllowAnonymous]
-        public IActionResult AddBaseStats([FromBody]int characterDescriptionId)
+        public IActionResult CreateBaseStats([FromBody]int characterDescriptionId)
         {
-            int newBaseStatsId = _characterSheetService.BaseStatsCreator(characterDescriptionId);
+            int newBaseStatsId = _characterSheetService.CreateBaseStats(characterDescriptionId);
             return Ok(newBaseStatsId);
         }
+
+        [HttpPost("CreateCharacterInfo/CharacterCard")]
+        [AllowAnonymous]
+        public IActionResult CreateCharacterInfo([FromBody] CreateCharacterInfoDto characterInfoDto)
+        {
+            int newCharacterInfoId = _characterSheetService.CreateCharacterInfo(characterInfoDto);
+            return Ok(newCharacterInfoId);
+        }
         
+        [HttpPost("AddWeapon")]
+        [AllowAnonymous]
+        public IActionResult AddWeapon([FromBody] AddWeaponDto weaponDto)
+        {
+            _characterSheetService.AddWeapon(weaponDto);
+            return Ok();
+        }
         
         /*
         public ActionResult<IEnumerable<CharacterSheets>> GetAll()

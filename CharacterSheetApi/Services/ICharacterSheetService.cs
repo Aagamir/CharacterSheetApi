@@ -4,18 +4,20 @@ namespace CharacterSheetApi.Services
 {
     public interface ICharacterSheetService
     {
-        int SheetCreator(CreateSheetDto dto);
-        int CharacterDescriptionCreator(CreateDescriptionDto characterDescriptionDto);
-        int ArmorCreator(CreateArmorDto armorDto);
-        int BaseStatsCreator(int characterDescriptionId);
-        int WeaponCreator(CreateWeaponDto weaponDto);
-        int MonetaryWealthCreator(CreateMonetaryWealthDto dto);
-        int ExpiriencePointsCreator(CreateExpiriencePointsDto dto);
-        int PlayerInfoCreator(CreatePlayerInfoDto dto);
-        int EquipmentCreator(CreateEquipmentDto dto);
-        int AbilityCreator(CreateAbilityDto dto);
-        int SkillCreator(CreateSkillDto dto);
-        int CurrentClassCreator(CreateCurrentClassDto dto);
-        int LastClassCreator(CreateLastClassDto dto);
+        int CreateSheet(CreateSheetDto dto);
+        int CreateCharacterDescription(CreateDescriptionDto characterDescriptionDto);
+        void CreateArmor(CreateArmorDto armorDto);
+        int CreateBaseStats(int characterDescriptionId);
+        void CreateWeapon(CreateWeaponDto weaponDto);
+        int CreateMonetaryWealth(CreateMonetaryWealthDto dto);
+        int CreateExpiriencePoints(CreateExpiriencePointsDto dto);
+        int CreatePlayerInfo(CreatePlayerInfoDto dto);
+        void CreateEquipment(CreateEquipmentDto dto);
+        void CreateAbility(CreateAbilityDto dto);
+        void CreateSkill(CreateSkillDto dto);
+        int CreateCurrentClass(CreateCurrentClassDto dto);
+        int CreateLastClass(CreateLastClassDto dto);
+        int CreateCharacterInfo(CreateCharacterInfoDto dto);
+        void AddWeapon (AddWeaponDto dto);
     }
 }
