@@ -13,6 +13,7 @@ namespace CharacterSheetApi.Entities
         public DbSet<CharacterDescription> CharacterDescriptions { get; set; }
         public DbSet<CharacterInfo> CharacterInfos { get; set; }
         public DbSet<CharacterSheet> CharacterSheets { get; set; }
+        public DbSet<Class> Classes { get; set; }
         public DbSet<CurrentClass> CurrentClass { get; set; }
         public DbSet<CurrentStats> CurrentStats { get; set; }
         public DbSet<Equipment> Equipments { get; set; }

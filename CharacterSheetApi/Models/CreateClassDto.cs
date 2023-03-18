@@ -1,6 +1,6 @@
 ﻿namespace CharacterSheetApi.Models
 {
-    public class CreateCurrentClassDto
+    public class CreateClassDto
     {
         public string Name { get; set; }
     }
