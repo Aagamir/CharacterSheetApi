@@ -440,35 +440,38 @@ namespace CharacterSheetApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BaseStatsId")
+                    b.Property<int>("BaseStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CharacterDescriptionId")
+                    b.Property<int>("CharacterDescriptionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CurrentClassId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CurrentStatsId")
+                    b.Property<int>("CurrentClassId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ExpiriencePointsId")
+                    b.Property<int>("CurrentStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GrowthStatsId")
+                    b.Property<int>("ExpiriencePointsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LastClassId")
+                    b.Property<int>("GrowthStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MonetaryWealthId")
+                    b.Property<int>("LastClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MonetaryWealthId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlayerInfoId")
+                    b.Property<int>("PlayerInfoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -476,6 +479,8 @@ namespace CharacterSheetApi.Migrations
                     b.HasIndex("BaseStatsId");
 
                     b.HasIndex("CharacterDescriptionId");
+
+                    b.HasIndex("ClassId");
 
                     b.HasIndex("CurrentClassId");
 
@@ -531,6 +536,23 @@ namespace CharacterSheetApi.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("CharacterSheets");
+                });
+
+            modelBuilder.Entity("CharacterSheetApi.Entities.Class", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CurrentClass", b =>
@@ -1648,43 +1670,69 @@ namespace CharacterSheetApi.Migrations
                 {
                     b.HasOne("CharacterSheetApi.Entities.BaseStats", "BaseStats")
                         .WithMany()
-                        .HasForeignKey("BaseStatsId");
+                        .HasForeignKey("BaseStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.CharacterDescription", "CharacterDescription")
                         .WithMany()
-                        .HasForeignKey("CharacterDescriptionId");
+                        .HasForeignKey("CharacterDescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.CurrentClass", "CurrentClass")
                         .WithMany()
-                        .HasForeignKey("CurrentClassId");
+                        .HasForeignKey("CurrentClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
                         .WithMany()
-                        .HasForeignKey("CurrentStatsId");
+                        .HasForeignKey("CurrentStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.ExpiriencePoints", "ExpiriencePoints")
                         .WithMany()
-                        .HasForeignKey("ExpiriencePointsId");
+                        .HasForeignKey("ExpiriencePointsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.GrowthStats", "GrowthStats")
                         .WithMany()
-                        .HasForeignKey("GrowthStatsId");
+                        .HasForeignKey("GrowthStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.LastClass", "LastClass")
                         .WithMany()
-                        .HasForeignKey("LastClassId");
+                        .HasForeignKey("LastClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.MonetaryWealth", "MonetaryWealth")
                         .WithMany()
-                        .HasForeignKey("MonetaryWealthId");
+                        .HasForeignKey("MonetaryWealthId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.PlayerInfo", "PlayerInfo")
                         .WithMany()
-                        .HasForeignKey("PlayerInfoId");
+                        .HasForeignKey("PlayerInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BaseStats");
 
                     b.Navigation("CharacterDescription");
+
+                    b.Navigation("Class");
 
                     b.Navigation("CurrentClass");
 

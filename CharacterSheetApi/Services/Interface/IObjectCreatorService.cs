@@ -5,7 +5,7 @@ namespace CharacterSheetApi.Services
     public interface IObjectCreatorService
     {
         int CreateSheet(CreateSheetDto dto);
-        int CreateCharacterDescription(CreateDescriptionDto characterDescriptionDto);
+        int CreateCharacterDescription(CreateDescriptionDto dto);
         int CreateBaseStats(int characterDescriptionId);
         int CreateMonetaryWealth(CreateMonetaryWealthDto dto);
         int CreateExpiriencePoints(CreateExpiriencePointsDto dto);

@@ -40,6 +40,7 @@ builder.Services.AddScoped<IPasswordHasher<Users>, PasswordHasher<Users>>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<ICharacterSheetService, CharacterSheetService>();
+builder.Services.AddScoped<IHigherObjectCreatorService, HigherObjectCreatorService>();
 builder.Services.AddControllers().AddFluentValidation();
 
 

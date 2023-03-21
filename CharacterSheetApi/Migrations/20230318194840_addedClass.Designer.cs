@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterSheetApi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230315123416_Armor")]
-    partial class Armor
+    [Migration("20230318194840_addedClass")]
+    partial class addedClass
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,96 @@ namespace CharacterSheetApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AbilityCharacterInfo", b =>
+                {
+                    b.Property<int>("AbilitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterInfoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AbilitiesId", "CharacterInfoId");
+
+                    b.HasIndex("CharacterInfoId");
+
+                    b.ToTable("AbilityCharacterInfo");
+                });
+
+            modelBuilder.Entity("ArmorBodyLocations", b =>
+                {
+                    b.Property<int>("ArmorsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BodyLocationsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArmorsId", "BodyLocationsId");
+
+                    b.HasIndex("BodyLocationsId");
+
+                    b.ToTable("ArmorBodyLocations");
+                });
+
+            modelBuilder.Entity("ArmorCharacterInfo", b =>
+                {
+                    b.Property<int>("ArmorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterInfoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArmorId", "CharacterInfoId");
+
+                    b.HasIndex("CharacterInfoId");
+
+                    b.ToTable("ArmorCharacterInfo");
+                });
+
+            modelBuilder.Entity("CharacterInfoEquipment", b =>
+                {
+                    b.Property<int>("CharacterInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EquipmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterInfoId", "EquipmentId");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.ToTable("CharacterInfoEquipment");
+                });
+
+            modelBuilder.Entity("CharacterInfoSkill", b =>
+                {
+                    b.Property<int>("CharacterInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterInfoId", "SkillsId");
+
+                    b.HasIndex("SkillsId");
+
+                    b.ToTable("CharacterInfoSkill");
+                });
+
+            modelBuilder.Entity("CharacterInfoWeapon", b =>
+                {
+                    b.Property<int>("CharacterInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WeaponsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterInfoId", "WeaponsId");
+
+                    b.HasIndex("WeaponsId");
+
+                    b.ToTable("CharacterInfoWeapon");
+                });
+
             modelBuilder.Entity("CharacterSheetApi.Entities.Ability", b =>
                 {
                     b.Property<int>("Id")
@@ -34,9 +124,11 @@ namespace CharacterSheetApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -56,9 +148,6 @@ namespace CharacterSheetApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ArmorTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BodyLocationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -242,16 +331,11 @@ namespace CharacterSheetApi.Migrations
                     b.Property<int>("BodyLocationsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ArmorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BodyLocationsId");
-
-                    b.HasIndex("ArmorId");
 
                     b.ToTable("BodyLocations");
 
@@ -359,66 +443,51 @@ namespace CharacterSheetApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AbilitiesId")
+                    b.Property<int>("BaseStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ArmorId")
+                    b.Property<int>("CharacterDescriptionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BaseStatsId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CharacterDescriptionId")
+                    b.Property<int>("CurrentClassId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CurrentClassId")
+                    b.Property<int>("CurrentStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CurrentStatsId")
+                    b.Property<int>("ExpiriencePointsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EquipmentId")
+                    b.Property<int>("GrowthStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ExpiriencePointsId")
+                    b.Property<int>("LastClassId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GrowthStatsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LastClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MonetaryWealthId")
+                    b.Property<int>("MonetaryWealthId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlayerInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SkillsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WeaponId")
+                    b.Property<int>("PlayerInfoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AbilitiesId");
-
-                    b.HasIndex("ArmorId");
 
                     b.HasIndex("BaseStatsId");
 
                     b.HasIndex("CharacterDescriptionId");
 
+                    b.HasIndex("ClassId");
+
                     b.HasIndex("CurrentClassId");
 
                     b.HasIndex("CurrentStatsId");
-
-                    b.HasIndex("EquipmentId");
 
                     b.HasIndex("ExpiriencePointsId");
 
@@ -429,10 +498,6 @@ namespace CharacterSheetApi.Migrations
                     b.HasIndex("MonetaryWealthId");
 
                     b.HasIndex("PlayerInfoId");
-
-                    b.HasIndex("SkillsId");
-
-                    b.HasIndex("WeaponId");
 
                     b.ToTable("CharacterInfos");
                 });
@@ -474,6 +539,23 @@ namespace CharacterSheetApi.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("CharacterSheets");
+                });
+
+            modelBuilder.Entity("CharacterSheetApi.Entities.Class", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CurrentClass", b =>
@@ -569,8 +651,8 @@ namespace CharacterSheetApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
+                    b.Property<float?>("Weight")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -1256,9 +1338,8 @@ namespace CharacterSheetApi.Migrations
                     b.Property<int>("WeaponStrength")
                         .HasColumnType("int");
 
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1352,12 +1433,7 @@ namespace CharacterSheetApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WeaponId")
-                        .HasColumnType("int");
-
                     b.HasKey("WeaponCharacteristicsId");
-
-                    b.HasIndex("WeaponId");
 
                     b.ToTable("WeaponCharacteristics");
 
@@ -1434,6 +1510,111 @@ namespace CharacterSheetApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WeaponWeaponCharacteristics", b =>
+                {
+                    b.Property<int>("WeaponCharacteristicsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WeaponsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WeaponCharacteristicsId", "WeaponsId");
+
+                    b.HasIndex("WeaponsId");
+
+                    b.ToTable("WeaponWeaponCharacteristics");
+                });
+
+            modelBuilder.Entity("AbilityCharacterInfo", b =>
+                {
+                    b.HasOne("CharacterSheetApi.Entities.Ability", null)
+                        .WithMany()
+                        .HasForeignKey("AbilitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.CharacterInfo", null)
+                        .WithMany()
+                        .HasForeignKey("CharacterInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ArmorBodyLocations", b =>
+                {
+                    b.HasOne("CharacterSheetApi.Entities.Armor", null)
+                        .WithMany()
+                        .HasForeignKey("ArmorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.BodyLocations", null)
+                        .WithMany()
+                        .HasForeignKey("BodyLocationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ArmorCharacterInfo", b =>
+                {
+                    b.HasOne("CharacterSheetApi.Entities.Armor", null)
+                        .WithMany()
+                        .HasForeignKey("ArmorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.CharacterInfo", null)
+                        .WithMany()
+                        .HasForeignKey("CharacterInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CharacterInfoEquipment", b =>
+                {
+                    b.HasOne("CharacterSheetApi.Entities.CharacterInfo", null)
+                        .WithMany()
+                        .HasForeignKey("CharacterInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.Equipment", null)
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CharacterInfoSkill", b =>
+                {
+                    b.HasOne("CharacterSheetApi.Entities.CharacterInfo", null)
+                        .WithMany()
+                        .HasForeignKey("CharacterInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CharacterInfoWeapon", b =>
+                {
+                    b.HasOne("CharacterSheetApi.Entities.CharacterInfo", null)
+                        .WithMany()
+                        .HasForeignKey("CharacterInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.Weapon", null)
+                        .WithMany()
+                        .HasForeignKey("WeaponsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CharacterSheetApi.Entities.Armor", b =>
                 {
                     b.HasOne("CharacterSheetApi.Entities.ArmorType", "ArmorType")
@@ -1443,13 +1624,6 @@ namespace CharacterSheetApi.Migrations
                         .IsRequired();
 
                     b.Navigation("ArmorType");
-                });
-
-            modelBuilder.Entity("CharacterSheetApi.Entities.BodyLocations", b =>
-                {
-                    b.HasOne("CharacterSheetApi.Entities.Armor", null)
-                        .WithMany("BodyLocations")
-                        .HasForeignKey("ArmorId");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterDescription", b =>
@@ -1497,75 +1671,75 @@ namespace CharacterSheetApi.Migrations
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterInfo", b =>
                 {
-                    b.HasOne("CharacterSheetApi.Entities.Ability", "Abilities")
-                        .WithMany()
-                        .HasForeignKey("AbilitiesId");
-
-                    b.HasOne("CharacterSheetApi.Entities.Armor", "Armor")
-                        .WithMany()
-                        .HasForeignKey("ArmorId");
-
                     b.HasOne("CharacterSheetApi.Entities.BaseStats", "BaseStats")
                         .WithMany()
-                        .HasForeignKey("BaseStatsId");
+                        .HasForeignKey("BaseStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.CharacterDescription", "CharacterDescription")
                         .WithMany()
-                        .HasForeignKey("CharacterDescriptionId");
+                        .HasForeignKey("CharacterDescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.CurrentClass", "CurrentClass")
                         .WithMany()
-                        .HasForeignKey("CurrentClassId");
+                        .HasForeignKey("CurrentClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
                         .WithMany()
-                        .HasForeignKey("CurrentStatsId");
-
-                    b.HasOne("CharacterSheetApi.Entities.Equipment", "Equipment")
-                        .WithMany()
-                        .HasForeignKey("EquipmentId");
+                        .HasForeignKey("CurrentStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.ExpiriencePoints", "ExpiriencePoints")
                         .WithMany()
-                        .HasForeignKey("ExpiriencePointsId");
+                        .HasForeignKey("ExpiriencePointsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.GrowthStats", "GrowthStats")
                         .WithMany()
-                        .HasForeignKey("GrowthStatsId");
+                        .HasForeignKey("GrowthStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.LastClass", "LastClass")
                         .WithMany()
-                        .HasForeignKey("LastClassId");
+                        .HasForeignKey("LastClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.MonetaryWealth", "MonetaryWealth")
                         .WithMany()
-                        .HasForeignKey("MonetaryWealthId");
+                        .HasForeignKey("MonetaryWealthId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CharacterSheetApi.Entities.PlayerInfo", "PlayerInfo")
                         .WithMany()
-                        .HasForeignKey("PlayerInfoId");
-
-                    b.HasOne("CharacterSheetApi.Entities.Skill", "Skills")
-                        .WithMany()
-                        .HasForeignKey("SkillsId");
-
-                    b.HasOne("CharacterSheetApi.Entities.Weapon", "Weapon")
-                        .WithMany()
-                        .HasForeignKey("WeaponId");
-
-                    b.Navigation("Abilities");
-
-                    b.Navigation("Armor");
+                        .HasForeignKey("PlayerInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BaseStats");
 
                     b.Navigation("CharacterDescription");
 
+                    b.Navigation("Class");
+
                     b.Navigation("CurrentClass");
 
                     b.Navigation("CurrentStats");
-
-                    b.Navigation("Equipment");
 
                     b.Navigation("ExpiriencePoints");
 
@@ -1576,10 +1750,6 @@ namespace CharacterSheetApi.Migrations
                     b.Navigation("MonetaryWealth");
 
                     b.Navigation("PlayerInfo");
-
-                    b.Navigation("Skills");
-
-                    b.Navigation("Weapon");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterSheet", b =>
@@ -1608,7 +1778,7 @@ namespace CharacterSheetApi.Migrations
             modelBuilder.Entity("CharacterSheetApi.Entities.Skill", b =>
                 {
                     b.HasOne("CharacterSheetApi.Entities.SkillLevel", "SkillLevel")
-                        .WithMany()
+                        .WithMany("Skill")
                         .HasForeignKey("SkillLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1638,26 +1808,29 @@ namespace CharacterSheetApi.Migrations
                     b.Navigation("WeaponCategory");
                 });
 
-            modelBuilder.Entity("CharacterSheetApi.Entities.WeaponCharacteristics", b =>
+            modelBuilder.Entity("WeaponWeaponCharacteristics", b =>
                 {
+                    b.HasOne("CharacterSheetApi.Entities.WeaponCharacteristics", null)
+                        .WithMany()
+                        .HasForeignKey("WeaponCharacteristicsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CharacterSheetApi.Entities.Weapon", null)
-                        .WithMany("WeaponCharacteristics")
-                        .HasForeignKey("WeaponId");
+                        .WithMany()
+                        .HasForeignKey("WeaponsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("CharacterSheetApi.Entities.Armor", b =>
+            modelBuilder.Entity("CharacterSheetApi.Entities.SkillLevel", b =>
                 {
-                    b.Navigation("BodyLocations");
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Users", b =>
                 {
                     b.Navigation("CharacterSheets");
-                });
-
-            modelBuilder.Entity("CharacterSheetApi.Entities.Weapon", b =>
-                {
-                    b.Navigation("WeaponCharacteristics");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CharacterSheetApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Rcist : Migration
+    public partial class NewDataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace CharacterSheetApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,6 +65,31 @@ namespace CharacterSheetApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BaseStats", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BodyLocations",
+                columns: table => new
+                {
+                    BodyLocationsId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BodyLocations", x => x.BodyLocationsId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,7 +140,7 @@ namespace CharacterSheetApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Weight = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -318,6 +343,18 @@ namespace CharacterSheetApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WeaponCharacteristics",
+                columns: table => new
+                {
+                    WeaponCharacteristicsId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeaponCharacteristics", x => x.WeaponCharacteristicsId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Armors",
                 columns: table => new
                 {
@@ -326,8 +363,7 @@ namespace CharacterSheetApi.Migrations
                     ArmorTypeId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ArmorPoints = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<int>(type: "int", nullable: false),
-                    BodyLocationId = table.Column<int>(type: "int", nullable: false)
+                    Weight = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -388,15 +424,15 @@ namespace CharacterSheetApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    RaceId = table.Column<int>(type: "int", nullable: false),
                     GenderId = table.Column<int>(type: "int", nullable: false),
                     EyeColorId = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<int>(type: "int", nullable: false),
-                    RaceId = table.Column<int>(type: "int", nullable: false),
                     HairColorId = table.Column<int>(type: "int", nullable: false),
-                    Height = table.Column<int>(type: "int", nullable: false),
                     StarSignId = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<int>(type: "int", nullable: false),
+                    Height = table.Column<int>(type: "int", nullable: false),
                     Siblings = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
                     PlaceOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CharacteriticSigns = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -442,7 +478,7 @@ namespace CharacterSheetApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Weight = table.Column<int>(type: "int", nullable: false),
                     WeaponCategoryId = table.Column<int>(type: "int", nullable: false),
                     WeaponStrength = table.Column<int>(type: "int", nullable: false),
                     Range = table.Column<int>(type: "int", nullable: false),
@@ -460,21 +496,27 @@ namespace CharacterSheetApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BodyLocations",
+                name: "ArmorBodyLocations",
                 columns: table => new
                 {
-                    BodyLocationsId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArmorId = table.Column<int>(type: "int", nullable: true)
+                    ArmorsId = table.Column<int>(type: "int", nullable: false),
+                    BodyLocationsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BodyLocations", x => x.BodyLocationsId);
+                    table.PrimaryKey("PK_ArmorBodyLocations", x => new { x.ArmorsId, x.BodyLocationsId });
                     table.ForeignKey(
-                        name: "FK_BodyLocations_Armors_ArmorId",
-                        column: x => x.ArmorId,
+                        name: "FK_ArmorBodyLocations_Armors_ArmorsId",
+                        column: x => x.ArmorsId,
                         principalTable: "Armors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArmorBodyLocations_BodyLocations_BodyLocationsId",
+                        column: x => x.BodyLocationsId,
+                        principalTable: "BodyLocations",
+                        principalColumn: "BodyLocationsId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -492,28 +534,11 @@ namespace CharacterSheetApi.Migrations
                     BaseStatsId = table.Column<int>(type: "int", nullable: false),
                     GrowthStatsId = table.Column<int>(type: "int", nullable: false),
                     CurrentStatsId = table.Column<int>(type: "int", nullable: false),
-                    WeaponId = table.Column<int>(type: "int", nullable: false),
-                    ArmorId = table.Column<int>(type: "int", nullable: false),
-                    SkillsId = table.Column<int>(type: "int", nullable: false),
-                    AbilitiesId = table.Column<int>(type: "int", nullable: false),
-                    EquipmentId = table.Column<int>(type: "int", nullable: false),
                     MonetaryWealthId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CharacterInfos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CharacterInfos_Abilities_AbilitiesId",
-                        column: x => x.AbilitiesId,
-                        principalTable: "Abilities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CharacterInfos_Armors_ArmorId",
-                        column: x => x.ArmorId,
-                        principalTable: "Armors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CharacterInfos_BaseStats_BaseStatsId",
                         column: x => x.BaseStatsId,
@@ -536,12 +561,6 @@ namespace CharacterSheetApi.Migrations
                         name: "FK_CharacterInfos_CurrentStats_CurrentStatsId",
                         column: x => x.CurrentStatsId,
                         principalTable: "CurrentStats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CharacterInfos_Equipments_EquipmentId",
-                        column: x => x.EquipmentId,
-                        principalTable: "Equipments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -574,36 +593,150 @@ namespace CharacterSheetApi.Migrations
                         principalTable: "PlayerInfo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WeaponWeaponCharacteristics",
+                columns: table => new
+                {
+                    WeaponCharacteristicsId = table.Column<int>(type: "int", nullable: false),
+                    WeaponsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeaponWeaponCharacteristics", x => new { x.WeaponCharacteristicsId, x.WeaponsId });
                     table.ForeignKey(
-                        name: "FK_CharacterInfos_Skills_SkillsId",
-                        column: x => x.SkillsId,
-                        principalTable: "Skills",
-                        principalColumn: "Id",
+                        name: "FK_WeaponWeaponCharacteristics_WeaponCharacteristics_WeaponCharacteristicsId",
+                        column: x => x.WeaponCharacteristicsId,
+                        principalTable: "WeaponCharacteristics",
+                        principalColumn: "WeaponCharacteristicsId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CharacterInfos_Weapons_WeaponId",
-                        column: x => x.WeaponId,
+                        name: "FK_WeaponWeaponCharacteristics_Weapons_WeaponsId",
+                        column: x => x.WeaponsId,
                         principalTable: "Weapons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WeaponCharacteristics",
+                name: "AbilityCharacterInfo",
                 columns: table => new
                 {
-                    WeaponCharacteristicsId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WeaponId = table.Column<int>(type: "int", nullable: true)
+                    AbilitiesId = table.Column<int>(type: "int", nullable: false),
+                    CharacterInfoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WeaponCharacteristics", x => x.WeaponCharacteristicsId);
+                    table.PrimaryKey("PK_AbilityCharacterInfo", x => new { x.AbilitiesId, x.CharacterInfoId });
                     table.ForeignKey(
-                        name: "FK_WeaponCharacteristics_Weapons_WeaponId",
-                        column: x => x.WeaponId,
+                        name: "FK_AbilityCharacterInfo_Abilities_AbilitiesId",
+                        column: x => x.AbilitiesId,
+                        principalTable: "Abilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AbilityCharacterInfo_CharacterInfos_CharacterInfoId",
+                        column: x => x.CharacterInfoId,
+                        principalTable: "CharacterInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArmorCharacterInfo",
+                columns: table => new
+                {
+                    ArmorId = table.Column<int>(type: "int", nullable: false),
+                    CharacterInfoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArmorCharacterInfo", x => new { x.ArmorId, x.CharacterInfoId });
+                    table.ForeignKey(
+                        name: "FK_ArmorCharacterInfo_Armors_ArmorId",
+                        column: x => x.ArmorId,
+                        principalTable: "Armors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArmorCharacterInfo_CharacterInfos_CharacterInfoId",
+                        column: x => x.CharacterInfoId,
+                        principalTable: "CharacterInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterInfoEquipment",
+                columns: table => new
+                {
+                    CharacterInfoId = table.Column<int>(type: "int", nullable: false),
+                    EquipmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterInfoEquipment", x => new { x.CharacterInfoId, x.EquipmentId });
+                    table.ForeignKey(
+                        name: "FK_CharacterInfoEquipment_CharacterInfos_CharacterInfoId",
+                        column: x => x.CharacterInfoId,
+                        principalTable: "CharacterInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterInfoEquipment_Equipments_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterInfoSkill",
+                columns: table => new
+                {
+                    CharacterInfoId = table.Column<int>(type: "int", nullable: false),
+                    SkillsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterInfoSkill", x => new { x.CharacterInfoId, x.SkillsId });
+                    table.ForeignKey(
+                        name: "FK_CharacterInfoSkill_CharacterInfos_CharacterInfoId",
+                        column: x => x.CharacterInfoId,
+                        principalTable: "CharacterInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterInfoSkill_Skills_SkillsId",
+                        column: x => x.SkillsId,
+                        principalTable: "Skills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CharacterInfoWeapon",
+                columns: table => new
+                {
+                    CharacterInfoId = table.Column<int>(type: "int", nullable: false),
+                    WeaponsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterInfoWeapon", x => new { x.CharacterInfoId, x.WeaponsId });
+                    table.ForeignKey(
+                        name: "FK_CharacterInfoWeapon_CharacterInfos_CharacterInfoId",
+                        column: x => x.CharacterInfoId,
+                        principalTable: "CharacterInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterInfoWeapon_Weapons_WeaponsId",
+                        column: x => x.WeaponsId,
                         principalTable: "Weapons",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -667,16 +800,16 @@ namespace CharacterSheetApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "BodyLocations",
-                columns: new[] { "BodyLocationsId", "ArmorId", "Name" },
+                columns: new[] { "BodyLocationsId", "Name" },
                 values: new object[,]
                 {
-                    { 0, null, "Head" },
-                    { 1, null, "LeftArm" },
-                    { 2, null, "RightArm" },
-                    { 3, null, "LeftLeg" },
-                    { 4, null, "RightLeg" },
-                    { 5, null, "Torso" },
-                    { 6, null, "WholeBody" }
+                    { 0, "Head" },
+                    { 1, "LeftArm" },
+                    { 2, "RightArm" },
+                    { 3, "LeftLeg" },
+                    { 4, "RightLeg" },
+                    { 5, "Torso" },
+                    { 6, "WholeBody" }
                 });
 
             migrationBuilder.InsertData(
@@ -822,34 +955,44 @@ namespace CharacterSheetApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "WeaponCharacteristics",
-                columns: new[] { "WeaponCharacteristicsId", "Name", "WeaponId" },
+                columns: new[] { "WeaponCharacteristicsId", "Name" },
                 values: new object[,]
                 {
-                    { 0, "Heavy", null },
-                    { 1, "Devastating", null },
-                    { 2, "Experimental", null },
-                    { 3, "Splinter", null },
-                    { 4, "Deafening", null },
-                    { 5, "Parrying", null },
-                    { 6, "Slow", null },
-                    { 7, "Precise", null },
-                    { 8, "Piercing", null },
-                    { 9, "Special", null },
-                    { 10, "Fast", null },
-                    { 11, "Immobilizing", null },
-                    { 12, "Balanced", null },
-                    { 13, "Unreliable", null }
+                    { 0, "Heavy" },
+                    { 1, "Devastating" },
+                    { 2, "Experimental" },
+                    { 3, "Splinter" },
+                    { 4, "Deafening" },
+                    { 5, "Parrying" },
+                    { 6, "Slow" },
+                    { 7, "Precise" },
+                    { 8, "Piercing" },
+                    { 9, "Special" },
+                    { 10, "Fast" },
+                    { 11, "Immobilizing" },
+                    { 12, "Balanced" },
+                    { 13, "Unreliable" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AbilityCharacterInfo_CharacterInfoId",
+                table: "AbilityCharacterInfo",
+                column: "CharacterInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArmorBodyLocations_BodyLocationsId",
+                table: "ArmorBodyLocations",
+                column: "BodyLocationsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArmorCharacterInfo_CharacterInfoId",
+                table: "ArmorCharacterInfo",
+                column: "CharacterInfoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Armors_ArmorTypeId",
                 table: "Armors",
                 column: "ArmorTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BodyLocations_ArmorId",
-                table: "BodyLocations",
-                column: "ArmorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterDescriptions_EyeColorId",
@@ -877,14 +1020,9 @@ namespace CharacterSheetApi.Migrations
                 column: "StarSignId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_AbilitiesId",
-                table: "CharacterInfos",
-                column: "AbilitiesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_ArmorId",
-                table: "CharacterInfos",
-                column: "ArmorId");
+                name: "IX_CharacterInfoEquipment_EquipmentId",
+                table: "CharacterInfoEquipment",
+                column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterInfos_BaseStatsId",
@@ -905,11 +1043,6 @@ namespace CharacterSheetApi.Migrations
                 name: "IX_CharacterInfos_CurrentStatsId",
                 table: "CharacterInfos",
                 column: "CurrentStatsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_EquipmentId",
-                table: "CharacterInfos",
-                column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterInfos_ExpiriencePointsId",
@@ -937,14 +1070,14 @@ namespace CharacterSheetApi.Migrations
                 column: "PlayerInfoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_SkillsId",
-                table: "CharacterInfos",
+                name: "IX_CharacterInfoSkill_SkillsId",
+                table: "CharacterInfoSkill",
                 column: "SkillsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_WeaponId",
-                table: "CharacterInfos",
-                column: "WeaponId");
+                name: "IX_CharacterInfoWeapon_WeaponsId",
+                table: "CharacterInfoWeapon",
+                column: "WeaponsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterSheets_CharacterInfoId",
@@ -972,27 +1105,60 @@ namespace CharacterSheetApi.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeaponCharacteristics_WeaponId",
-                table: "WeaponCharacteristics",
-                column: "WeaponId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Weapons_WeaponCategoryId",
                 table: "Weapons",
                 column: "WeaponCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WeaponWeaponCharacteristics_WeaponsId",
+                table: "WeaponWeaponCharacteristics",
+                column: "WeaponsId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BodyLocations");
+                name: "AbilityCharacterInfo");
+
+            migrationBuilder.DropTable(
+                name: "ArmorBodyLocations");
+
+            migrationBuilder.DropTable(
+                name: "ArmorCharacterInfo");
+
+            migrationBuilder.DropTable(
+                name: "CharacterInfoEquipment");
+
+            migrationBuilder.DropTable(
+                name: "CharacterInfoSkill");
+
+            migrationBuilder.DropTable(
+                name: "CharacterInfoWeapon");
 
             migrationBuilder.DropTable(
                 name: "CharacterSheets");
 
             migrationBuilder.DropTable(
-                name: "WeaponCharacteristics");
+                name: "Classes");
+
+            migrationBuilder.DropTable(
+                name: "WeaponWeaponCharacteristics");
+
+            migrationBuilder.DropTable(
+                name: "Abilities");
+
+            migrationBuilder.DropTable(
+                name: "BodyLocations");
+
+            migrationBuilder.DropTable(
+                name: "Armors");
+
+            migrationBuilder.DropTable(
+                name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "Skills");
 
             migrationBuilder.DropTable(
                 name: "CharacterInfos");
@@ -1004,10 +1170,16 @@ namespace CharacterSheetApi.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Abilities");
+                name: "WeaponCharacteristics");
 
             migrationBuilder.DropTable(
-                name: "Armors");
+                name: "Weapons");
+
+            migrationBuilder.DropTable(
+                name: "ArmorType");
+
+            migrationBuilder.DropTable(
+                name: "SkillLevel");
 
             migrationBuilder.DropTable(
                 name: "BaseStats");
@@ -1020,9 +1192,6 @@ namespace CharacterSheetApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "CurrentStats");
-
-            migrationBuilder.DropTable(
-                name: "Equipments");
 
             migrationBuilder.DropTable(
                 name: "ExpiriencePoints");
@@ -1040,16 +1209,10 @@ namespace CharacterSheetApi.Migrations
                 name: "PlayerInfo");
 
             migrationBuilder.DropTable(
-                name: "Skills");
-
-            migrationBuilder.DropTable(
-                name: "Weapons");
-
-            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "ArmorType");
+                name: "WeaponCategory");
 
             migrationBuilder.DropTable(
                 name: "EyeColor");
@@ -1065,12 +1228,6 @@ namespace CharacterSheetApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "StarSign");
-
-            migrationBuilder.DropTable(
-                name: "SkillLevel");
-
-            migrationBuilder.DropTable(
-                name: "WeaponCategory");
         }
     }
 }

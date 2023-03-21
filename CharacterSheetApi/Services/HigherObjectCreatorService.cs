@@ -35,7 +35,8 @@ namespace CharacterSheetApi.Services
             weapon.Range = dto.Range;
             weapon.ReloadTime = dto.ReloadTime;
             weapon.WeaponCategoryId = dto.WeaponCategory;
-            //Zrobić WeaponCharacteristics bo mogą być customowe bronie
+            weapon.WeaponCharacteristics = new List<WeaponCharacteristics>(); //poprawić/dodać characteristics 
+            weapon.WeaponCharacteristics.AddRange((IEnumerable<WeaponCharacteristics>)dto.WeaponCharacteristics);
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
         }
