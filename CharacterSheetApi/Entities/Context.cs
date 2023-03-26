@@ -14,7 +14,7 @@ namespace CharacterSheetApi.Entities
         public DbSet<CharacterInfo> CharacterInfos { get; set; }
         public DbSet<CharacterSheet> CharacterSheets { get; set; }
         public DbSet<Class> Classes { get; set; }
-        public DbSet<CurrentClass> CurrentClass { get; set; }
+        public DbSet<Class> Class { get; set; }
         public DbSet<CurrentStats> CurrentStats { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<ExpiriencePoints> ExpiriencePoints { get; set; }
@@ -27,6 +27,8 @@ namespace CharacterSheetApi.Entities
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<WeaponCharacteristics> WeaponsCharacteristics { get; set; }
+        public DbSet<BodyLocations> BodyLocations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -22,7 +22,7 @@ namespace CharacterSheetApi.Services
             characterSheet.RpgSystemId = dto.RpgSystem;
             characterSheet.DateOfCreation = DateTime.Now;
             characterSheet.CreatorName = dto.CreatorName;
-            characterSheet.CharacterInfo = new CharacterInfo();
+            characterSheet.CharacterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
             _context.CharacterSheets.Add(characterSheet);
             _context.SaveChanges();
             return characterSheet.CharacterInfo.Id;
@@ -99,7 +99,6 @@ namespace CharacterSheetApi.Services
                     baseStat.stat 
                 }*/
                 //
-                return baseStats.Id;
             }
             else if (race == RaceId.Elf)
             {
@@ -190,7 +189,6 @@ namespace CharacterSheetApi.Services
             playerInfo.PlayerName = dto.PlayerName;
             playerInfo.GameMasterName = dto.GameMasterName;
             playerInfo.CampaignName = dto.CampaignName;
-            playerInfo.CampaignDateTime = dto.CampaignDateTime;
             _context.PlayerInfo.Add(playerInfo);
             _context.SaveChanges();
             return playerInfo.Id;
@@ -202,7 +200,7 @@ namespace CharacterSheetApi.Services
             characterInfo.PlayerInfo = _context.PlayerInfo.FirstOrDefault(c => c.Id == dto.PlayerInfoId);
             characterInfo.ExpiriencePoints = _context.ExpiriencePoints.FirstOrDefault(c => c.Id == dto.ExpiriencePointsId);
             characterInfo.CharacterDescription = _context.CharacterDescriptions.FirstOrDefault(c => c.Id == dto.CharacterDescriptionId);
-            characterInfo.CurrentClass = _context.CurrentClass.FirstOrDefault(c => c.Id == dto.CurrentClassId);
+            characterInfo.Class = _context.Class.FirstOrDefault(c => c.Id == dto.ClassId);
             characterInfo.LastClass = _context.LastClass.FirstOrDefault(c => c.Id == dto.LastClassId);
             characterInfo.BaseStats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.BaseStatsId);
             characterInfo.MonetaryWealth = _context.MonetaryWealth.FirstOrDefault(c => c.Id == dto.MonetaryWealthId);

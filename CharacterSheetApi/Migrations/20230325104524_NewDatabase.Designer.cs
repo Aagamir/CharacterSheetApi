@@ -4,6 +4,7 @@ using CharacterSheetApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterSheetApi.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230325104524_NewDatabase")]
+    partial class NewDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -449,6 +452,9 @@ namespace CharacterSheetApi.Migrations
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CurrentClassId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CurrentStatsId")
                         .HasColumnType("int");
 
@@ -478,6 +484,8 @@ namespace CharacterSheetApi.Migrations
                     b.HasIndex("CharacterDescriptionId");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("CurrentClassId");
 
                     b.HasIndex("CurrentStatsId");
 
@@ -548,6 +556,23 @@ namespace CharacterSheetApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("CharacterSheetApi.Entities.CurrentClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CurrentClass");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CurrentStats", b =>
@@ -1663,6 +1688,12 @@ namespace CharacterSheetApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CharacterSheetApi.Entities.CurrentClass", "CurrentClass")
+                        .WithMany()
+                        .HasForeignKey("CurrentClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
                         .WithMany()
                         .HasForeignKey("CurrentStatsId");
@@ -1698,6 +1729,8 @@ namespace CharacterSheetApi.Migrations
                     b.Navigation("CharacterDescription");
 
                     b.Navigation("Class");
+
+                    b.Navigation("CurrentClass");
 
                     b.Navigation("CurrentStats");
 

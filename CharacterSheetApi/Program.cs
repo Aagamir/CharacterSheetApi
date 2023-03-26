@@ -41,6 +41,7 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<ICharacterSheetService, CharacterSheetService>();
 builder.Services.AddScoped<IHigherObjectCreatorService, HigherObjectCreatorService>();
+builder.Services.AddScoped<IObjectCreatorService, ObjectCreatorService>();
 builder.Services.AddControllers().AddFluentValidation();
 
 

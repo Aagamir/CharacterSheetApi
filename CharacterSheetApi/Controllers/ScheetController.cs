@@ -1,6 +1,7 @@
 ﻿using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
+using CharacterSheetApi.Models.CharacterSheetDtos;
 using CharacterSheetApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,22 @@ namespace CharacterSheetApi.Controllers
             _characterSheetService.AddWeapon(weaponDto);
             return Ok();
         }
+
+        [HttpPost("AddArmor")]
+        [AllowAnonymous]
+        public IActionResult AddArmor([FromBody]AddArmorDto armorDto)
+        {
+            _characterSheetService.AddArmor(armorDto);
+            return Ok();
+        }
         
+        [HttpPost("AddEquipment")]
+        [AllowAnonymous]
+        public IActionResult AddEquipment(AddEquipmentDto equipmentDto)
+        {
+            _characterSheetService.AddEquipment(equipmentDto);
+            return Ok();
+        }
         /*
         public ActionResult<IEnumerable<CharacterSheets>> GetAll()
         {

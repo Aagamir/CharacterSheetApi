@@ -9,6 +9,6 @@ namespace CharacterSheetApi.Services
         public int ArmorPoints { get; set; }
         public int Weight { get; set; }
         public ArmorTypeId ArmorType { get; set; }
-        public List<BodyLocationsId> BodyLocationsId { get; set; }
+        public List<BodyLocationsId> BodyLocations { get; set; }
     }
 }

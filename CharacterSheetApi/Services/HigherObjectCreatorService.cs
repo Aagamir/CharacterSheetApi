@@ -1,4 +1,5 @@
 ﻿using CharacterSheetApi.Entities;
+using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
 
 namespace CharacterSheetApi.Services
@@ -21,8 +22,9 @@ namespace CharacterSheetApi.Services
             armor.ArmorPoints = dto.ArmorPoints;
             armor.Weight = dto.Weight;
             armor.ArmorTypeId = dto.ArmorType;
-            //Zrobić BodyLocations/ponieważ mogą być robione customowe armory
+            armor.BodyLocations = _context.BodyLocations.ToList().Join(dto.BodyLocations, c => c.BodyLocationsId, d => d, (c, d) => c).ToList();
             _context.Armors.Add(armor);
+            var dupa = armor.BodyLocations;
             _context.SaveChanges();
         }
 
@@ -35,8 +37,7 @@ namespace CharacterSheetApi.Services
             weapon.Range = dto.Range;
             weapon.ReloadTime = dto.ReloadTime;
             weapon.WeaponCategoryId = dto.WeaponCategory;
-            weapon.WeaponCharacteristics = new List<WeaponCharacteristics>(); //poprawić/dodać characteristics 
-            weapon.WeaponCharacteristics.AddRange((IEnumerable<WeaponCharacteristics>)dto.WeaponCharacteristics);
+            weapon.WeaponCharacteristics =_context.WeaponsCharacteristics.ToList().Join(dto.WeaponCharacteristics, c => c.WeaponCharacteristicsId, d => d, (c, d) => c).ToList();
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
         }

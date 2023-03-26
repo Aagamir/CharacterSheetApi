@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterSheetApi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230318194840_addedClass")]
-    partial class addedClass
+    [Migration("20230325121426_RaceTestDelete")]
+    partial class RaceTestDelete
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -452,19 +452,16 @@ namespace CharacterSheetApi.Migrations
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CurrentClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CurrentStatsId")
+                    b.Property<int?>("CurrentStatsId")
                         .HasColumnType("int");
 
                     b.Property<int>("ExpiriencePointsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GrowthStatsId")
+                    b.Property<int?>("GrowthStatsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LastClassId")
+                    b.Property<int?>("LastClassId")
                         .HasColumnType("int");
 
                     b.Property<int>("MonetaryWealthId")
@@ -484,8 +481,6 @@ namespace CharacterSheetApi.Migrations
                     b.HasIndex("CharacterDescriptionId");
 
                     b.HasIndex("ClassId");
-
-                    b.HasIndex("CurrentClassId");
 
                     b.HasIndex("CurrentStatsId");
 
@@ -555,24 +550,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classes");
-                });
-
-            modelBuilder.Entity("CharacterSheetApi.Entities.CurrentClass", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CurrentClass");
+                    b.ToTable("Class");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CurrentStats", b =>
@@ -994,13 +972,12 @@ namespace CharacterSheetApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CampaignDateTime")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CampaignName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GameMasterName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlayerName")
@@ -1435,7 +1412,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("WeaponCharacteristicsId");
 
-                    b.ToTable("WeaponCharacteristics");
+                    b.ToTable("WeaponsCharacteristics");
 
                     b.HasData(
                         new
@@ -1689,17 +1666,9 @@ namespace CharacterSheetApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CharacterSheetApi.Entities.CurrentClass", "CurrentClass")
-                        .WithMany()
-                        .HasForeignKey("CurrentClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
                         .WithMany()
-                        .HasForeignKey("CurrentStatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CurrentStatsId");
 
                     b.HasOne("CharacterSheetApi.Entities.ExpiriencePoints", "ExpiriencePoints")
                         .WithMany()
@@ -1709,15 +1678,11 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasOne("CharacterSheetApi.Entities.GrowthStats", "GrowthStats")
                         .WithMany()
-                        .HasForeignKey("GrowthStatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GrowthStatsId");
 
                     b.HasOne("CharacterSheetApi.Entities.LastClass", "LastClass")
                         .WithMany()
-                        .HasForeignKey("LastClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastClassId");
 
                     b.HasOne("CharacterSheetApi.Entities.MonetaryWealth", "MonetaryWealth")
                         .WithMany()
@@ -1736,8 +1701,6 @@ namespace CharacterSheetApi.Migrations
                     b.Navigation("CharacterDescription");
 
                     b.Navigation("Class");
-
-                    b.Navigation("CurrentClass");
 
                     b.Navigation("CurrentStats");
 
