@@ -27,6 +27,12 @@ namespace CharacterSheetApi.Services
             var dupa = armor.BodyLocations;
             _context.SaveChanges();
         }
+        public void DeleteArmor(int armorId)
+        {
+            var armor = _context.Armors.FirstOrDefault(c => c.Id == armorId);
+            _context.Armors.Remove(armor);
+            _context.SaveChanges();
+        }
 
         public void CreateWeapon(CreateWeaponDto dto)
         {
@@ -41,6 +47,12 @@ namespace CharacterSheetApi.Services
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
         }
+        public void DeleteWeapon(int weaponId)
+        {
+            var weapon = _context.Weapons.FirstOrDefault(c => c.Id == weaponId);
+            _context.Weapons.Remove(weapon);
+            _context.SaveChanges();
+        }
 
         public void CreateEquipment(CreateEquipmentDto dto)
         {
@@ -49,6 +61,12 @@ namespace CharacterSheetApi.Services
             equipment.Description = dto.Description;
             equipment.Weight = dto.Weight;
             _context.Equipments.Add(equipment);
+            _context.SaveChanges();
+        }
+        public void DeleteEquipment(int equipmentId)
+        {
+            var equipment = _context.Equipments.FirstOrDefault(c => c.Id == equipmentId);
+            _context.Equipments.Remove(equipment);
             _context.SaveChanges();
         }
 
@@ -60,6 +78,12 @@ namespace CharacterSheetApi.Services
             _context.Abilities.Add(ability);
             _context.SaveChanges();
         }
+        public void DeleteAbility(int abilityId)
+        {
+            var ability = _context.Abilities.FirstOrDefault(c => c.Id == abilityId);
+            _context.Abilities.Remove(ability);
+            _context.SaveChanges();
+        }
 
         public void CreateSkill(CreateSkillDto dto)
         {
@@ -69,12 +93,24 @@ namespace CharacterSheetApi.Services
             _context.Skills.Add(skill);
             _context.SaveChanges();
         }
+        public void DeleteSkill(int skillId)
+        {
+            var skill = _context.Skills.FirstOrDefault(c => c.Id == skillId);
+            _context.Skills.Remove(skill);
+            _context.SaveChanges();
+        }
 
         public void CreateClass(CreateClassDto dto)
         {
             var newClass = new Class();
             newClass.Name = dto.Name;
             _context.Classes.Add(newClass);
+            _context.SaveChanges();
+        }
+        public void DeleteClass(int classId)
+        {
+            var classe = _context.Class.FirstOrDefault(c => c.Id == classId);
+            _context.Classes.Remove(classe);
             _context.SaveChanges();
         }
     }
