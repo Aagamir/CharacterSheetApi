@@ -1,4 +1,5 @@
 ﻿using CharacterSheetApi.Models;
+using CharacterSheetApi.Models.ObjectCreatorDtos;
 using CharacterSheetApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ namespace CharacterSheetApi.Controllers
 {
     [Route("api/add")]
     [ApiController]
+    [AllowAnonymous]
     public class ObjectController : ControllerBase
     {
         private IObjectCreatorService _objectCreatorService;
@@ -23,6 +25,13 @@ namespace CharacterSheetApi.Controllers
             int newSheetId = _objectCreatorService.CreateSheet(sheetDto);
             return Ok(newSheetId);
         }
+        [HttpPut("ChangeSheet")]
+        [AllowAnonymous]
+        public IActionResult ChangeSheet([FromBody] ChangeSheetDto sheetDto)
+        {
+            _objectCreatorService.ChangeSheet(sheetDto);
+            return Ok();
+        }
 
         [HttpPost("CreateCharacterDescription")]
         [AllowAnonymous]
@@ -30,6 +39,12 @@ namespace CharacterSheetApi.Controllers
         {
             int newDescriptionId = _objectCreatorService.CreateCharacterDescription(characterDescriptionDto);
             return Ok(newDescriptionId);
+        }
+        [HttpPut("ChangeCharacterDescription")]
+        public IActionResult ChangeCharacterDescription([FromBody] ChangeCharacterDescriptionDto characterDescriptionDto)
+        {
+            _objectCreatorService.ChangeCharacterDescription(characterDescriptionDto);
+            return Ok();
         }
 
         [HttpPost("CreateBaseStats")]
@@ -39,6 +54,13 @@ namespace CharacterSheetApi.Controllers
             int newBaseStatsId = _objectCreatorService.CreateBaseStats(characterDescriptionId);
             return Ok(newBaseStatsId);
         }
+        [HttpPut("ChangeBaseStats")]
+        [AllowAnonymous]
+        public IActionResult ChangeBaseStats([FromBody] ChangeStatsDto statsDto)
+        {
+            _objectCreatorService.ChangeBaseStats(statsDto);
+            return Ok();
+        }
 
         [HttpPost("CreateMonetaryWealth")]
         [AllowAnonymous]
@@ -46,6 +68,13 @@ namespace CharacterSheetApi.Controllers
         {
             int newMonetaryWealthId = _objectCreatorService.CreateMonetaryWealth(monetaryWealthDto);
             return Ok(newMonetaryWealthId);
+        }
+        [HttpPut("ChangeMonetaryWealth")]
+        [AllowAnonymous]
+        public IActionResult ChangeMonetaryWealth([FromBody] ChangeMonetaryWealthDto monetaryWealthDto)
+        {
+            _objectCreatorService.ChangeMonetaryWealth(monetaryWealthDto);
+            return Ok();
         }
 
         [HttpPost("CreateExpiriencePoints")]

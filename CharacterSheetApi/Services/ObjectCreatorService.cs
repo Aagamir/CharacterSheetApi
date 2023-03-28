@@ -1,6 +1,8 @@
 ﻿using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
+using CharacterSheetApi.Models.ObjectCreatorDtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace CharacterSheetApi.Services
 {
@@ -26,6 +28,17 @@ namespace CharacterSheetApi.Services
             _context.CharacterSheets.Add(characterSheet);
             _context.SaveChanges();
             return characterSheet.CharacterInfo.Id;
+            //zwróć Id
+        }
+        public void ChangeSheet(ChangeSheetDto dto)
+        {
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            characterSheet.Name = dto.Name;
+            characterSheet.RpgSystemId = dto.RpgSystem;
+            characterSheet.CreatorName = dto.CreatorName;
+            characterSheet.CharacterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            _context.CharacterSheets.Add(characterSheet);
+            _context.SaveChanges();
             //zwróć Id
         }
 
@@ -66,6 +79,10 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
             return characterDescription.Id;
         }
+        public void ChangeCharacterDescription(ChangeCharacterDescriptionDto dto)
+        {
+
+        }
 
         public int CreateBaseStats(int characterDescriptionId)
         {
@@ -73,17 +90,16 @@ namespace CharacterSheetApi.Services
             var race = _context.CharacterDescriptions.FirstOrDefault(c => c.Id == characterDescriptionId).RaceId;
             Random random = new Random();
             int randomk10 = random.Next(1, 10);
-
             if (race == RaceId.Human)
             {
-                baseStats.WW = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.US = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.K = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Odp = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Zr = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Int = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.SW = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Ogd = 20 + random.Next(1, 10) + random.Next(1, 10);
+                baseStats.WW = 20 + randomk10 + randomk10;
+                baseStats.US = 20 + randomk10 + randomk10;
+                baseStats.K = 20 + randomk10 + randomk10;
+                baseStats.Odp = 20 + randomk10 + randomk10;
+                baseStats.Zr = 20 + randomk10 + randomk10;
+                baseStats.Int = 20 + randomk10 + randomk10;
+                baseStats.SW = 20 + randomk10 + randomk10;
+                baseStats.Ogd = 20 + randomk10 + randomk10;
                 baseStats.A = 1;
                 baseStats.Zyw = randomk10;//to trzeba poprwaić na tabele
                 baseStats.S = (baseStats.K - baseStats.K % 10) / 10;
@@ -92,24 +108,17 @@ namespace CharacterSheetApi.Services
                 baseStats.Mag = 0;
                 baseStats.PO = 0;
                 baseStats.PP = random.Next(1, 4);
-
-                /*
-                foreach(int stat in BaseStats)
-                {
-                    baseStat.stat 
-                }*/
-                //
             }
             else if (race == RaceId.Elf)
             {
-                baseStats.WW = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.US = 30 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.K = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Odp = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Zr = 30 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Int = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.SW = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Ogd = 20 + random.Next(1, 10) + random.Next(1, 10);
+                baseStats.WW = 20 + randomk10 + randomk10;
+                baseStats.US = 30 + randomk10 + randomk10;
+                baseStats.K = 20 + randomk10 + randomk10;
+                baseStats.Odp = 20 + randomk10 + randomk10;
+                baseStats.Zr = 30 + randomk10 + randomk10;
+                baseStats.Int = 20 + randomk10 + randomk10;
+                baseStats.SW = 20 + randomk10 + randomk10;
+                baseStats.Ogd = 20 + randomk10 + randomk10;
                 baseStats.A = 1;
                 baseStats.Zyw = randomk10;//to trzeba poprwaić na tabele
                 baseStats.S = (baseStats.K - baseStats.K % 10) / 10;
@@ -121,14 +130,14 @@ namespace CharacterSheetApi.Services
             }
             else if (race == RaceId.Dwarf)
             {
-                baseStats.WW = 30 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.US = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.K = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Odp = 30 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Zr = 10 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Int = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.SW = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Ogd = 10 + random.Next(1, 10) + random.Next(1, 10);
+                baseStats.WW = 30 + randomk10 + randomk10;
+                baseStats.US = 20 + randomk10 + randomk10;
+                baseStats.K = 20 + randomk10 + randomk10;
+                baseStats.Odp = 30 + randomk10 + randomk10;
+                baseStats.Zr = 10 + randomk10 + randomk10;
+                baseStats.Int = 20 + randomk10 + randomk10;
+                baseStats.SW = 20 + randomk10 + randomk10;
+                baseStats.Ogd = 10 + randomk10 + randomk10;
                 baseStats.A = 1;
                 baseStats.Zyw = randomk10;//to trzeba poprwaić na tabele
                 baseStats.S = (baseStats.K - baseStats.K % 10) / 10;
@@ -140,14 +149,14 @@ namespace CharacterSheetApi.Services
             }
             else if (race == RaceId.Hafling)
             {
-                baseStats.WW = 10 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.US = 30 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.K = 10 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Odp = 10 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Zr = 30 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Int = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.SW = 20 + random.Next(1, 10) + random.Next(1, 10);
-                baseStats.Ogd = 30 + random.Next(1, 10) + random.Next(1, 10);
+                baseStats.WW = 10 + randomk10 + randomk10;
+                baseStats.US = 30 + randomk10 + randomk10;
+                baseStats.K = 10 + randomk10 + randomk10;
+                baseStats.Odp = 10 + randomk10 + randomk10;
+                baseStats.Zr = 30 + randomk10 + randomk10;
+                baseStats.Int = 20 + randomk10 + randomk10;
+                baseStats.SW = 20 + randomk10 + randomk10;
+                baseStats.Ogd = 30 + randomk10 + randomk10;
                 baseStats.A = 1;
                 baseStats.Zyw = randomk10;//to trzeba poprwaić na tabele
                 baseStats.S = (baseStats.K - baseStats.K % 10) / 10;
@@ -161,6 +170,72 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
             return baseStats.Id;
         }
+        public void ChangeBaseStats(ChangeStatsDto dto)
+        { 
+            var stats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.StatsId);
+            /*
+            foreach(var stat in stats)
+            {
+                if (dto.)
+            }
+            */
+
+            if (dto.WW != 0)
+            {
+                stats.WW = dto.WW;
+            }
+            if (dto.US != 0)
+            {
+                stats.US = dto.US;
+            }
+            if (dto.K != 0)
+            {
+                stats.K = dto.K;
+                stats.S = (stats.K - stats.K % 10) / 10;
+            }
+            if (dto.Odp != 0)
+            {
+                stats.Odp = dto.Odp;
+                stats.Wt = (stats.Odp - stats.Odp % 10) / 10;
+            }
+            if (dto.Zr != 0)
+            {
+                stats.Zr = dto.Zr;
+            }
+            if (dto.Int != 0)
+            {
+                stats.Int = dto.Int;
+            }
+            if (dto.SW != 0)
+            {
+                stats.SW = dto.SW;
+            }
+            if (dto.Ogd != 0)
+            {
+                stats.Ogd = dto.Ogd;
+            }
+            if (dto.A != 0)
+            {
+                stats.A = dto.A;
+            }
+            if (dto.Zyw != 0)
+            {
+                stats.Zyw = dto.Zyw;
+            }
+            if (dto.Mag != 0)
+            {
+                stats.Mag = dto.Mag;
+            }
+            if (dto.PO != 0)
+            {
+                stats.PO = dto.PO;
+            }
+            if (dto.PP != 0)
+            {
+                stats.PP = dto.PP;
+            }
+            _context.SaveChanges();
+        }
 
         public int CreateMonetaryWealth(CreateMonetaryWealthDto dto)
         {
@@ -171,6 +246,23 @@ namespace CharacterSheetApi.Services
             _context.MonetaryWealth.Add(monetaryWealth);
             _context.SaveChanges();
             return monetaryWealth.Id;
+        }
+        public void ChangeMonetaryWealth(ChangeMonetaryWealthDto dto)
+        {
+            var monetaryWealth = _context.MonetaryWealth.FirstOrDefault(x => x.Id == dto.MonetaryWealthId);
+            if (dto.CopperPences != null)
+            {
+                monetaryWealth.CopperPences = dto.CopperPences;
+            }
+            if (dto.SilverShilling != null)
+            {
+                monetaryWealth.SilverShilling = dto.SilverShilling;
+            }
+            if (dto.GoldCrowns != null)
+            {
+                monetaryWealth.GoldCrowns = dto.GoldCrowns;
+            }
+            _context.SaveChanges();
         }
 
         public int CreateExpiriencePoints(CreateExpiriencePointsDto dto)
