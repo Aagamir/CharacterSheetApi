@@ -14,9 +14,9 @@ namespace CharacterSheetApi.Services
         int CreateMonetaryWealth(CreateMonetaryWealthDto dto);
         void ChangeMonetaryWealth(ChangeMonetaryWealthDto dto);
         int CreateExpiriencePoints(CreateExpiriencePointsDto dto);
-        void ChangeExpiriencePoints(ChangeExpiriencePointsDto dto);
+        //void ChangeExpiriencePoints(ChangeExpiriencePointsDto dto);
         int CreatePlayerInfo(CreatePlayerInfoDto dto);
-        void ChangePlayerInfo(ChangePlayerInfoDto dto);
+        //void ChangePlayerInfo(ChangePlayerInfoDto dto);
         int CreateCharacterInfo(CreateCharacterInfoDto dto);
         
     }

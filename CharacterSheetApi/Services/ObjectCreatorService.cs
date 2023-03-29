@@ -81,6 +81,7 @@ namespace CharacterSheetApi.Services
         }
         public void ChangeCharacterDescription(ChangeCharacterDescriptionDto dto)
         {
+            //var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == CharacterSheetId)
 
         }
 
