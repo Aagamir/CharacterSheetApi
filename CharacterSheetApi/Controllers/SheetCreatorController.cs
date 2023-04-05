@@ -6,26 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CharacterSheetApi.Controllers
 {
-    [Route("api/add")]
+    [Route("api/sheet-creator")]
     [ApiController]
     [AllowAnonymous]
-    public class ObjectController : ControllerBase
+    public class SheetCreatorController : ControllerBase
     {
         private IObjectCreatorService _objectCreatorService;
-        public ObjectController(IObjectCreatorService objectCreatorService)
+        public SheetCreatorController(IObjectCreatorService objectCreatorService)
         {
             _objectCreatorService = objectCreatorService;
         }
 
 
-        [HttpPost("CreateSheet")]
+        [HttpPost("sheet")]
         [AllowAnonymous]
         public ActionResult CreateSheet([FromBody] CreateSheetDto sheetDto)
         {
             int newSheetId = _objectCreatorService.CreateSheet(sheetDto);
             return Ok(newSheetId);
         }
-        [HttpPut("ChangeSheet")]
+        [HttpPut("sheet/{id}")]
         [AllowAnonymous]
         public IActionResult ChangeSheet([FromBody] ChangeSheetDto sheetDto)
         {
@@ -33,28 +33,28 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpPost("CreateCharacterDescription")]
+        [HttpPost("character-description")]
         [AllowAnonymous]
         public ActionResult CreateCharacterDescription([FromBody] CreateDescriptionDto characterDescriptionDto)
         {
             int newDescriptionId = _objectCreatorService.CreateCharacterDescription(characterDescriptionDto);
             return Ok(newDescriptionId);
         }
-        [HttpPut("ChangeCharacterDescription")]
+        [HttpPut("character-description/{id}")]
         public IActionResult ChangeCharacterDescription([FromBody] ChangeCharacterDescriptionDto characterDescriptionDto)
         {
             _objectCreatorService.ChangeCharacterDescription(characterDescriptionDto);
             return Ok();
         }
 
-        [HttpPost("CreateBaseStats")]
+        [HttpPost("base-stats/{id}")]
         [AllowAnonymous]
         public IActionResult CreateBaseStats([FromBody] int characterDescriptionId)
         {
             int newBaseStatsId = _objectCreatorService.CreateBaseStats(characterDescriptionId);
             return Ok(newBaseStatsId);
         }
-        [HttpPut("ChangeBaseStats")]
+        [HttpPut("base-stats/{id}")]
         [AllowAnonymous]
         public IActionResult ChangeBaseStats([FromBody] ChangeStatsDto statsDto)
         {
@@ -62,14 +62,14 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpPost("CreateMonetaryWealth")]
+        [HttpPost("monetary-wealth/{id}")]
         [AllowAnonymous]
         public IActionResult CreateMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto)
         {
             int newMonetaryWealthId = _objectCreatorService.CreateMonetaryWealth(monetaryWealthDto);
             return Ok(newMonetaryWealthId);
         }
-        [HttpPut("ChangeMonetaryWealth")]
+        [HttpPut("monetary-wealth/{id}")]
         [AllowAnonymous]
         public IActionResult ChangeMonetaryWealth([FromBody] ChangeMonetaryWealthDto monetaryWealthDto)
         {
@@ -77,7 +77,7 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpPost("CreateExpiriencePoints")]
+        [HttpPost("expirience-points/{id}")]
         [AllowAnonymous]
         public IActionResult CreateExpiriencePoints([FromBody] CreateExpiriencePointsDto expiriencePointsDto)
         {
@@ -85,7 +85,7 @@ namespace CharacterSheetApi.Controllers
             return Ok(newExpiriencePointsId);
         }
 
-        [HttpPost("CreatePlayerInfo")]
+        [HttpPost("player-info/{id}")]
         [AllowAnonymous]
         public IActionResult CreatePlayerInfo([FromBody] CreatePlayerInfoDto playerInfoDto)
         {
@@ -93,7 +93,7 @@ namespace CharacterSheetApi.Controllers
             return Ok(newPlayerInfoId);
         }
 
-        [HttpPost("CreateCharacterInfo/CharacterCard")]
+        [HttpPost("character-card/{id}")]
         [AllowAnonymous]
         public IActionResult CreateCharacterInfo([FromBody] CreateCharacterInfoDto characterInfoDto)
         {

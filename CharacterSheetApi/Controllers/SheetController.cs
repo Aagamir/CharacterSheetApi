@@ -5,10 +5,11 @@ using CharacterSheetApi.Models.CharacterSheetDtos;
 using CharacterSheetApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 
 namespace CharacterSheetApi.Controllers
 {
-    [Route("api/sheet")]
+    [Route("api/sheet-controller")]
     [ApiController]
     [AllowAnonymous]
     public class SheetControler : ControllerBase
@@ -19,49 +20,49 @@ namespace CharacterSheetApi.Controllers
             _characterSheetService = characterSheetService;
         }    
         
-        [HttpPost("AddWeapon")]
+        [HttpPost("weapon")]
         [AllowAnonymous]
         public IActionResult AddWeapon([FromBody] AddWeaponDto weaponDto)
         {
             _characterSheetService.AddWeapon(weaponDto);
             return Ok();
         }
-        [HttpDelete("DeleteWeapon")]
+        [HttpDelete("weapon/{id}")]
         public IActionResult DeleteWeapon([FromBody] DeleteWeaponDto weaponDto)
         {
             _characterSheetService.DeleteWeapon(weaponDto);
             return Ok();
         }
 
-        [HttpPost("AddArmor")]
+        [HttpPost("armor")]
         [AllowAnonymous]
         public IActionResult AddArmor([FromBody]AddArmorDto armorDto)
         {
             _characterSheetService.AddArmor(armorDto);
             return Ok();
         }
-        [HttpDelete("DeleteArmor")]
+        [HttpDelete("armor/{id}")]
         public IActionResult DeleteArmor([FromBody]DeleteArmorDto armorDto)
         {
             _characterSheetService.DeleteArmor(armorDto);
             return Ok();
         }
         
-        [HttpPost("AddEquipment")]
+        [HttpPost("equipment")]
         [AllowAnonymous]
         public IActionResult AddEquipment([FromBody]AddEquipmentDto equipmentDto)
         {
             _characterSheetService.AddEquipment(equipmentDto);
             return Ok();
         }
-        [HttpDelete("DeleteEquipment")]
+        [HttpDelete("equipment/{id}")]
         public IActionResult DeleteEquipment([FromBody]DeleteEquipmentDto equipmentDto)
         {
             _characterSheetService?.DeleteEquipment(equipmentDto);
             return Ok();
         }
 
-        [HttpPost("AddSkill")]
+        [HttpPost("skill")]
         [AllowAnonymous]
         public IActionResult AddSkill([FromBody]AddSkillDto skillDto)
         {
@@ -69,7 +70,7 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteSkill")]
+        [HttpDelete("skill/{id}")]
         [AllowAnonymous]
         public IActionResult AddSkill([FromBody]DeleteSkillDto skillDto)
         {
@@ -77,7 +78,7 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpPost("AddAbility")]
+        [HttpPost("ability")]
         [AllowAnonymous]
         public IActionResult AddAbilty([FromBody]AddAbilityDto abilityDto)
         {
@@ -85,7 +86,7 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteAbility")]
+        [HttpDelete("ability/{id}")]
         [AllowAnonymous]
         public IActionResult DeleteAbility([FromBody]DeleteAbilityDto abilityDto)
         {
@@ -93,12 +94,12 @@ namespace CharacterSheetApi.Controllers
             return NoContent();
         }
 
-        [HttpGet("Print")]
+        [HttpGet("character-sheet/{id}")]
         [AllowAnonymous]
-        public IActionResult PrintSheet([FromRoute]int characterInfoId)
+        public FileStreamResult PrintSheet([FromRoute]int id)
         {
-            _characterSheetService.PrintSheet(characterInfoId);
-            return Ok();
+            FileStreamResult pdf = _characterSheetService.PrintSheet(id);
+            return pdf;
         }
         /*
         public ActionResult<IEnumerable<CharacterSheets>> GetAll()

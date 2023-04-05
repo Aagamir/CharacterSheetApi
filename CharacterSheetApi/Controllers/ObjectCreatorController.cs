@@ -5,95 +5,95 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CharacterSheetApi.Controllers
 {
-    [Route("api/ClassifiedCreator")]
+    [Route("api/object-creator")]
     [ApiController]
     [AllowAnonymous]
-    public class HigerObjectController : ControllerBase
+    public class ObjectCreatorController : ControllerBase
     {
         private IHigherObjectCreatorService _higherObjectCreatorService;
-        public HigerObjectController(IHigherObjectCreatorService higherObjectCreatorService)
+        public ObjectCreatorController(IHigherObjectCreatorService higherObjectCreatorService)
         {
             _higherObjectCreatorService = higherObjectCreatorService;
         }
 
-        [HttpPost("CreateArmor")]
+        [HttpPost("armor")]
         [AllowAnonymous]
         public IActionResult CreateArmor([FromBody] CreateArmorDto armorDto)
         {
             _higherObjectCreatorService.CreateArmor(armorDto);
             return Ok();
         }
-        [HttpDelete("DeleteArmor")]
+        [HttpDelete("armor/{id}")]
         public IActionResult DeleteArmor([FromBody] int armorId)
         {
             _higherObjectCreatorService.DeleteArmor(armorId);
             return Ok();
         }
 
-        [HttpPost("CreateWeapon")]
+        [HttpPost("weapon")]
         [AllowAnonymous]
         public IActionResult CreateWeapon([FromBody] CreateWeaponDto weaponDto)
         {
             _higherObjectCreatorService.CreateWeapon(weaponDto);
             return Ok();
         }
-        [HttpDelete("DeleteWeapon")]
+        [HttpDelete("weapon/{id}")]
         public IActionResult DeleteWeapon([FromBody] int weaponId)
         {
             _higherObjectCreatorService.DeleteWeapon(weaponId);
             return Ok();
         }
 
-        [HttpPost("CreateEquipment")]
+        [HttpPost("equipment")]
         [AllowAnonymous]
         public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
             _higherObjectCreatorService.CreateEquipment(equipmentDto);
             return Ok();
         }
-        [HttpDelete("DeleteEquipment")]
+        [HttpDelete("equipment/{id}")]
         public IActionResult DeleteEquipment([FromBody] int equipmentId)
         {
             _higherObjectCreatorService.DeleteEquipment(equipmentId);
             return Ok();
         }
 
-        [HttpPost("CreateAbility")]
+        [HttpPost("ability")]
         [AllowAnonymous]
         public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
             _higherObjectCreatorService.CreateAbility(abilityDto);
             return Ok();
         }
-        [HttpDelete("DeleteAbility")]
+        [HttpDelete("ability/{id}")]
         public IActionResult DeleteAbility([FromBody] int abilityId)
         {
             _higherObjectCreatorService.DeleteAbility(abilityId);
             return Ok();
         }
 
-        [HttpPost("CreateSkill")]
+        [HttpPost("skill")]
         [AllowAnonymous]
         public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
             _higherObjectCreatorService.CreateSkill(skillDto);
             return Ok();
         }
-        [HttpDelete("DeleteSkill")]
+        [HttpDelete("skill/{id}")]
         public IActionResult DeleteSkill([FromBody] int skillId)
         {
             _higherObjectCreatorService.DeleteSkill(skillId);
             return Ok();
         }
 
-        [HttpPost("CreateClass")]
+        [HttpPost("class")]
         [AllowAnonymous]
         public IActionResult CreateClass([FromBody] CreateClassDto classDto)
         {
             _higherObjectCreatorService.CreateClass(classDto);
             return Ok();
         }
-        [HttpDelete("DeleteClass")]
+        [HttpDelete("class/{id}")]
         public IActionResult DeleteClass([FromBody]int classId)
         {
             _higherObjectCreatorService.DeleteClass(classId);

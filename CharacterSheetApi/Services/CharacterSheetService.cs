@@ -2,6 +2,7 @@
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CharacterSheetApi.Services
@@ -126,14 +127,21 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
         }
 
-        public void PrintSheet(int characterInfoId)
+        public FileStreamResult PrintSheet(int characterSheetId)
         {
-            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == characterInfoId);
-            //var characterDescription = characterInfo.CharacterDescription;
-            PdfDocument doc = PdfDocument.FromFile(@"C:\Users\User\source\repos\CharacterSheetApi\WarhammerKarta.pdf");
+
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo.CharacterDescription).FirstOrDefault(c => c.Id == characterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            var characterDescription = characterInfo.CharacterDescription;
+
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+
+            PdfDocument doc = PdfDocument.FromFile(@$"{projectDirectory}\repos\CharacterSheetApi\Karta.pdf");
             var form = doc.Form;
 
-            form.GetFieldByName("Imię: ").Value = characterInfo.Name;
+            form.Fields[0].Value = "dupa";
+
             //form.Fields[0].Value = characterInfo.Name;
             /*
             form.GetFieldByName("Rasa:").Value = characterDescription.Race;
@@ -143,7 +151,14 @@ namespace CharacterSheetApi.Services
             form.GetFieldByName("Kolor Włosów:").Value = characterDescription.HairColor;
             form.GetFieldByName("Znak Gwiezdny:").Value = characterDescription.StarSign;
             */
-            doc.SaveAs(@"C:\Users\User\source\repos\CharacterSheetApi\WFRP2_karta7");
+
+
+            Stream pdf = doc.Stream;
+            FileStreamResult stream = new FileStreamResult(pdf, "application/pdf")
+            {
+                FileDownloadName = $"Karta_{characterSheet.RpgSystemId}_{characterSheet.CreatorName}_#{characterSheetId}.pdf"
+            };
+            return stream;
         }
     }
 }

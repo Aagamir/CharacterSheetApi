@@ -1,5 +1,6 @@
 ﻿using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CharacterSheetApi.Services
 {
@@ -15,6 +16,6 @@ namespace CharacterSheetApi.Services
         void DeleteSkill(DeleteSkillDto dto);
         void AddAbility(AddAbilityDto dto);
         void DeleteAbility(DeleteAbilityDto dto);
-        void PrintSheet(int characterInfoId);
+        FileStreamResult PrintSheet(int characterSheetId);
     }
 }
