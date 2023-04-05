@@ -92,6 +92,14 @@ namespace CharacterSheetApi.Controllers
             _characterSheetService.DeleteAbility(abilityDto);
             return NoContent();
         }
+
+        [HttpGet("Print")]
+        [AllowAnonymous]
+        public IActionResult PrintSheet([FromRoute]int characterInfoId)
+        {
+            _characterSheetService.PrintSheet(characterInfoId);
+            return Ok();
+        }
         /*
         public ActionResult<IEnumerable<CharacterSheets>> GetAll()
         {

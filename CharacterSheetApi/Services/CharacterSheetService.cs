@@ -125,5 +125,25 @@ namespace CharacterSheetApi.Services
             characterInfo.Abilities.Remove(ability);
             _context.SaveChanges();
         }
+
+        public void PrintSheet(int characterInfoId)
+        {
+            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == characterInfoId);
+            //var characterDescription = characterInfo.CharacterDescription;
+            PdfDocument doc = PdfDocument.FromFile(@"C:\Users\User\source\repos\CharacterSheetApi\WarhammerKarta.pdf");
+            var form = doc.Form;
+
+            form.GetFieldByName("Imię: ").Value = characterInfo.Name;
+            //form.Fields[0].Value = characterInfo.Name;
+            /*
+            form.GetFieldByName("Rasa:").Value = characterDescription.Race;
+            form.GetFieldByName("Obecna Profesja:").Value = characterInfo.Class;
+            form.GetFieldByName("Wiek:").Value = characterDescription.Age;
+            form.GetFieldByName("Kolor Oczu:").Value = characterDescription.EyeColor;
+            form.GetFieldByName("Kolor Włosów:").Value = characterDescription.HairColor;
+            form.GetFieldByName("Znak Gwiezdny:").Value = characterDescription.StarSign;
+            */
+            doc.SaveAs(@"C:\Users\User\source\repos\CharacterSheetApi\WFRP2_karta7");
+        }
     }
 }

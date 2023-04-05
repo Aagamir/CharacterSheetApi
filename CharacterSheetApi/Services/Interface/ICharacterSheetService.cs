@@ -15,5 +15,6 @@ namespace CharacterSheetApi.Services
         void DeleteSkill(DeleteSkillDto dto);
         void AddAbility(AddAbilityDto dto);
         void DeleteAbility(DeleteAbilityDto dto);
+        void PrintSheet(int characterInfoId);
     }
 }
