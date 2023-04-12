@@ -12,11 +12,11 @@ namespace CharacterSheetApi.Controllers
     public class SheetCreatorController : ControllerBase
     {
         private IObjectCreatorService _objectCreatorService;
+
         public SheetCreatorController(IObjectCreatorService objectCreatorService)
         {
             _objectCreatorService = objectCreatorService;
         }
-
 
         [HttpPost("sheet")]
         [AllowAnonymous]
@@ -25,6 +25,7 @@ namespace CharacterSheetApi.Controllers
             int newSheetId = _objectCreatorService.CreateSheet(sheetDto);
             return Ok(newSheetId);
         }
+
         [HttpPut("sheet/{id}")]
         [AllowAnonymous]
         public IActionResult ChangeSheet([FromBody] ChangeSheetDto sheetDto)
@@ -40,6 +41,7 @@ namespace CharacterSheetApi.Controllers
             int newDescriptionId = _objectCreatorService.CreateCharacterDescription(characterDescriptionDto);
             return Ok(newDescriptionId);
         }
+
         [HttpPut("character-description/{id}")]
         public IActionResult ChangeCharacterDescription([FromBody] ChangeCharacterDescriptionDto characterDescriptionDto)
         {
@@ -51,9 +53,10 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public IActionResult CreateBaseStats([FromBody] int characterDescriptionId)
         {
-            int newBaseStatsId = _objectCreatorService.CreateBaseStats(characterDescriptionId);
+            string newBaseStatsId = _objectCreatorService.CreateBaseStats(characterDescriptionId);
             return Ok(newBaseStatsId);
         }
+
         [HttpPut("base-stats/{id}")]
         [AllowAnonymous]
         public IActionResult ChangeBaseStats([FromBody] ChangeStatsDto statsDto)
@@ -69,6 +72,7 @@ namespace CharacterSheetApi.Controllers
             int newMonetaryWealthId = _objectCreatorService.CreateMonetaryWealth(monetaryWealthDto);
             return Ok(newMonetaryWealthId);
         }
+
         [HttpPut("monetary-wealth/{id}")]
         [AllowAnonymous]
         public IActionResult ChangeMonetaryWealth([FromBody] ChangeMonetaryWealthDto monetaryWealthDto)

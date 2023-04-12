@@ -15,11 +15,12 @@ namespace CharacterSheetApi.Controllers
     public class SheetControler : ControllerBase
     {
         private ICharacterSheetService _characterSheetService;
-        public SheetControler( ICharacterSheetService characterSheetService)
+
+        public SheetControler(ICharacterSheetService characterSheetService)
         {
             _characterSheetService = characterSheetService;
-        }    
-        
+        }
+
         [HttpPost("weapon")]
         [AllowAnonymous]
         public IActionResult AddWeapon([FromBody] AddWeaponDto weaponDto)
@@ -27,6 +28,7 @@ namespace CharacterSheetApi.Controllers
             _characterSheetService.AddWeapon(weaponDto);
             return Ok();
         }
+
         [HttpDelete("weapon/{id}")]
         public IActionResult DeleteWeapon([FromBody] DeleteWeaponDto weaponDto)
         {
@@ -36,27 +38,29 @@ namespace CharacterSheetApi.Controllers
 
         [HttpPost("armor")]
         [AllowAnonymous]
-        public IActionResult AddArmor([FromBody]AddArmorDto armorDto)
+        public IActionResult AddArmor([FromBody] AddArmorDto armorDto)
         {
             _characterSheetService.AddArmor(armorDto);
             return Ok();
         }
+
         [HttpDelete("armor/{id}")]
-        public IActionResult DeleteArmor([FromBody]DeleteArmorDto armorDto)
+        public IActionResult DeleteArmor([FromBody] DeleteArmorDto armorDto)
         {
             _characterSheetService.DeleteArmor(armorDto);
             return Ok();
         }
-        
+
         [HttpPost("equipment")]
         [AllowAnonymous]
-        public IActionResult AddEquipment([FromBody]AddEquipmentDto equipmentDto)
+        public IActionResult AddEquipment([FromBody] AddEquipmentDto equipmentDto)
         {
             _characterSheetService.AddEquipment(equipmentDto);
             return Ok();
         }
+
         [HttpDelete("equipment/{id}")]
-        public IActionResult DeleteEquipment([FromBody]DeleteEquipmentDto equipmentDto)
+        public IActionResult DeleteEquipment([FromBody] DeleteEquipmentDto equipmentDto)
         {
             _characterSheetService?.DeleteEquipment(equipmentDto);
             return Ok();
@@ -64,7 +68,7 @@ namespace CharacterSheetApi.Controllers
 
         [HttpPost("skill")]
         [AllowAnonymous]
-        public IActionResult AddSkill([FromBody]AddSkillDto skillDto)
+        public IActionResult AddSkill([FromBody] AddSkillDto skillDto)
         {
             _characterSheetService.AddSkill(skillDto);
             return Ok();
@@ -72,7 +76,7 @@ namespace CharacterSheetApi.Controllers
 
         [HttpDelete("skill/{id}")]
         [AllowAnonymous]
-        public IActionResult AddSkill([FromBody]DeleteSkillDto skillDto)
+        public IActionResult AddSkill([FromBody] DeleteSkillDto skillDto)
         {
             _characterSheetService.DeleteSkill(skillDto);
             return Ok();
@@ -80,7 +84,7 @@ namespace CharacterSheetApi.Controllers
 
         [HttpPost("ability")]
         [AllowAnonymous]
-        public IActionResult AddAbilty([FromBody]AddAbilityDto abilityDto)
+        public IActionResult AddAbilty([FromBody] AddAbilityDto abilityDto)
         {
             _characterSheetService.AddAbility(abilityDto);
             return Ok();
@@ -88,7 +92,7 @@ namespace CharacterSheetApi.Controllers
 
         [HttpDelete("ability/{id}")]
         [AllowAnonymous]
-        public IActionResult DeleteAbility([FromBody]DeleteAbilityDto abilityDto)
+        public IActionResult DeleteAbility([FromBody] DeleteAbilityDto abilityDto)
         {
             _characterSheetService.DeleteAbility(abilityDto);
             return NoContent();
@@ -96,11 +100,12 @@ namespace CharacterSheetApi.Controllers
 
         [HttpGet("character-sheet/{id}")]
         [AllowAnonymous]
-        public FileStreamResult PrintSheet([FromRoute]int id)
+        public FileStreamResult PrintSheet([FromRoute] int id)
         {
             FileStreamResult pdf = _characterSheetService.PrintSheet(id);
             return pdf;
         }
+
         /*
         public ActionResult<IEnumerable<CharacterSheets>> GetAll()
         {
