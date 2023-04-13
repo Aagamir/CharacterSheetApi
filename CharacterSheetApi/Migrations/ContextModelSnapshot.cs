@@ -385,14 +385,23 @@ namespace CharacterSheetApi.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<int>("BaseStatsId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CharacteriticSigns")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CurrentStatsId")
+                        .HasColumnType("int");
 
                     b.Property<int>("EyeColorId")
                         .HasColumnType("int");
 
                     b.Property<int>("GenderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GrowthStatsId")
                         .HasColumnType("int");
 
                     b.Property<int>("HairColorId")
@@ -419,9 +428,15 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BaseStatsId");
+
+                    b.HasIndex("CurrentStatsId");
+
                     b.HasIndex("EyeColorId");
 
                     b.HasIndex("GenderId");
+
+                    b.HasIndex("GrowthStatsId");
 
                     b.HasIndex("HairColorId");
 
@@ -440,22 +455,13 @@ namespace CharacterSheetApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BaseStatsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CharacterDescriptionId")
                         .HasColumnType("int");
 
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CurrentStatsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ExpiriencePointsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GrowthStatsId")
                         .HasColumnType("int");
 
                     b.Property<int?>("LastClassId")
@@ -473,17 +479,11 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BaseStatsId");
-
                     b.HasIndex("CharacterDescriptionId");
 
                     b.HasIndex("ClassId");
 
-                    b.HasIndex("CurrentStatsId");
-
                     b.HasIndex("ExpiriencePointsId");
-
-                    b.HasIndex("GrowthStatsId");
 
                     b.HasIndex("LastClassId");
 
@@ -1602,6 +1602,18 @@ namespace CharacterSheetApi.Migrations
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterDescription", b =>
                 {
+                    b.HasOne("CharacterSheetApi.Entities.BaseStats", "BaseStats")
+                        .WithMany()
+                        .HasForeignKey("BaseStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
+                        .WithMany()
+                        .HasForeignKey("CurrentStatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CharacterSheetApi.Entities.EyeColor", "EyeColor")
                         .WithMany()
                         .HasForeignKey("EyeColorId")
@@ -1613,6 +1625,10 @@ namespace CharacterSheetApi.Migrations
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CharacterSheetApi.Entities.GrowthStats", "GrowthStats")
+                        .WithMany()
+                        .HasForeignKey("GrowthStatsId");
 
                     b.HasOne("CharacterSheetApi.Entities.HairColor", "HairColor")
                         .WithMany()
@@ -1632,9 +1648,15 @@ namespace CharacterSheetApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("BaseStats");
+
+                    b.Navigation("CurrentStats");
+
                     b.Navigation("EyeColor");
 
                     b.Navigation("Gender");
+
+                    b.Navigation("GrowthStats");
 
                     b.Navigation("HairColor");
 
@@ -1645,12 +1667,6 @@ namespace CharacterSheetApi.Migrations
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterInfo", b =>
                 {
-                    b.HasOne("CharacterSheetApi.Entities.BaseStats", "BaseStats")
-                        .WithMany()
-                        .HasForeignKey("BaseStatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CharacterSheetApi.Entities.CharacterDescription", "CharacterDescription")
                         .WithMany()
                         .HasForeignKey("CharacterDescriptionId")
@@ -1663,21 +1679,11 @@ namespace CharacterSheetApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
-                        .WithMany()
-                        .HasForeignKey("CurrentStatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CharacterSheetApi.Entities.ExpiriencePoints", "ExpiriencePoints")
                         .WithMany()
                         .HasForeignKey("ExpiriencePointsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CharacterSheetApi.Entities.GrowthStats", "GrowthStats")
-                        .WithMany()
-                        .HasForeignKey("GrowthStatsId");
 
                     b.HasOne("CharacterSheetApi.Entities.LastClass", "LastClass")
                         .WithMany()
@@ -1695,17 +1701,11 @@ namespace CharacterSheetApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BaseStats");
-
                     b.Navigation("CharacterDescription");
 
                     b.Navigation("Class");
 
-                    b.Navigation("CurrentStats");
-
                     b.Navigation("ExpiriencePoints");
-
-                    b.Navigation("GrowthStats");
 
                     b.Navigation("LastClass");
 

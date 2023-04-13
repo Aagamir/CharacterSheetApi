@@ -49,13 +49,15 @@ namespace CharacterSheetApi.Controllers
             return Ok();
         }
 
+        /*
         [HttpPost("base-stats/{id}")]
         [AllowAnonymous]
         public IActionResult CreateBaseStats([FromBody] int characterDescriptionId)
         {
             string newBaseStatsId = _objectCreatorService.CreateBaseStats(characterDescriptionId);
-            return Ok(newBaseStatsId);
+            return Ok();
         }
+        */
 
         [HttpPut("base-stats/{id}")]
         [AllowAnonymous]

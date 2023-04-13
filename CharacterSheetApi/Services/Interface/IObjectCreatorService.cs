@@ -13,7 +13,7 @@ namespace CharacterSheetApi.Services
 
         void ChangeCharacterDescription(ChangeCharacterDescriptionDto dto);
 
-        string CreateBaseStats(int characterDescriptionId);
+        //string CreateBaseStats(int characterDescriptionId);
 
         void ChangeBaseStats(ChangeStatsDto dto);
 

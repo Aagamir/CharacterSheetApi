@@ -22,5 +22,8 @@ namespace CharacterSheetApi.Entities
         public int Age { get; set; }
         public string PlaceOfBirth { get; set; }
         public string CharacteriticSigns { get; set; }
+        public BaseStats BaseStats { get; set; }
+        public GrowthStats? GrowthStats { get; set; }
+        public CurrentStats CurrentStats { get; set; }
     }
 }

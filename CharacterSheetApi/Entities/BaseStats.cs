@@ -3,6 +3,7 @@
     public class BaseStats
     {
         public int Id { get; set; }
+        //public int CharacterDescriptionId { get; set; }
 
         public int WW { get; set; }
         public int US { get; set; }
@@ -21,6 +22,5 @@
         public int Mag { get; set; }
         public int PO { get; set; }
         public int PP { get; set; }
-
     }
 }

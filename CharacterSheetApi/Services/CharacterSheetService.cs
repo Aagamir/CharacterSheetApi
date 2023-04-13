@@ -3,6 +3,7 @@ using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace CharacterSheetApi.Services
 {
@@ -132,11 +133,14 @@ namespace CharacterSheetApi.Services
 
         public FileStreamResult PrintSheet(int characterSheetId)
         {
+            var time = new Stopwatch();
+            time.Start();
             var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo)
                 .Include(c => c.CharacterInfo.CharacterDescription)
                 .Include(c => c.CharacterInfo.Class).Include(c => c.CharacterInfo.ExpiriencePoints)
-                .Include(c => c.CharacterInfo.BaseStats)
-                .Include(c => c.CharacterInfo.CurrentStats)
+                .Include(c => c.CharacterInfo.CharacterDescription.BaseStats)
+                .Include(c => c.CharacterInfo.CharacterDescription.CurrentStats)
+                .Include(c => c.CharacterInfo.PlayerInfo)
                 .Include(c => c.CharacterInfo.Armor)
                 .FirstOrDefault(c => c.Id == characterSheetId);
             //var characterDescription = characterSheet.CharacterDescription;
@@ -169,18 +173,20 @@ namespace CharacterSheetApi.Services
             form.Fields[13].Value = characterSheet.CharacterInfo.CharacterDescription.CharacteriticSigns;
             //Gracz
             form.Fields[14].Value = characterSheet.CreatorName;
+            form.Fields[15].Value = characterSheet.CharacterInfo.PlayerInfo.GameMasterName;
+            form.Fields[16].Value = characterSheet.CharacterInfo.PlayerInfo.CampaignName;
             //Punkty Doświadczenia
             form.Fields[18].Value = characterSheet.CharacterInfo.ExpiriencePoints.CurrentPoints.ToString();
             form.Fields[19].Value = characterSheet.CharacterInfo.ExpiriencePoints.OverallPoints.ToString();
             //Cechy
-            form.Fields[31].Value = characterSheet.CharacterInfo.BaseStats.WW.ToString();
-            form.Fields[32].Value = characterSheet.CharacterInfo.BaseStats.US.ToString();
-            form.Fields[33].Value = characterSheet.CharacterInfo.BaseStats.K.ToString();
-            form.Fields[34].Value = characterSheet.CharacterInfo.BaseStats.Odp.ToString();
-            form.Fields[35].Value = characterSheet.CharacterInfo.BaseStats.Zr.ToString();
-            form.Fields[36].Value = characterSheet.CharacterInfo.BaseStats.Int.ToString();
-            form.Fields[37].Value = characterSheet.CharacterInfo.BaseStats.SW.ToString();
-            form.Fields[38].Value = characterSheet.CharacterInfo.BaseStats.Ogd.ToString();
+            form.Fields[31].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.WW.ToString();
+            form.Fields[32].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.US.ToString();
+            form.Fields[33].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.K.ToString();
+            form.Fields[34].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Odp.ToString();
+            form.Fields[35].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Zr.ToString();
+            form.Fields[36].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Int.ToString();
+            form.Fields[37].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.SW.ToString();
+            form.Fields[38].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Ogd.ToString();
             form.Fields[39].Value = null;
             form.Fields[40].Value = null;
             form.Fields[41].Value = null;
@@ -189,30 +195,30 @@ namespace CharacterSheetApi.Services
             form.Fields[44].Value = null;
             form.Fields[45].Value = null;
             form.Fields[46].Value = null;
-            form.Fields[47].Value = characterSheet.CharacterInfo.CurrentStats.WW.ToString();
-            form.Fields[48].Value = characterSheet.CharacterInfo.CurrentStats.US.ToString();
-            form.Fields[49].Value = characterSheet.CharacterInfo.CurrentStats.K.ToString();
-            form.Fields[50].Value = characterSheet.CharacterInfo.CurrentStats.Odp.ToString();
-            form.Fields[51].Value = characterSheet.CharacterInfo.CurrentStats.Zr.ToString();
-            form.Fields[52].Value = characterSheet.CharacterInfo.CurrentStats.Int.ToString();
-            form.Fields[53].Value = characterSheet.CharacterInfo.CurrentStats.SW.ToString();
-            form.Fields[54].Value = characterSheet.CharacterInfo.CurrentStats.Ogd.ToString();
-            form.Fields[79].Value = characterSheet.CharacterInfo.CurrentStats.A.ToString();
-            form.Fields[80].Value = characterSheet.CharacterInfo.CurrentStats.Zyw.ToString();
-            form.Fields[81].Value = characterSheet.CharacterInfo.CurrentStats.S.ToString();
-            form.Fields[82].Value = characterSheet.CharacterInfo.CurrentStats.Wt.ToString();
-            form.Fields[83].Value = characterSheet.CharacterInfo.CurrentStats.Sz.ToString();
-            form.Fields[84].Value = characterSheet.CharacterInfo.CurrentStats.Mag.ToString();
-            form.Fields[85].Value = characterSheet.CharacterInfo.CurrentStats.PO.ToString();
-            form.Fields[86].Value = characterSheet.CharacterInfo.CurrentStats.PP.ToString();
-            form.Fields[63].Value = characterSheet.CharacterInfo.BaseStats.A.ToString();
-            form.Fields[64].Value = characterSheet.CharacterInfo.BaseStats.Zyw.ToString();
-            form.Fields[65].Value = characterSheet.CharacterInfo.BaseStats.S.ToString();
-            form.Fields[66].Value = characterSheet.CharacterInfo.BaseStats.Wt.ToString();
-            form.Fields[67].Value = characterSheet.CharacterInfo.BaseStats.Sz.ToString();
-            form.Fields[68].Value = characterSheet.CharacterInfo.BaseStats.Mag.ToString();
-            form.Fields[69].Value = characterSheet.CharacterInfo.BaseStats.PO.ToString();
-            form.Fields[70].Value = characterSheet.CharacterInfo.BaseStats.PP.ToString();
+            form.Fields[47].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.WW.ToString();
+            form.Fields[48].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.US.ToString();
+            form.Fields[49].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.K.ToString();
+            form.Fields[50].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Odp.ToString();
+            form.Fields[51].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Zr.ToString();
+            form.Fields[52].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Int.ToString();
+            form.Fields[53].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.SW.ToString();
+            form.Fields[54].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Ogd.ToString();
+            form.Fields[79].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.A.ToString();
+            form.Fields[80].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Zyw.ToString();
+            form.Fields[81].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.S.ToString();
+            form.Fields[82].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt.ToString();
+            form.Fields[83].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Sz.ToString();
+            form.Fields[84].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Mag.ToString();
+            form.Fields[85].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.PO.ToString();
+            form.Fields[86].Value = characterSheet.CharacterInfo.CharacterDescription.CurrentStats.PP.ToString();
+            form.Fields[63].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.A.ToString();
+            form.Fields[64].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Zyw.ToString();
+            form.Fields[65].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.S.ToString();
+            form.Fields[66].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Wt.ToString();
+            form.Fields[67].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Sz.ToString();
+            form.Fields[68].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.Mag.ToString();
+            form.Fields[69].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.PO.ToString();
+            form.Fields[70].Value = characterSheet.CharacterInfo.CharacterDescription.BaseStats.PP.ToString();
             form.Fields[71].Value = null;
             form.Fields[72].Value = null;
             form.Fields[73].Value = null;
@@ -222,55 +228,31 @@ namespace CharacterSheetApi.Services
             form.Fields[77].Value = null;
             form.Fields[78].Value = null;
             //Punkty Zbroi
-            form.Fields[87].Value = (characterSheet.CharacterInfo.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.Head)).Sum(a => a.ArmorPoints)).ToString();
-            form.Fields[88].Value = (characterSheet.CharacterInfo.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.Torso)).Sum(a => a.ArmorPoints)).ToString();
-            form.Fields[89].Value = (characterSheet.CharacterInfo.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.RightArm)).Sum(a => a.ArmorPoints)).ToString();
-            form.Fields[90].Value = (characterSheet.CharacterInfo.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.LeftArm)).Sum(a => a.ArmorPoints)).ToString();
-            form.Fields[91].Value = (characterSheet.CharacterInfo.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.RightLeg)).Sum(a => a.ArmorPoints)).ToString();
-            form.Fields[92].Value = (characterSheet.CharacterInfo.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.LeftLeg)).Sum(a => a.ArmorPoints)).ToString();
+            form.Fields[87].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.Head)).Sum(a => a.ArmorPoints)).ToString();
+            form.Fields[88].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.Torso)).Sum(a => a.ArmorPoints)).ToString();
+            form.Fields[89].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.RightArm)).Sum(a => a.ArmorPoints)).ToString();
+            form.Fields[90].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.LeftArm)).Sum(a => a.ArmorPoints)).ToString();
+            form.Fields[91].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.RightLeg)).Sum(a => a.ArmorPoints)).ToString();
+            form.Fields[92].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.LeftLeg)).Sum(a => a.ArmorPoints)).ToString();
+
+            if (characterSheet.CharacterInfo.Weapons != null && characterSheet.CharacterInfo.Weapons.Count > 0)
+            {
+                int x = 0;
+                foreach (var weapon in characterSheet.CharacterInfo.Weapons)
+                {
+                    int n = 7 * x;
+                    form.Fields[93 + n].Value = weapon.Name;
+                    form.Fields[94 + n].Value = weapon.Weight.ToString();
+                    form.Fields[95 + n].Value = weapon.WeaponCategoryId.ToString();
+                    form.Fields[96 + n].Value = weapon.WeaponStrength.ToString();
+                    form.Fields[97 + n].Value = weapon.Range.ToString();
+                    form.Fields[98 + n].Value = weapon.ReloadTime.ToString();
+                    form.Fields[99 + n].Value = weapon.WeaponCharacteristics.ToString();
+                    x++;
+                }
+            }
             /*
-            form.Fields[93].Value = ;
-            form.Fields[94].Value = ;
-            form.Fields[95].Value = ;
-            form.Fields[96].Value = ;
-            form.Fields[97].Value = ;
-            form.Fields[98].Value = ;
-            form.Fields[99].Value = ;
-            form.Fields[100].Value = ;
-            form.Fields[101].Value = ;
-            form.Fields[102].Value = ;
-            form.Fields[103].Value = ;
-            form.Fields[104].Value = ;
-            form.Fields[105].Value = ;
-            form.Fields[106].Value = ;
-            form.Fields[107].Value = ;
-            form.Fields[108].Value = ;
-            form.Fields[109].Value = ;
-            form.Fields[110].Value = ;
-            form.Fields[111].Value = ;
-            form.Fields[112].Value = ;
-            form.Fields[113].Value = ;
-            form.Fields[114].Value = ;
-            form.Fields[115].Value = ;
-            form.Fields[116].Value = ;
-            form.Fields[117].Value = ;
-            form.Fields[118].Value = ;
-            form.Fields[119].Value = ;
-            form.Fields[120].Value = ;
-            form.Fields[121].Value = ;
-            form.Fields[122].Value = ;
-            form.Fields[123].Value = ;
-            form.Fields[124].Value = ;
-            form.Fields[125].Value = ;
-            form.Fields[126].Value = ;
-            form.Fields[127].Value = ;
-            form.Fields[128].Value = ;
-            form.Fields[129].Value = ;
-            form.Fields[130].Value = ;
-            form.Fields[131].Value = ;
-            form.Fields[132].Value = ;
-            form.Fields[133].Value = ;
-            form.Fields[134].Value = ;
+
             form.Fields[135].Value = ;
             form.Fields[136].Value = ;
             form.Fields[137].Value = ;
@@ -538,21 +520,15 @@ namespace CharacterSheetApi.Services
             form.Fields[399].Value = ;
             form.Fields[400].Value = ;
             */
-            //form.Fields[0].Value = characterInfo.Name;
-            /*
-            form.GetFieldByName("Rasa:").Value = characterDescription.Race;
-            form.GetFieldByName("Obecna Profesja:").Value = characterInfo.Class;
-            form.GetFieldByName("Wiek:").Value = characterDescription.Age;
-            form.GetFieldByName("Kolor Oczu:").Value = characterDescription.EyeColor;
-            form.GetFieldByName("Kolor Włosów:").Value = characterDescription.HairColor;
-            form.GetFieldByName("Znak Gwiezdny:").Value = characterDescription.StarSign;
-            */
 
             Stream pdf = doc.Stream;
+
             FileStreamResult stream = new FileStreamResult(pdf, "application/pdf")
             {
                 FileDownloadName = $"Karta_{characterSheet.RpgSystemId}_{characterSheet.CreatorName}_#{characterSheetId}.pdf"
             };
+
+            time.Stop();
             return stream;
         }
     }

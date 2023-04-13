@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CharacterSheetApi.Migrations
 {
     /// <inheritdoc />
-    public partial class NewDatabase : Migration
+    public partial class kutazz : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,19 +90,6 @@ namespace CharacterSheetApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Class", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CurrentClass",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CurrentClass", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,11 +420,26 @@ namespace CharacterSheetApi.Migrations
                     Siblings = table.Column<int>(type: "int", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     PlaceOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CharacteriticSigns = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CharacteriticSigns = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BaseStatsId = table.Column<int>(type: "int", nullable: false),
+                    GrowthStatsId = table.Column<int>(type: "int", nullable: true),
+                    CurrentStatsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CharacterDescriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CharacterDescriptions_BaseStats_BaseStatsId",
+                        column: x => x.BaseStatsId,
+                        principalTable: "BaseStats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterDescriptions_CurrentStats_CurrentStatsId",
+                        column: x => x.CurrentStatsId,
+                        principalTable: "CurrentStats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CharacterDescriptions_EyeColor_EyeColorId",
                         column: x => x.EyeColorId,
@@ -450,6 +452,11 @@ namespace CharacterSheetApi.Migrations
                         principalTable: "Gender",
                         principalColumn: "GenderId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterDescriptions_GrowthStats_GrowthStatsId",
+                        column: x => x.GrowthStatsId,
+                        principalTable: "GrowthStats",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CharacterDescriptions_HairColor_HairColorId",
                         column: x => x.HairColorId,
@@ -528,23 +535,13 @@ namespace CharacterSheetApi.Migrations
                     PlayerInfoId = table.Column<int>(type: "int", nullable: false),
                     ExpiriencePointsId = table.Column<int>(type: "int", nullable: false),
                     CharacterDescriptionId = table.Column<int>(type: "int", nullable: false),
-                    CurrentClassId = table.Column<int>(type: "int", nullable: false),
                     ClassId = table.Column<int>(type: "int", nullable: false),
                     LastClassId = table.Column<int>(type: "int", nullable: true),
-                    BaseStatsId = table.Column<int>(type: "int", nullable: false),
-                    GrowthStatsId = table.Column<int>(type: "int", nullable: true),
-                    CurrentStatsId = table.Column<int>(type: "int", nullable: true),
                     MonetaryWealthId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CharacterInfos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CharacterInfos_BaseStats_BaseStatsId",
-                        column: x => x.BaseStatsId,
-                        principalTable: "BaseStats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CharacterInfos_CharacterDescriptions_CharacterDescriptionId",
                         column: x => x.CharacterDescriptionId,
@@ -558,27 +555,11 @@ namespace CharacterSheetApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CharacterInfos_CurrentClass_CurrentClassId",
-                        column: x => x.CurrentClassId,
-                        principalTable: "CurrentClass",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CharacterInfos_CurrentStats_CurrentStatsId",
-                        column: x => x.CurrentStatsId,
-                        principalTable: "CurrentStats",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_CharacterInfos_ExpiriencePoints_ExpiriencePointsId",
                         column: x => x.ExpiriencePointsId,
                         principalTable: "ExpiriencePoints",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CharacterInfos_GrowthStats_GrowthStatsId",
-                        column: x => x.GrowthStatsId,
-                        principalTable: "GrowthStats",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CharacterInfos_LastClass_LastClassId",
                         column: x => x.LastClassId,
@@ -998,6 +979,16 @@ namespace CharacterSheetApi.Migrations
                 column: "ArmorTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CharacterDescriptions_BaseStatsId",
+                table: "CharacterDescriptions",
+                column: "BaseStatsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterDescriptions_CurrentStatsId",
+                table: "CharacterDescriptions",
+                column: "CurrentStatsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CharacterDescriptions_EyeColorId",
                 table: "CharacterDescriptions",
                 column: "EyeColorId");
@@ -1006,6 +997,11 @@ namespace CharacterSheetApi.Migrations
                 name: "IX_CharacterDescriptions_GenderId",
                 table: "CharacterDescriptions",
                 column: "GenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterDescriptions_GrowthStatsId",
+                table: "CharacterDescriptions",
+                column: "GrowthStatsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterDescriptions_HairColorId",
@@ -1028,11 +1024,6 @@ namespace CharacterSheetApi.Migrations
                 column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_BaseStatsId",
-                table: "CharacterInfos",
-                column: "BaseStatsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CharacterInfos_CharacterDescriptionId",
                 table: "CharacterInfos",
                 column: "CharacterDescriptionId");
@@ -1043,24 +1034,9 @@ namespace CharacterSheetApi.Migrations
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_CurrentClassId",
-                table: "CharacterInfos",
-                column: "CurrentClassId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_CurrentStatsId",
-                table: "CharacterInfos",
-                column: "CurrentStatsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CharacterInfos_ExpiriencePointsId",
                 table: "CharacterInfos",
                 column: "ExpiriencePointsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterInfos_GrowthStatsId",
-                table: "CharacterInfos",
-                column: "GrowthStatsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterInfos_LastClassId",
@@ -1187,25 +1163,13 @@ namespace CharacterSheetApi.Migrations
                 name: "SkillLevel");
 
             migrationBuilder.DropTable(
-                name: "BaseStats");
-
-            migrationBuilder.DropTable(
                 name: "CharacterDescriptions");
 
             migrationBuilder.DropTable(
                 name: "Class");
 
             migrationBuilder.DropTable(
-                name: "CurrentClass");
-
-            migrationBuilder.DropTable(
-                name: "CurrentStats");
-
-            migrationBuilder.DropTable(
                 name: "ExpiriencePoints");
-
-            migrationBuilder.DropTable(
-                name: "GrowthStats");
 
             migrationBuilder.DropTable(
                 name: "LastClass");
@@ -1223,10 +1187,19 @@ namespace CharacterSheetApi.Migrations
                 name: "WeaponCategory");
 
             migrationBuilder.DropTable(
+                name: "BaseStats");
+
+            migrationBuilder.DropTable(
+                name: "CurrentStats");
+
+            migrationBuilder.DropTable(
                 name: "EyeColor");
 
             migrationBuilder.DropTable(
                 name: "Gender");
+
+            migrationBuilder.DropTable(
+                name: "GrowthStats");
 
             migrationBuilder.DropTable(
                 name: "HairColor");
