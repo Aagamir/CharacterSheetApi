@@ -5,28 +5,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CharacterSheetApi.Controllers
 {
-    [Route("api/object-creator")]
+    [Route("api/object_creator")]
     [ApiController]
     [AllowAnonymous]
-    public class ObjectCreatorController : ControllerBase
+    public class GameMasterController : ControllerBase
     {
-        private IHigherObjectCreatorService _higherObjectCreatorService;
-        public ObjectCreatorController(IHigherObjectCreatorService higherObjectCreatorService)
+        private IGameMasterService _gameMasterService;
+
+        public GameMasterController(IGameMasterService gameMasterService)
         {
-            _higherObjectCreatorService = higherObjectCreatorService;
+            _gameMasterService = gameMasterService;
         }
 
         [HttpPost("armor")]
         [AllowAnonymous]
         public IActionResult CreateArmor([FromBody] CreateArmorDto armorDto)
         {
-            _higherObjectCreatorService.CreateArmor(armorDto);
+            _gameMasterService.CreateArmor(armorDto);
             return Ok();
         }
+
         [HttpDelete("armor/{id}")]
         public IActionResult DeleteArmor([FromBody] int armorId)
         {
-            _higherObjectCreatorService.DeleteArmor(armorId);
+            _gameMasterService.DeleteArmor(armorId);
             return Ok();
         }
 
@@ -34,13 +36,14 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public IActionResult CreateWeapon([FromBody] CreateWeaponDto weaponDto)
         {
-            _higherObjectCreatorService.CreateWeapon(weaponDto);
+            _gameMasterService.CreateWeapon(weaponDto);
             return Ok();
         }
+
         [HttpDelete("weapon/{id}")]
         public IActionResult DeleteWeapon([FromBody] int weaponId)
         {
-            _higherObjectCreatorService.DeleteWeapon(weaponId);
+            _gameMasterService.DeleteWeapon(weaponId);
             return Ok();
         }
 
@@ -48,13 +51,14 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
-            _higherObjectCreatorService.CreateEquipment(equipmentDto);
+            _gameMasterService.CreateEquipment(equipmentDto);
             return Ok();
         }
+
         [HttpDelete("equipment/{id}")]
         public IActionResult DeleteEquipment([FromBody] int equipmentId)
         {
-            _higherObjectCreatorService.DeleteEquipment(equipmentId);
+            _gameMasterService.DeleteEquipment(equipmentId);
             return Ok();
         }
 
@@ -62,13 +66,14 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
-            _higherObjectCreatorService.CreateAbility(abilityDto);
+            _gameMasterService.CreateAbility(abilityDto);
             return Ok();
         }
+
         [HttpDelete("ability/{id}")]
         public IActionResult DeleteAbility([FromBody] int abilityId)
         {
-            _higherObjectCreatorService.DeleteAbility(abilityId);
+            _gameMasterService.DeleteAbility(abilityId);
             return Ok();
         }
 
@@ -76,13 +81,14 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
-            _higherObjectCreatorService.CreateSkill(skillDto);
+            _gameMasterService.CreateSkill(skillDto);
             return Ok();
         }
+
         [HttpDelete("skill/{id}")]
         public IActionResult DeleteSkill([FromBody] int skillId)
         {
-            _higherObjectCreatorService.DeleteSkill(skillId);
+            _gameMasterService.DeleteSkill(skillId);
             return Ok();
         }
 
@@ -90,13 +96,14 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public IActionResult CreateClass([FromBody] CreateClassDto classDto)
         {
-            _higherObjectCreatorService.CreateClass(classDto);
+            _gameMasterService.CreateClass(classDto);
             return Ok();
         }
+
         [HttpDelete("class/{id}")]
-        public IActionResult DeleteClass([FromBody]int classId)
+        public IActionResult DeleteClass([FromBody] int classId)
         {
-            _higherObjectCreatorService.DeleteClass(classId);
+            _gameMasterService.DeleteClass(classId);
             return Ok();
         }
     }

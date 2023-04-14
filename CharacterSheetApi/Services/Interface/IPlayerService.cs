@@ -3,7 +3,7 @@ using CharacterSheetApi.Models.ObjectCreatorDtos;
 
 namespace CharacterSheetApi.Services
 {
-    public interface IObjectCreatorService
+    public interface IPlayerService
     {
         int CreateSheet(CreateSheetDto dto);
 

@@ -2,7 +2,7 @@
 
 namespace CharacterSheetApi.Services
 {
-    public interface IHigherObjectCreatorService
+    public interface IGameMasterService
     {
         void CreateArmor(CreateArmorDto armorDto);
         void DeleteArmor(int armorId);

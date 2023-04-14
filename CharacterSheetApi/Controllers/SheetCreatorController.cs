@@ -11,9 +11,9 @@ namespace CharacterSheetApi.Controllers
     [AllowAnonymous]
     public class SheetCreatorController : ControllerBase
     {
-        private IObjectCreatorService _objectCreatorService;
+        private IPlayerService _objectCreatorService;
 
-        public SheetCreatorController(IObjectCreatorService objectCreatorService)
+        public SheetCreatorController(IPlayerService objectCreatorService)
         {
             _objectCreatorService = objectCreatorService;
         }

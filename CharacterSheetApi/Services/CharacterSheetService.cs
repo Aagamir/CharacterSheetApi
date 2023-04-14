@@ -1,4 +1,5 @@
 ﻿using CharacterSheetApi.Entities;
+using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
 using Microsoft.AspNetCore.Mvc;
@@ -137,13 +138,22 @@ namespace CharacterSheetApi.Services
             time.Start();
             var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo)
                 .Include(c => c.CharacterInfo.CharacterDescription)
-                .Include(c => c.CharacterInfo.Class).Include(c => c.CharacterInfo.ExpiriencePoints)
+                .Include(c => c.CharacterInfo.Class)
+                .Include(c => c.CharacterInfo.Equipment)
+                .Include(c => c.CharacterInfo.ExpiriencePoints)
                 .Include(c => c.CharacterInfo.CharacterDescription.BaseStats)
                 .Include(c => c.CharacterInfo.CharacterDescription.CurrentStats)
                 .Include(c => c.CharacterInfo.PlayerInfo)
+                .Include(c => c.CharacterInfo.MonetaryWealth)
+                .Include(c => c.CharacterInfo.Abilities)
+                .Include(c => c.CharacterInfo.Skills)
                 .Include(c => c.CharacterInfo.Armor)
+                .ThenInclude(c => c.BodyLocations)
+                .Include(c => c.CharacterInfo.Armor)
+                .ThenInclude(c => c.ArmorType)
+                .Include(c => c.CharacterInfo.Weapons)
+                .ThenInclude(c => c.WeaponCharacteristics)
                 .FirstOrDefault(c => c.Id == characterSheetId);
-            //var characterDescription = characterSheet.CharacterDescription;
 
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
@@ -234,7 +244,7 @@ namespace CharacterSheetApi.Services
             form.Fields[90].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.LeftArm)).Sum(a => a.ArmorPoints)).ToString();
             form.Fields[91].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.RightLeg)).Sum(a => a.ArmorPoints)).ToString();
             form.Fields[92].Value = (characterSheet.CharacterInfo.CharacterDescription.CurrentStats.Wt + characterSheet.CharacterInfo.Armor.Where(a => a.BodyLocations.Any(b => b.BodyLocationsId == Enums.BodyLocationsId.LeftLeg)).Sum(a => a.ArmorPoints)).ToString();
-
+            //Bronie
             if (characterSheet.CharacterInfo.Weapons != null && characterSheet.CharacterInfo.Weapons.Count > 0)
             {
                 int x = 0;
@@ -247,39 +257,31 @@ namespace CharacterSheetApi.Services
                     form.Fields[96 + n].Value = weapon.WeaponStrength.ToString();
                     form.Fields[97 + n].Value = weapon.Range.ToString();
                     form.Fields[98 + n].Value = weapon.ReloadTime.ToString();
-                    form.Fields[99 + n].Value = weapon.WeaponCharacteristics.ToString();
+                    form.Fields[99 + n].Value = String.Join(", ", weapon.WeaponCharacteristics.Select(w => w.Name));
                     x++;
                 }
             }
-            /*
+            //Zbroje
+            form.Fields[135].Value = null;
+            form.Fields[136].Value = null;
+            form.Fields[137].Value = null;
 
-            form.Fields[135].Value = ;
-            form.Fields[136].Value = ;
-            form.Fields[137].Value = ;
-            form.Fields[138].Value = ;
-            form.Fields[139].Value = ;
-            form.Fields[140].Value = ;
-            form.Fields[141].Value = ;
-            form.Fields[142].Value = ;
-            form.Fields[143].Value = ;
-            form.Fields[144].Value = ;
-            form.Fields[145].Value = ;
-            form.Fields[146].Value = ;
-            form.Fields[147].Value = ;
-            form.Fields[148].Value = ;
-            form.Fields[149].Value = ;
-            form.Fields[150].Value = ;
-            form.Fields[151].Value = ;
-            form.Fields[152].Value = ;
-            form.Fields[153].Value = ;
-            form.Fields[154].Value = ;
-            form.Fields[155].Value = ;
-            form.Fields[156].Value = ;
-            form.Fields[157].Value = ;
-            form.Fields[158].Value = ;
-            form.Fields[159].Value = ;
-            form.Fields[160].Value = ;
-            form.Fields[161].Value = ;
+            if (characterSheet.CharacterInfo.Armor != null && characterSheet.CharacterInfo.Armor.Count > 0)
+            {
+                int x = 0;
+                foreach (var armor in characterSheet.CharacterInfo.Armor)
+                {
+                    int n = 4 * x;
+                    form.Fields[138 + n].Value = armor.ArmorType.ToString();
+                    form.Fields[139 + n].Value = armor.Weight.ToString();
+                    form.Fields[140 + n].Value = String.Join(", ", armor.BodyLocations.Select(b => b.Name));
+                    form.Fields[141 + n].Value = armor.ArmorPoints.ToString();
+                    x++;
+                }
+            }
+
+            /*
+            //SKILLS
             form.Fields[162].Value = ;
             form.Fields[163].Value = ;
             form.Fields[164].Value = ;
@@ -433,81 +435,37 @@ namespace CharacterSheetApi.Services
             form.Fields[312].Value = ;
             form.Fields[313].Value = ;
             form.Fields[314].Value = ;
-            form.Fields[315].Value = ;
-            form.Fields[316].Value = ;
-            form.Fields[317].Value = ;
-            form.Fields[318].Value = ;
-            form.Fields[319].Value = ;
-            form.Fields[320].Value = ;
-            form.Fields[321].Value = ;
-            form.Fields[322].Value = ;
-            form.Fields[323].Value = ;
-            form.Fields[324].Value = ;
-            form.Fields[325].Value = ;
-            form.Fields[326].Value = ;
-            form.Fields[327].Value = ;
-            form.Fields[328].Value = ;
-            form.Fields[329].Value = ;
-            form.Fields[330].Value = ;
-            form.Fields[331].Value = ;
-            form.Fields[332].Value = ;
-            form.Fields[333].Value = ;
-            form.Fields[334].Value = ;
-            form.Fields[335].Value = ;
-            form.Fields[336].Value = ;
-            form.Fields[337].Value = ;
-            form.Fields[338].Value = ;
-            form.Fields[339].Value = ;
-            form.Fields[340].Value = ;
-            form.Fields[341].Value = ;
-            form.Fields[342].Value = ;
-            form.Fields[343].Value = ;
-            form.Fields[344].Value = ;
-            form.Fields[345].Value = ;
-            form.Fields[346].Value = ;
-            form.Fields[347].Value = ;
-            form.Fields[348].Value = ;
-            form.Fields[349].Value = ;
-            form.Fields[350].Value = ;
-            form.Fields[351].Value = ;
-            form.Fields[352].Value = ;
-            form.Fields[353].Value = ;
-            form.Fields[354].Value = ;
-            form.Fields[355].Value = ;
-            form.Fields[356].Value = ;
-            form.Fields[357].Value = ;
-            form.Fields[358].Value = ;
-            form.Fields[359].Value = ;
-            form.Fields[360].Value = ;
-            form.Fields[361].Value = ;
-            form.Fields[362].Value = ;
-            form.Fields[363].Value = ;
-            form.Fields[364].Value = ;
-            form.Fields[365].Value = ;
-            form.Fields[366].Value = ;
-            form.Fields[367].Value = ;
-            form.Fields[368].Value = ;
-            form.Fields[369].Value = ;
-            form.Fields[370].Value = ;
-            form.Fields[371].Value = ;
-            form.Fields[372].Value = ;
-            form.Fields[373].Value = ;
-            form.Fields[374].Value = ;
-            form.Fields[375].Value = ;
-            form.Fields[376].Value = ;
-            form.Fields[377].Value = ;
-            form.Fields[378].Value = ;
-            form.Fields[379].Value = ;
-            form.Fields[380].Value = ;
-            form.Fields[381].Value = ;
-            form.Fields[382].Value = ;
-            form.Fields[383].Value = ;
-            form.Fields[384].Value = ;
-            form.Fields[385].Value = ;
-            form.Fields[386].Value = ;
-            form.Fields[387].Value = ;
-            form.Fields[388].Value = ;
-            form.Fields[389].Value = ;
+
+            */
+
+            if (characterSheet.CharacterInfo.Abilities != null && characterSheet.CharacterInfo.Abilities.Count > 0)
+            {
+                int x = 0;
+                foreach (var ability in characterSheet.CharacterInfo.Abilities)
+                {
+                    int n = 2 * x;
+                    form.Fields[315 + n].Value = ability.Name;
+                    form.Fields[316 + n].Value = ability.Description;
+                    x++;
+                }
+            }
+
+            if (characterSheet.CharacterInfo.Equipment != null && characterSheet.CharacterInfo.Equipment.Count > 0)
+            {
+                int x = 0;
+                foreach (var equipment in characterSheet.CharacterInfo.Equipment)
+                {
+                    int n = 3 * x;
+                    form.Fields[345 + n].Value = equipment.Name;
+                    form.Fields[346 + n].Value = equipment.Weight.ToString();
+                    form.Fields[347 + n].Value = equipment.Description;
+                    x++;
+                }
+            }
+            form.Fields[387].Value = characterSheet.CharacterInfo.MonetaryWealth.GoldCrowns.ToString();
+            form.Fields[388].Value = characterSheet.CharacterInfo.MonetaryWealth.SilverShilling.ToString();
+            form.Fields[389].Value = characterSheet.CharacterInfo.MonetaryWealth.CopperPences.ToString();
+            /*
             form.Fields[390].Value = ;
             form.Fields[391].Value = ;
             form.Fields[392].Value = ;
@@ -520,7 +478,6 @@ namespace CharacterSheetApi.Services
             form.Fields[399].Value = ;
             form.Fields[400].Value = ;
             */
-
             Stream pdf = doc.Stream;
 
             FileStreamResult stream = new FileStreamResult(pdf, "application/pdf")

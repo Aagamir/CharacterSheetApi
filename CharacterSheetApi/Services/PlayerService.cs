@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CharacterSheetApi.Services
 {
-    public class ObjectCreatorService : IObjectCreatorService
+    public class PlayerService : IPlayerService
     {
         private readonly Context _context;
         private readonly IUserContextService _userContextService;
 
-        public ObjectCreatorService(Context context, IUserContextService userContextService)
+        public PlayerService(Context context, IUserContextService userContextService)
         {
             _context = context;
             _userContextService = userContextService;
@@ -273,6 +273,7 @@ namespace CharacterSheetApi.Services
         public void ChangeBaseStats(ChangeStatsDto dto)
         {
             var stats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.StatsId);
+            var current = _context.CurrentStats.FirstOrDefault(c => c.Id == dto.StatsId);
             /*
             foreach(var stat in stats)
             {
@@ -282,57 +283,57 @@ namespace CharacterSheetApi.Services
 
             if (dto.WW != 0)
             {
-                stats.WW = dto.WW;
+                current.WW = stats.WW = dto.WW;
             }
             if (dto.US != 0)
             {
-                stats.US = dto.US;
+                current.US = stats.US = dto.US;
             }
             if (dto.K != 0)
             {
-                stats.K = dto.K;
-                stats.S = (stats.K - stats.K % 10) / 10;
+                current.K = stats.K = dto.K;
+                current.S = stats.S = (stats.K - stats.K % 10) / 10;
             }
             if (dto.Odp != 0)
             {
-                stats.Odp = dto.Odp;
-                stats.Wt = (stats.Odp - stats.Odp % 10) / 10;
+                current.Odp = stats.Odp = dto.Odp;
+                current.Wt = stats.Wt = (stats.Odp - stats.Odp % 10) / 10;
             }
             if (dto.Zr != 0)
             {
-                stats.Zr = dto.Zr;
+                current.Zr = stats.Zr = dto.Zr;
             }
             if (dto.Int != 0)
             {
-                stats.Int = dto.Int;
+                current.Int = stats.Int = dto.Int;
             }
             if (dto.SW != 0)
             {
-                stats.SW = dto.SW;
+                current.SW = stats.SW = dto.SW;
             }
             if (dto.Ogd != 0)
             {
-                stats.Ogd = dto.Ogd;
+                current.Ogd = stats.Ogd = dto.Ogd;
             }
             if (dto.A != 0)
             {
-                stats.A = dto.A;
+                current.A = stats.A = dto.A;
             }
             if (dto.Zyw != 0)
             {
-                stats.Zyw = dto.Zyw;
+                current.Zyw = stats.Zyw = dto.Zyw;
             }
             if (dto.Mag != 0)
             {
-                stats.Mag = dto.Mag;
+                current.Mag = stats.Mag = dto.Mag;
             }
             if (dto.PO != 0)
             {
-                stats.PO = dto.PO;
+                current.PO = stats.PO = dto.PO;
             }
             if (dto.PP != 0)
             {
-                stats.PP = dto.PP;
+                current.PP = stats.PP = dto.PP;
             }
             _context.SaveChanges();
         }
