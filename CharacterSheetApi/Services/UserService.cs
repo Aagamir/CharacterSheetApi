@@ -29,7 +29,7 @@ namespace CharacterSheetApi.Services
             user.Email = dto.Email;
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
 
-            user.Role = _context.Roles.FirstOrDefault(x => x.RoleId == RoleId.User);
+            user.Role = _context.Roles.FirstOrDefault(x => x.RoleId == RoleId.Player);
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -37,7 +37,6 @@ namespace CharacterSheetApi.Services
 
         public void DeleteUser(int id)
         {
-
         }
 
         public string GenerateLoginToken(LoginDto dto)
@@ -45,7 +44,6 @@ namespace CharacterSheetApi.Services
             var user = _context
                 .Users
                 .FirstOrDefault(x => x.Email == dto.Email);
-
 
             if (user is null)
             {

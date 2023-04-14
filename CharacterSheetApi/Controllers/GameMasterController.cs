@@ -7,7 +7,7 @@ namespace CharacterSheetApi.Controllers
 {
     [Route("api/object_creator")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize(Roles = "GameMaster")]
     public class GameMasterController : ControllerBase
     {
         private IGameMasterService _gameMasterService;
@@ -18,7 +18,6 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPost("armor")]
-        [AllowAnonymous]
         public IActionResult CreateArmor([FromBody] CreateArmorDto armorDto)
         {
             _gameMasterService.CreateArmor(armorDto);
@@ -33,7 +32,6 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPost("weapon")]
-        [AllowAnonymous]
         public IActionResult CreateWeapon([FromBody] CreateWeaponDto weaponDto)
         {
             _gameMasterService.CreateWeapon(weaponDto);
@@ -48,7 +46,6 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPost("equipment")]
-        [AllowAnonymous]
         public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
             _gameMasterService.CreateEquipment(equipmentDto);
@@ -63,7 +60,6 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPost("ability")]
-        [AllowAnonymous]
         public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
             _gameMasterService.CreateAbility(abilityDto);
@@ -78,7 +74,6 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPost("skill")]
-        [AllowAnonymous]
         public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
             _gameMasterService.CreateSkill(skillDto);
@@ -93,7 +88,6 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPost("class")]
-        [AllowAnonymous]
         public IActionResult CreateClass([FromBody] CreateClassDto classDto)
         {
             _gameMasterService.CreateClass(classDto);

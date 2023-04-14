@@ -1,4 +1,4 @@
-﻿namespace CharacterSheetApi.Models.ObjectCreatorDtos
+﻿namespace CharacterSheetApi.Models.playerDtos
 {
     public class ChangeStatsDto
     {
@@ -18,6 +18,5 @@
         public int Mag { get; set; }
         public int PO { get; set; }
         public int PP { get; set; }
-
     }
 }

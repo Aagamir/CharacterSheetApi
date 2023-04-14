@@ -1,6 +1,6 @@
 ﻿using CharacterSheetApi.Enums;
 
-namespace CharacterSheetApi.Models.ObjectCreatorDtos
+namespace CharacterSheetApi.Models.playerDtos
 {
     public class ChangeCharacterDescriptionDto
     {

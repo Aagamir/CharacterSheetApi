@@ -1,5 +1,5 @@
 ﻿using CharacterSheetApi.Models;
-using CharacterSheetApi.Models.ObjectCreatorDtos;
+using CharacterSheetApi.Models.playerDtos;
 
 namespace CharacterSheetApi.Services
 {

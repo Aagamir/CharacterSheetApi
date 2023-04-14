@@ -2,7 +2,7 @@
 {
     public enum RoleId
     {
-        Admin,
-        User
+        GameMaster,
+        Player
     }
 }

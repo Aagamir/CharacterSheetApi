@@ -1,7 +1,7 @@
 ﻿using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
-using CharacterSheetApi.Models.ObjectCreatorDtos;
+using CharacterSheetApi.Models.playerDtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace CharacterSheetApi.Services
