@@ -27,9 +27,10 @@ namespace CharacterSheetApi.Services
             Users user = new Users();
             user.Name = dto.Name;
             user.Email = dto.Email;
+            user.RoleId = RoleId.Player;
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
 
-            user.Role = _context.Roles.FirstOrDefault(x => x.RoleId == RoleId.Player);
+            user.RoleId = RoleId.Player; //_context.Roles.FirstOrDefault(x => x.RoleId == RoleId.Player);
 
             _context.Users.Add(user);
             _context.SaveChanges();

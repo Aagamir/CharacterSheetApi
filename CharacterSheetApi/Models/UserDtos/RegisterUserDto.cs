@@ -1,4 +1,7 @@
-﻿namespace CharacterSheetApi.Models
+﻿using CharacterSheetApi.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace CharacterSheetApi.Models
 {
     public class RegisterUserDto
     {
@@ -6,6 +9,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-
+        //public RoleId RoleId { get; set; } = RoleId.Player;
     }
 }

@@ -7,6 +7,7 @@ namespace CharacterSheetApi.Entities
     {
         private string _connectionString =
             "Server=(localdb)\\mssqllocaldb;Database=SheetDb;Trusted_Connection=True";
+
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<Armor> Armors { get; set; }
         public DbSet<BaseStats> BaseStats { get; set; }
@@ -26,20 +27,19 @@ namespace CharacterSheetApi.Entities
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+
+        //public DbSet<Role> Roles { get; set; }
         public DbSet<WeaponCharacteristics> WeaponsCharacteristics { get; set; }
+
         public DbSet<BodyLocations> BodyLocations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Users>()
                 .Property(u => u.Name)
                 .IsRequired();
 
-            modelBuilder.Entity<Role>()
-               .Property(u => u.Name)
-               .IsRequired();
+            //modelBuilder.Entity<Role>().Property(u => u.Name).IsRequired();
 
             modelBuilder
                 .Entity<WeaponCharacteristics>()
@@ -56,7 +56,6 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
-
 
             modelBuilder
                 .Entity<Weapon>()
@@ -77,7 +76,6 @@ namespace CharacterSheetApi.Entities
                     })
                 );
 
-
             modelBuilder
                 .Entity<CharacterDescription>()
                 .Property(e => e.StarSignId)
@@ -96,7 +94,6 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
-
 
             modelBuilder
                 .Entity<Skill>()
@@ -117,8 +114,6 @@ namespace CharacterSheetApi.Entities
                     })
                 );
 
-
-
             modelBuilder
                 .Entity<CharacterSheet>()
                 .Property(e => e.RpgSystemId)
@@ -137,7 +132,6 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
-
 
             modelBuilder
                 .Entity<CharacterDescription>()
@@ -177,7 +171,6 @@ namespace CharacterSheetApi.Entities
                     })
                 );
 
-
             modelBuilder
                 .Entity<CharacterDescription>()
                 .Property(e => e.GenderId)
@@ -196,7 +189,6 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
-
 
             modelBuilder
                 .Entity<CharacterDescription>()
@@ -221,12 +213,12 @@ namespace CharacterSheetApi.Entities
                 .Entity<BodyLocations/*Armor*/>()
                 .Property(e => e.BodyLocationsId)
                 .HasConversion<int>();
-           // /*
+            // /*
             modelBuilder
                 .Entity<BodyLocations>()
                 .Property(e => e.BodyLocationsId)
                 .HasConversion<int>();
-           // */
+            // */
             modelBuilder
                 .Entity<BodyLocations>().HasData(
                 Enum.GetValues(typeof(BodyLocationsId))
@@ -237,7 +229,6 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
-
 
             modelBuilder
                 .Entity<Armor>()
@@ -258,6 +249,7 @@ namespace CharacterSheetApi.Entities
                     })
                 );
 
+            /*
             modelBuilder
                 .Entity<Role>()
                 .Property(e => e.RoleId)
@@ -276,6 +268,7 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
+            */
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -283,7 +276,4 @@ namespace CharacterSheetApi.Entities
             optionsBuilder.UseSqlServer(_connectionString);
         }
     }
-
 }
-
-

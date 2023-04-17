@@ -92,6 +92,7 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpGet("character-sheet/{id}")]
+        [AllowAnonymous]
         public FileStreamResult PrintSheet([FromRoute] int id)
         {
             FileStreamResult pdf = _characterSheetService.PrintSheet(id);

@@ -7,13 +7,11 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-
+using CharacterSheetApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-
 
 var authenticationSettings = new AuthenticationSettings();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
@@ -34,7 +32,9 @@ builder.Services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
     };
 });
+
 builder.Services.AddDbContext<Context>();
+builder.Services.AddScoped<Seeder>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddScoped<IPasswordHasher<Users>, PasswordHasher<Users>>();
 builder.Services.AddScoped<IUsersService, UsersService>();
@@ -44,7 +44,6 @@ builder.Services.AddScoped<IGameMasterService, GameMasterService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddControllers().AddFluentValidation();
 
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +52,9 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
+seeder.Seed();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

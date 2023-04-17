@@ -21,7 +21,7 @@ namespace CharacterSheetApi.Models.Validators
                 });
 
             RuleFor(x => x.Password)
-                .MinimumLength(8);
+                .MinimumLength(6);
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password);
 
