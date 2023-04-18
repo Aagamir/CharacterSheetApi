@@ -3,6 +3,6 @@
     public class AddArmorDto
     {
         public List<int> ArmorIds { get; set; }
-        public int CharacterInfoId { get; set; }
+        public int CharacterSheetId { get; set; }
     }
 }

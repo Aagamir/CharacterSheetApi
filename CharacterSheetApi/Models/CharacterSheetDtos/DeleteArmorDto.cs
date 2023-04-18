@@ -2,7 +2,7 @@
 {
     public class DeleteArmorDto
     {
-        public int CharacterInfoId { get; set; }
+        public int CharacterSheetId { get; set; }
         public int ArmorId { get; set; }
     }
 }

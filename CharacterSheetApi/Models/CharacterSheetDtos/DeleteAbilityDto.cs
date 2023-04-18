@@ -2,7 +2,7 @@
 {
     public class DeleteAbilityDto
     {
-        public int characterInfoId { get; set; }
+        public int CharacterSheetId { get; set; }
         public int abilityId { get; set; }
     }
 }

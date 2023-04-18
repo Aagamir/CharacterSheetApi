@@ -23,7 +23,8 @@ namespace CharacterSheetApi.Services
 
         int CreateExpiriencePoints(CreateExpiriencePointsDto dto);
 
-        //void ChangeExpiriencePoints(ChangeExpiriencePointsDto dto);
+        void ChangeExpiriencePoints(ChangeExpiriencePointsDto dto);
+
         int CreatePlayerInfo(CreatePlayerInfoDto dto);
 
         //void ChangePlayerInfo(ChangePlayerInfoDto dto);

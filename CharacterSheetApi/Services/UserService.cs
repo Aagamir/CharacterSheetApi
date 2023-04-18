@@ -2,6 +2,7 @@
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -42,9 +43,7 @@ namespace CharacterSheetApi.Services
 
         public string GenerateLoginToken(LoginDto dto)
         {
-            var user = _context
-                .Users
-                .FirstOrDefault(x => x.Email == dto.Email);
+            var user = _context.Users.FirstOrDefault(x => x.Email == dto.Email);
 
             if (user is null)
             {
@@ -63,17 +62,16 @@ namespace CharacterSheetApi.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
-                //new Claim(ClaimTypes.Role, user.Role.Name)
+                new Claim(ClaimTypes.Role, user.RoleId.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
 
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer,
                 _authenticationSettings.JwtIssuer,
                 claims,
-                expires: expires,
+                expires: DateTime.Now.AddDays(15),
                 signingCredentials: cred);
 
             var tokenHandler = new JwtSecurityTokenHandler();

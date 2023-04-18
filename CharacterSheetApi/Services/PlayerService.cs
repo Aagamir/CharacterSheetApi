@@ -1,5 +1,6 @@
 ﻿using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
+using CharacterSheetApi.Exceptions;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.playerDtos;
 using Microsoft.EntityFrameworkCore;
@@ -34,10 +35,16 @@ namespace CharacterSheetApi.Services
         public void ChangeSheet(ChangeSheetDto dto)
         {
             var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            //var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == dto.CharacterSheetId);
             characterSheet.Name = dto.Name;
             characterSheet.RpgSystemId = dto.RpgSystem;
             characterSheet.CreatorName = dto.CreatorName;
             characterSheet.CharacterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            characterSheet.UsersId = _userContextService.GetUserId.Value;
             _context.CharacterSheets.Add(characterSheet);
             _context.SaveChanges();
             //zwróć Id
@@ -272,6 +279,11 @@ namespace CharacterSheetApi.Services
 
         public void ChangeBaseStats(ChangeStatsDto dto)
         {
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.CharacterDescription.BaseStats.Id == dto.StatsId);//Where(c => c.CharacterInfo.CharacterDescription.BaseStats.Id == dto.StatsId));
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
             var stats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.StatsId);
             var current = _context.CurrentStats.FirstOrDefault(c => c.Id == dto.StatsId);
             /*
@@ -351,6 +363,11 @@ namespace CharacterSheetApi.Services
 
         public void ChangeMonetaryWealth(ChangeMonetaryWealthDto dto)
         {
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.MonetaryWealth.Id == dto.MonetaryWealthId);//Where(c => c.CharacterInfo.CharacterDescription.BaseStats.Id == dto.StatsId));
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
             var monetaryWealth = _context.MonetaryWealth.FirstOrDefault(x => x.Id == dto.MonetaryWealthId);
             if (dto.CopperPences != null)
             {
@@ -375,6 +392,18 @@ namespace CharacterSheetApi.Services
             _context.ExpiriencePoints.Add(expiriencePoints);
             _context.SaveChanges();
             return expiriencePoints.Id;
+        }
+
+        public void ChangeExpiriencePoints(ChangeExpiriencePointsDto dto)
+        {
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.ExpiriencePoints.Id == dto.PointsId);//Where(c => c.CharacterInfo.CharacterDescription.BaseStats.Id == dto.StatsId));
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            characterSheet.CharacterInfo.ExpiriencePoints.CurrentPoints = dto.CurrentPoints;
+            characterSheet.CharacterInfo.ExpiriencePoints.OverallPoints = dto.OverallPoints;
+            _context.SaveChanges();
         }
 
         public int CreatePlayerInfo(CreatePlayerInfoDto dto)

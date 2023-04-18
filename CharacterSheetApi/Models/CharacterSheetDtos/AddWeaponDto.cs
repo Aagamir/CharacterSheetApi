@@ -3,6 +3,6 @@
     public class AddWeaponDto
     {
         public List<int> WeaponIds { get; set; }
-        public int CharacterInfoId { get; set; }
+        public int CharacterSheetId { get; set; } //CharacterInfoId
     }
 }

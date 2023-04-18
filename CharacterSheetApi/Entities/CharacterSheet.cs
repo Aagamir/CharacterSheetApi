@@ -10,6 +10,7 @@ namespace CharacterSheetApi.Entities
         public RpgSystem RpgSystem { get; set; }
         public DateTime DateOfCreation { get; set; }
         public string CreatorName { get; set; }
+        public int UsersId { get; set; }
 
         public virtual CharacterInfo CharacterInfo { get; set; }
     }

@@ -6,6 +6,6 @@ namespace CharacterSheetApi.Models.CharacterSheetDtos
     public class AddSkillDto
     {
         public List<int> SkillIds { get; set; }
-        public int CharacterInfoId { get; set; }
+        public int CharacterSheetId { get; set; }
     }
 }

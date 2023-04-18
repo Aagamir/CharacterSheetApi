@@ -1,5 +1,6 @@
 ﻿using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
+using CharacterSheetApi.Exceptions;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ namespace CharacterSheetApi.Services
     {
         private readonly Context _context;
         private readonly IUserContextService _userContextService;
+        private readonly ICharacterSheetService _characterSheetService;
 
         public CharacterSheetService(Context context, IUserContextService userContextService)
         {
@@ -21,7 +23,19 @@ namespace CharacterSheetApi.Services
 
         public void AddWeapon(AddWeaponDto dto)
         {
-            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Weapons).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            foreach (var weapon in dto.WeaponIds)
+            {
+                if (_context.Weapons.FirstOrDefault(w => w.Id == weapon) is null)
+                {
+                    throw new NotFoundException("Wrong weapon Id");
+                }
+            }
             if (characterInfo.Weapons is null)
             {
                 characterInfo.Weapons = new List<Weapon>();
@@ -35,7 +49,16 @@ namespace CharacterSheetApi.Services
 
         public void DeleteWeapon(DeleteWeaponDto dto)
         {
-            var characterInfo = _context.CharacterInfos.Include(c => c.Weapons).FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Weapons).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong weapon Id");
+            }
             //custom błąd jeżeli null
             var weapon = characterInfo.Weapons.FirstOrDefault(a => a.Id == dto.WeaponId);
             //custom błąd jeżeli null
@@ -45,7 +68,16 @@ namespace CharacterSheetApi.Services
 
         public void AddArmor(AddArmorDto dto)
         {
-            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Armor).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong armor Id");
+            }
             if (characterInfo.Armor is null)
             {
                 characterInfo.Armor = new List<Armor>();
@@ -57,7 +89,16 @@ namespace CharacterSheetApi.Services
 
         public void DeleteArmor(DeleteArmorDto dto)
         {
-            var characterInfo = _context.CharacterInfos.Include(c => c.Armor).FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Armor).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong armor Id");
+            }
             //custom błąd jeżeli null
             var armor = characterInfo.Armor.FirstOrDefault(a => a.Id == dto.ArmorId);
             //custom błąd jeżeli null
@@ -67,7 +108,16 @@ namespace CharacterSheetApi.Services
 
         public void AddEquipment(AddEquipmentDto dto)
         {
-            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Equipment).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong equipment Id");
+            }
             if (characterInfo.Equipment is null)
             {
                 characterInfo.Equipment = new List<Equipment>();
@@ -79,7 +129,16 @@ namespace CharacterSheetApi.Services
 
         public void DeleteEquipment(DeleteEquipmentDto dto)
         {
-            var characterInfo = _context.CharacterInfos.Include(c => c.Equipment).FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Equipment).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong equipment Id");
+            }
             //custom błąd jeżeli null
             var equipment = characterInfo.Equipment.FirstOrDefault(a => a.Id == dto.EquipmentId);
             //custom błąd jeżeli null
@@ -89,7 +148,16 @@ namespace CharacterSheetApi.Services
 
         public void AddSkill(AddSkillDto dto)
         {
-            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Skills).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong skill Id");
+            }
             if (characterInfo.Skills is null)
             {
                 characterInfo.Skills = new List<Skill>();
@@ -102,7 +170,16 @@ namespace CharacterSheetApi.Services
 
         public void DeleteSkill(DeleteSkillDto dto)
         {
-            var characterInfo = _context.CharacterInfos.Include(c => c.Skills).FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Skills).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong skill Id");
+            }
             //custom błąd jeżeli null
             var skill = characterInfo.Skills.FirstOrDefault(a => a.Id == dto.SkillId);
             //custom błąd jeżeli null
@@ -112,7 +189,16 @@ namespace CharacterSheetApi.Services
 
         public void AddAbility(AddAbilityDto dto)
         {
-            var characterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Abilities).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong ability Id");
+            }
             if (characterInfo.Abilities is null)
             {
                 characterInfo.Abilities = new List<Ability>();
@@ -124,7 +210,17 @@ namespace CharacterSheetApi.Services
 
         public void DeleteAbility(DeleteAbilityDto dto)
         {
-            var characterInfo = _context.CharacterInfos.Include(c => c.Abilities).FirstOrDefault(c => c.Id == dto.characterInfoId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Abilities).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterInfo = characterSheet.CharacterInfo;
+            if (characterSheet.UsersId != _userContextService.GetUserId)//!_context.CharacterSheets.Any(c => c.UsersId == _userContextService.GetUserId))
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
+            if (characterInfo is null)
+            {
+                throw new NotFoundException("Wrong ability Id");
+            }
+
             //custom błąd jeżeli null
             var ability = characterInfo.Abilities.FirstOrDefault(a => a.Id == dto.abilityId);
             //custom błąd jeżeli null
@@ -154,6 +250,15 @@ namespace CharacterSheetApi.Services
                 .Include(c => c.CharacterInfo.Weapons)
                 .ThenInclude(c => c.WeaponCharacteristics)
                 .FirstOrDefault(c => c.Id == characterSheetId);
+            if (characterSheet is null)
+            {
+                throw new NotFoundException("Sheet not found");
+            }
+
+            if (_userContextService.GetUserId != characterSheet.UsersId)
+            {
+                throw new ForbidException("Nie masz uprawnień");
+            }
 
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;

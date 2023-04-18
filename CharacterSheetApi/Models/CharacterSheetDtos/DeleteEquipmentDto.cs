@@ -3,6 +3,6 @@
     public class DeleteEquipmentDto
     {
         public int EquipmentId { get; set; }
-        public int CharacterInfoId { get; set; }
+        public int CharacterSheetId { get; set; }
     }
 }
