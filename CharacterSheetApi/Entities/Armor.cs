@@ -11,8 +11,7 @@ namespace CharacterSheetApi.Entities
         public int ArmorPoints { get; set; }
         public int Weight { get; set; }
         public List<BodyLocations> BodyLocations { get; set; }
-        //////////////////////////////////////////////////////
-        public List<CharacterInfo> CharacterInfo { get; set; }
 
+        public List<CharacterInfo> CharacterInfo { get; set; }
     }
 }

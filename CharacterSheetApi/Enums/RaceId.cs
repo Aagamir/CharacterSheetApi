@@ -2,9 +2,9 @@
 {
     public enum RaceId
     {
-        Human, // Id = 
-        Elf,   // Id = 
-        Dwarf, // Id = 
-        Hafling// Id = 
+        Human,
+        Elf,
+        Dwarf,
+        Hafling
     }
 }

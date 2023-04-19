@@ -21,70 +21,70 @@ namespace CharacterSheetApi.Controllers
             _characterSheetService = characterSheetService;
         }
 
-        [HttpPost("weapon-addition/{id}")]
+        [HttpPost("weapon/{id}")]
         public IActionResult AddWeapon([FromBody] AddWeaponDto weaponDto)
         {
             _characterSheetService.AddWeapon(weaponDto);
             return Ok();
         }
 
-        [HttpDelete("weapon-deletion/{id}")]
+        [HttpDelete("weapon/{id}")]
         public IActionResult DeleteWeapon([FromBody] DeleteWeaponDto weaponDto)
         {
             _characterSheetService.DeleteWeapon(weaponDto);
             return Ok();
         }
 
-        [HttpPost("armor-addition/{id}")]
+        [HttpPost("armor/{id}")]
         public IActionResult AddArmor([FromBody] AddArmorDto armorDto)
         {
             _characterSheetService.AddArmor(armorDto);
             return Ok();
         }
 
-        [HttpDelete("armor-deletion/{id}")]
+        [HttpDelete("armor/{id}")]
         public IActionResult DeleteArmor([FromBody] DeleteArmorDto armorDto)
         {
             _characterSheetService.DeleteArmor(armorDto);
             return Ok();
         }
 
-        [HttpPost("equipment-addition/{id}")]
+        [HttpPost("equipment/{id}")]
         public IActionResult AddEquipment([FromBody] AddEquipmentDto equipmentDto)
         {
             _characterSheetService.AddEquipment(equipmentDto);
             return Ok();
         }
 
-        [HttpDelete("equipment-deletion/{id}")]
+        [HttpDelete("equipment/{id}")]
         public IActionResult DeleteEquipment([FromBody] DeleteEquipmentDto equipmentDto)
         {
             _characterSheetService?.DeleteEquipment(equipmentDto);
             return Ok();
         }
 
-        [HttpPost("skill-addition/{id}")]
+        [HttpPost("skill/{id}")]
         public IActionResult AddSkill([FromBody] AddSkillDto skillDto)
         {
             _characterSheetService.AddSkill(skillDto);
             return Ok();
         }
 
-        [HttpDelete("skill-deletion/{id}")]
+        [HttpDelete("skill/{id}")]
         public IActionResult AddSkill([FromBody] DeleteSkillDto skillDto)
         {
             _characterSheetService.DeleteSkill(skillDto);
             return Ok();
         }
 
-        [HttpPost("ability-addition/{id}")]
+        [HttpPost("ability/{id}")]
         public IActionResult AddAbilty([FromBody] AddAbilityDto abilityDto)
         {
             _characterSheetService.AddAbility(abilityDto);
             return Ok();
         }
 
-        [HttpDelete("ability-deletion/{id}")]
+        [HttpDelete("ability/{id}")]
         public IActionResult DeleteAbility([FromBody] DeleteAbilityDto abilityDto)
         {
             _characterSheetService.DeleteAbility(abilityDto);
@@ -98,14 +98,5 @@ namespace CharacterSheetApi.Controllers
             FileStreamResult pdf = _characterSheetService.PrintSheet(id);
             return pdf;
         }
-
-        /*
-        public ActionResult<IEnumerable<CharacterSheets>> GetAll()
-        {
-            var sheets = _dbContext
-                .CharacterSheets
-                .ToList;
-            return Ok(sheets);
-        }*/
     }
 }

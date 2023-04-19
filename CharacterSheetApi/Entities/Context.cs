@@ -28,7 +28,6 @@ namespace CharacterSheetApi.Entities
         public DbSet<Weapon> Weapons { get; set; }
         public DbSet<Users> Users { get; set; }
 
-        //public DbSet<Role> Roles { get; set; }
         public DbSet<WeaponCharacteristics> WeaponsCharacteristics { get; set; }
 
         public DbSet<BodyLocations> BodyLocations { get; set; }
@@ -38,8 +37,6 @@ namespace CharacterSheetApi.Entities
             modelBuilder.Entity<Users>()
                 .Property(u => u.Name)
                 .IsRequired();
-
-            //modelBuilder.Entity<Role>().Property(u => u.Name).IsRequired();
 
             modelBuilder
                 .Entity<WeaponCharacteristics>()
@@ -210,15 +207,13 @@ namespace CharacterSheetApi.Entities
                 );
 
             modelBuilder
-                .Entity<BodyLocations/*Armor*/>()
+                .Entity<BodyLocations>()
                 .Property(e => e.BodyLocationsId)
                 .HasConversion<int>();
-            // /*
             modelBuilder
                 .Entity<BodyLocations>()
                 .Property(e => e.BodyLocationsId)
                 .HasConversion<int>();
-            // */
             modelBuilder
                 .Entity<BodyLocations>().HasData(
                 Enum.GetValues(typeof(BodyLocationsId))
@@ -248,27 +243,6 @@ namespace CharacterSheetApi.Entities
                         Name = e.ToString()
                     })
                 );
-
-            /*
-            modelBuilder
-                .Entity<Role>()
-                .Property(e => e.RoleId)
-                .HasConversion<int>();
-            modelBuilder
-                .Entity<Role>()
-                .Property(e => e.RoleId)
-                .HasConversion<int>();
-            modelBuilder
-                .Entity<Role>().HasData(
-                Enum.GetValues(typeof(RoleId))
-                    .Cast<RoleId>()
-                    .Select(e => new Role()
-                    {
-                        RoleId = e,
-                        Name = e.ToString()
-                    })
-                );
-            */
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

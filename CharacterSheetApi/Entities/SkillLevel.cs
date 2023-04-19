@@ -6,6 +6,6 @@ namespace CharacterSheetApi.Entities
     {
         public SkillLevelId SkillLevelId { get; set; }
         public string Name { get; set; }
-        //public List<Skill> Skill { get; set; }
+        public List<Skill> Skill { get; set; }
     }
 }

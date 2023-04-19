@@ -18,87 +18,77 @@ namespace CharacterSheetApi.Controllers
             _playerService = playerService;
         }
 
-        [HttpPost("sheet-creation")]
+        [HttpPost("sheet")]
         public ActionResult CreateSheet([FromBody] CreateSheetDto sheetDto)
         {
             int newSheetId = _playerService.CreateSheet(sheetDto);
             return Ok(newSheetId);
         }
 
-        [HttpPut("sheet-change/{id}")]
+        [HttpPut("sheet/{id}")]
         public IActionResult ChangeSheet([FromBody] ChangeSheetDto sheetDto)
         {
             _playerService.ChangeSheet(sheetDto);
             return Ok();
         }
 
-        [HttpPost("character-description-creation")]
+        [HttpPost("character-description")]
         public ActionResult CreateCharacterDescription([FromBody] CreateDescriptionDto characterDescriptionDto)
         {
             int newDescriptionId = _playerService.CreateCharacterDescription(characterDescriptionDto);
             return Ok(newDescriptionId);
         }
 
-        [HttpPut("character-description-change/{id}")]
+        [HttpPut("character-description/{id}")]
         public IActionResult ChangeCharacterDescription([FromBody] ChangeCharacterDescriptionDto characterDescriptionDto)
         {
             _playerService.ChangeCharacterDescription(characterDescriptionDto);
             return Ok();
         }
 
-        /*
-        [HttpPost("base-stats/{id}")]
-        [AllowAnonymous]
-        public IActionResult CreateBaseStats([FromBody] int characterDescriptionId)
-        {
-            string newBaseStatsId = _playerService.CreateBaseStats(characterDescriptionId);
-            return Ok();
-        }
-        */
-
-        [HttpPut("base-stats-change/{id}")]
+        [HttpPut("base-stats/{id}")]
         public IActionResult ChangeBaseStats([FromBody] ChangeStatsDto statsDto)
         {
             _playerService.ChangeBaseStats(statsDto);
             return Ok();
         }
 
-        [HttpPost("monetary-wealth-creation")]
+        [HttpPost("monetary-wealth")]
         public IActionResult CreateMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto)
         {
             int newMonetaryWealthId = _playerService.CreateMonetaryWealth(monetaryWealthDto);
             return Ok(newMonetaryWealthId);
         }
 
-        [HttpPut("monetary-wealth-change/{id}")]
+        [HttpPut("monetary-wealth/{id}")]
         public IActionResult ChangeMonetaryWealth([FromBody] ChangeMonetaryWealthDto monetaryWealthDto)
         {
             _playerService.ChangeMonetaryWealth(monetaryWealthDto);
             return Ok();
         }
 
-        [HttpPost("expirience-points-creation")]
+        [HttpPost("expirience-points")]
         public IActionResult CreateExpiriencePoints([FromBody] CreateExpiriencePointsDto expiriencePointsDto)
         {
             int newExpiriencePointsId = _playerService.CreateExpiriencePoints(expiriencePointsDto);
             return Ok(newExpiriencePointsId);
         }
 
-        [HttpPut("expirience-points-change/{id}")]
+        [HttpPut("expirience-points/{id}")]
         public IActionResult ChangeExpiriencePoints([FromBody] ChangeExpiriencePointsDto changeExpiriencePointsDto)
         {
             _playerService.ChangeExpiriencePoints(changeExpiriencePointsDto);
             return Ok();
         }
 
-        [HttpPost("player-info-creation")]
+        [HttpPost("player-info")]
         public IActionResult CreatePlayerInfo([FromBody] CreatePlayerInfoDto playerInfoDto)
         {
             int newPlayerInfoId = _playerService.CreatePlayerInfo(playerInfoDto);
             return Ok(newPlayerInfoId);
         }
 
-        [HttpPost("character-info-creation")]
+        [HttpPost("character-info")]
         public IActionResult CreateCharacterInfo([FromBody] CreateCharacterInfoDto characterInfoDto)
         {
             int newCharacterInfoId = _playerService.CreateCharacterInfo(characterInfoDto);

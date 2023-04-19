@@ -1,10 +1,11 @@
-﻿ using CharacterSheetApi.Models;
+﻿using CharacterSheetApi.Models;
 
 namespace CharacterSheetApi.Services
 {
     public interface IUsersService
     {
-        void UserPutterInDatabase(RegisterUserDto dto);
+        void RegisterUser(RegisterUserDto dto);
+
         string GenerateLoginToken(LoginDto dto);
     }
 }

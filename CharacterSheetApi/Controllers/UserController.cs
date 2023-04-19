@@ -22,7 +22,7 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public ActionResult RegisterUser([FromBody] RegisterUserDto userDto)
         {
-            _service.UserPutterInDatabase(userDto);
+            _service.RegisterUser(userDto);
             return Ok();
         }
 
@@ -32,13 +32,6 @@ namespace CharacterSheetApi.Controllers
         {
             string token = _service.GenerateLoginToken(userDto);
             return Ok(token);
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser([FromRoute] int id)
-        {
-            return Ok();
-
         }
     }
 }

@@ -17,84 +17,84 @@ namespace CharacterSheetApi.Controllers
             _gameMasterService = gameMasterService;
         }
 
-        [HttpPost("armor-creation")]
+        [HttpPost("armor")]
         public IActionResult CreateArmor([FromBody] CreateArmorDto armorDto)
         {
             _gameMasterService.CreateArmor(armorDto);
             return Ok();
         }
 
-        [HttpDelete("armor-deletion/{id}")]
+        [HttpDelete("armor/{id}")]
         public IActionResult DeleteArmor([FromBody] int armorId)
         {
             _gameMasterService.DeleteArmor(armorId);
             return Ok();
         }
 
-        [HttpPost("weapon-creation")]
+        [HttpPost("weapon")]
         public IActionResult CreateWeapon([FromBody] CreateWeaponDto weaponDto)
         {
             _gameMasterService.CreateWeapon(weaponDto);
             return Ok();
         }
 
-        [HttpDelete("weapon-deletion/{id}")]
+        [HttpDelete("weapon/{id}")]
         public IActionResult DeleteWeapon([FromBody] int weaponId)
         {
             _gameMasterService.DeleteWeapon(weaponId);
             return Ok();
         }
 
-        [HttpPost("equipment-creation")]
+        [HttpPost("equipment")]
         public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
             _gameMasterService.CreateEquipment(equipmentDto);
             return Ok();
         }
 
-        [HttpDelete("equipment-deletion/{id}")]
+        [HttpDelete("equipment/{id}")]
         public IActionResult DeleteEquipment([FromBody] int equipmentId)
         {
             _gameMasterService.DeleteEquipment(equipmentId);
             return Ok();
         }
 
-        [HttpPost("ability-creation")]
+        [HttpPost("ability")]
         public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
             _gameMasterService.CreateAbility(abilityDto);
             return Ok();
         }
 
-        [HttpDelete("ability-deletion/{id}")]
+        [HttpDelete("ability/{id}")]
         public IActionResult DeleteAbility([FromBody] int abilityId)
         {
             _gameMasterService.DeleteAbility(abilityId);
             return Ok();
         }
 
-        [HttpPost("skill-creation")]
+        [HttpPost("skill")]
         public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
             _gameMasterService.CreateSkill(skillDto);
             return Ok();
         }
 
-        [HttpDelete("skill-deletion/{id}")]
+        [HttpDelete("skill/{id}")]
         public IActionResult DeleteSkill([FromBody] int skillId)
         {
             _gameMasterService.DeleteSkill(skillId);
             return Ok();
         }
 
-        [HttpPost("class-creation")]
+        [HttpPost("class")]
         public IActionResult CreateClass([FromBody] CreateClassDto classDto)
         {
             _gameMasterService.CreateClass(classDto);
             return Ok();
         }
 
-        [HttpDelete("class-deletion/{id}")]
+        [HttpDelete("class/{id}")]
         public IActionResult DeleteClass([FromBody] int classId)
         {
             _gameMasterService.DeleteClass(classId);

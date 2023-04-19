@@ -23,7 +23,7 @@ namespace CharacterSheetApi.Services
             _authenticationSettings = authenticationSettings;
         }
 
-        public void UserPutterInDatabase(RegisterUserDto dto)
+        public void RegisterUser(RegisterUserDto dto)
         {
             Users user = new Users();
             user.Name = dto.Name;
@@ -31,7 +31,7 @@ namespace CharacterSheetApi.Services
             user.RoleId = RoleId.Player;
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
 
-            user.RoleId = RoleId.Player; //_context.Roles.FirstOrDefault(x => x.RoleId == RoleId.Player);
+            user.RoleId = RoleId.Player;
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -47,14 +47,12 @@ namespace CharacterSheetApi.Services
 
             if (user is null)
             {
-                // throw new BadRequestException("Invalid username or password");
                 throw new BadHttpRequestException("Invalid username or password");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
             {
-                // throw new BadRequestException("Invalid username or password");
                 throw new BadHttpRequestException("Invalid username or password");
             }
 

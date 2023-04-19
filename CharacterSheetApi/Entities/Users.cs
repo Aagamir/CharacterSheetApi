@@ -11,7 +11,6 @@ namespace CharacterSheetApi.Entities
 
         public RoleId RoleId { get; set; }
 
-        //public virtual Role Role { get; set; }
         public virtual List<CharacterSheet> CharacterSheets { get; set; }
     }
 }

@@ -13,8 +13,6 @@ namespace CharacterSheetApi.Services
 
         void ChangeCharacterDescription(ChangeCharacterDescriptionDto dto);
 
-        //string CreateBaseStats(int characterDescriptionId);
-
         void ChangeBaseStats(ChangeStatsDto dto);
 
         int CreateMonetaryWealth(CreateMonetaryWealthDto dto);
@@ -27,7 +25,6 @@ namespace CharacterSheetApi.Services
 
         int CreatePlayerInfo(CreatePlayerInfoDto dto);
 
-        //void ChangePlayerInfo(ChangePlayerInfoDto dto);
         int CreateCharacterInfo(CreateCharacterInfoDto dto);
     }
 }
