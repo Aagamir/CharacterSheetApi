@@ -31,14 +31,8 @@ namespace CharacterSheetApi.Services
             user.RoleId = RoleId.Player;
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
 
-            user.RoleId = RoleId.Player;
-
             _context.Users.Add(user);
             _context.SaveChanges();
-        }
-
-        public void DeleteUser(int id)
-        {
         }
 
         public string GenerateLoginToken(LoginDto dto)

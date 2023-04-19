@@ -1,4 +1,5 @@
-﻿using CharacterSheetApi.Entities;
+﻿using AutoMapper;
+using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Models;
 
@@ -8,16 +9,19 @@ namespace CharacterSheetApi.Services
     {
         private readonly Context _context;
         private readonly IUserContextService _userContextService;
+        private readonly IMapper _mapper;
 
-        public GameMasterService(Context context, IUserContextService userContextService)
+        public GameMasterService(Context context, IUserContextService userContextService, IMapper mapper)
         {
             _context = context;
             _userContextService = userContextService;
+            _mapper = mapper;
         }
 
         public void CreateArmor(CreateArmorDto dto)
         {
             var armor = new Armor();
+
             armor.Name = dto.Name;
             armor.ArmorPoints = dto.ArmorPoints;
             armor.Weight = dto.Weight;
@@ -25,6 +29,10 @@ namespace CharacterSheetApi.Services
             armor.BodyLocations = _context.BodyLocations.ToList().Join(dto.BodyLocations, c => c.BodyLocationsId, d => d, (c, d) => c).ToList();
             _context.Armors.Add(armor);
             var dupa = armor.BodyLocations;
+            /*
+            var aarmor = _mapper.Map<CreateArmorDto>(armor);
+            _context.Armors.Add(aarmor);
+            */
             _context.SaveChanges();
         }
 

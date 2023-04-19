@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using CharacterSheetApi;
+using CharacterSheetApi.Exceptions.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,7 @@ builder.Services.AddScoped<ICharacterSheetService, CharacterSheetService>();
 builder.Services.AddScoped<IGameMasterService, GameMasterService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddControllers().AddFluentValidation();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -62,6 +64,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseAuthentication();
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseRouting();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

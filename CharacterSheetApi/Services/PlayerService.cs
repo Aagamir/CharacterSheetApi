@@ -184,6 +184,9 @@ namespace CharacterSheetApi.Services
             var stats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.StatsId);
             var current = _context.CurrentStats.FirstOrDefault(c => c.Id == dto.StatsId);
 
+            //foreach (int stat in dto)
+            {
+            }
             if (dto.WW != 0)
             {
                 current.WW = stats.WW = dto.WW;
