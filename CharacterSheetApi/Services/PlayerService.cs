@@ -86,8 +86,8 @@ namespace CharacterSheetApi.Services
         {
             Random random = new Random();
             var characterDescription = new CharacterDescription();
-            var baseStats = new BaseStats();
-            var currentStats = new CurrentStats();
+            var baseStats = new Stats();
+            var currentStats = new Stats();
             var race = dto.RaceId;
             int raceIdNumber = random.Next(3);
             characterDescription.RaceId = dto.RaceId;
@@ -230,12 +230,10 @@ namespace CharacterSheetApi.Services
             if (dto.K != 0)
             {
                 current.K = stats.K = dto.K;
-                current.S = stats.S = (stats.K - stats.K % 10) / 10;
             }
             if (dto.Odp != 0)
             {
                 current.Odp = stats.Odp = dto.Odp;
-                current.Wt = stats.Wt = (stats.Odp - stats.Odp % 10) / 10;
             }
             if (dto.Zr != 0)
             {
@@ -273,6 +271,8 @@ namespace CharacterSheetApi.Services
             {
                 current.PP = stats.PP = dto.PP;
             }
+            current.S = stats.S = (stats.K - stats.K % 10) / 10;
+            current.Wt = stats.Wt = (stats.Odp - stats.Odp % 10) / 10;
             _context.SaveChanges();
         }
 
