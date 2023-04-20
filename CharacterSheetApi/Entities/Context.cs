@@ -6,7 +6,7 @@ namespace CharacterSheetApi.Entities
     public class Context : DbContext
     {
         private string _connectionString =
-            "Server=(localdb)\\mssqllocaldb;Database=heetDb;Trusted_Connection=True";
+            "Server=(localdb)\\mssqllocaldb;Database=SheetDb;Trusted_Connection=True";
 
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<Armor> Armors { get; set; }

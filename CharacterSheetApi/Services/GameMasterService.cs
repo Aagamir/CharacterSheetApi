@@ -20,19 +20,21 @@ namespace CharacterSheetApi.Services
 
         public void CreateArmor(CreateArmorDto dto)
         {
+            /*
             var armor = new Armor();
 
             armor.Name = dto.Name;
             armor.ArmorPoints = dto.ArmorPoints;
             armor.Weight = dto.Weight;
-            armor.ArmorTypeId = dto.ArmorType;
-            armor.BodyLocations = _context.BodyLocations.ToList().Join(dto.BodyLocations, c => c.BodyLocationsId, d => d, (c, d) => c).ToList();
+
             _context.Armors.Add(armor);
             var dupa = armor.BodyLocations;
-            /*
-            var aarmor = _mapper.Map<CreateArmorDto>(armor);
-            _context.Armors.Add(aarmor);
             */
+            var armor = _mapper.Map<Armor>(dto);
+            armor.BodyLocations = _context.BodyLocations.ToList().Join(dto.BodyLocations, c => c.BodyLocationsId, d => d, (c, d) => c).ToList();
+            armor.ArmorTypeId = dto.ArmorType;
+            _context.Armors.Add(armor);
+
             _context.SaveChanges();
         }
 

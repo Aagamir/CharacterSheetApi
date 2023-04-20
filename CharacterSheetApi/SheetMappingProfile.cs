@@ -15,12 +15,11 @@ namespace CharacterSheetApi
     {
         public SheetMappingProfile()
         {
-            CreateMap<Armor, CreateArmorDto>()
-                .ForMember(m => m.Name, c => c.MapFrom(m => m.Name))
-                .ForMember(m => m.Weight, c => c.MapFrom(c => c.Weight))
-                .ForMember(m => m.ArmorType, c => c.MapFrom(a => a.ArmorType))
-                .ForMember(m => m.ArmorPoints, c => c.MapFrom(a => a.ArmorPoints))
-                .ForMember(m => m.BodyLocations, c => c.MapFrom(a => a.BodyLocations));
+            CreateMap<CreateArmorDto, Armor>()
+                .ForMember(x => x.BodyLocations, opt => opt.Ignore())
+                .ForMember(x => x.ArmorType, opt => opt.Ignore());
+
+            CreateMap<Ability, CreateAbilityDto>();
 
             /*
             CreateMap<Users, RegisterUserDto>()
