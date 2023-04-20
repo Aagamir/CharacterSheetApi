@@ -16,17 +16,28 @@ namespace CharacterSheetApi
         public SheetMappingProfile()
         {
             CreateMap<CreateArmorDto, Armor>()
-                .ForMember(x => x.BodyLocations, opt => opt.Ignore())
-                .ForMember(x => x.ArmorType, opt => opt.Ignore());
+                .ForMember(x => x.BodyLocations, opt => opt.Ignore());
 
-            CreateMap<Ability, CreateAbilityDto>();
+            CreateMap<CreateWeaponDto, Weapon>()
+                .ForMember(x => x.WeaponCharacteristics, opt => opt.Ignore());
 
-            /*
-            CreateMap<Users, RegisterUserDto>()
-                .ForMember(m => m.Name, c => c.MapFrom(m => m.Name))
-                .ForMember(m => m.Email, c => c.MapFrom(m => m.Email))
-                .ForMember(m => m.Password, c => c.MapFrom(m => m.Password))
-            */
+            CreateMap<CreateEquipmentDto, Equipment>();
+
+            CreateMap<CreateAbilityDto, Ability>();
+
+            CreateMap<CreateSkillDto, Skill>();
+
+            CreateMap<CreateClassDto, Class>();
+
+            CreateMap<CreatePlayerInfoDto, PlayerInfo>();
+
+            CreateMap<CreateSheetDto, CharacterSheet>()
+                .ForMember(x => x.DateOfCreation, opt => opt.Ignore())
+                .ForMember(x => x.CharacterInfo, opt => opt.Ignore());
+
+            CreateMap<CreateMonetaryWealthDto, MonetaryWealth>();
+
+            CreateMap<CreateExpiriencePointsDto, ExpiriencePoints>();
         }
     }
 }

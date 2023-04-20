@@ -23,7 +23,8 @@ namespace CharacterSheetApi.Controllers
         public ActionResult RegisterUser([FromBody] RegisterUserDto userDto)
         {
             _service.RegisterUser(userDto);
-            return Ok();
+            string uri = $"https://www.test.com/api/sheet=test";
+            return Created(uri, "Account Created");
         }
 
         [HttpPost("login")]

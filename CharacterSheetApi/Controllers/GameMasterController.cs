@@ -25,9 +25,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpDelete("armor/{id}")]
-        public IActionResult DeleteArmor([FromBody] int armorId)
+        public IActionResult DeleteArmor([FromRoute] int id)
         {
-            _gameMasterService.DeleteArmor(armorId);
+            _gameMasterService.DeleteArmor(id);
             return Ok();
         }
 
@@ -39,9 +39,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpDelete("weapon/{id}")]
-        public IActionResult DeleteWeapon([FromBody] int weaponId)
+        public IActionResult DeleteWeapon([FromRoute] int id)
         {
-            _gameMasterService.DeleteWeapon(weaponId);
+            _gameMasterService.DeleteWeapon(id);
             return Ok();
         }
 
@@ -53,9 +53,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpDelete("equipment/{id}")]
-        public IActionResult DeleteEquipment([FromBody] int equipmentId)
+        public IActionResult DeleteEquipment([FromRoute] int id)
         {
-            _gameMasterService.DeleteEquipment(equipmentId);
+            _gameMasterService.DeleteEquipment(id);
             return Ok();
         }
 
@@ -67,9 +67,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpDelete("ability/{id}")]
-        public IActionResult DeleteAbility([FromBody] int abilityId)
+        public IActionResult DeleteAbility([FromRoute] int id)
         {
-            _gameMasterService.DeleteAbility(abilityId);
+            _gameMasterService.DeleteAbility(id);
             return Ok();
         }
 
@@ -81,9 +81,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpDelete("skill/{id}")]
-        public IActionResult DeleteSkill([FromBody] int skillId)
+        public IActionResult DeleteSkill([FromRoute] int id)
         {
-            _gameMasterService.DeleteSkill(skillId);
+            _gameMasterService.DeleteSkill(id);
             return Ok();
         }
 
@@ -95,9 +95,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpDelete("class/{id}")]
-        public IActionResult DeleteClass([FromBody] int classId)
+        public IActionResult DeleteClass([FromRoute] int id)
         {
-            _gameMasterService.DeleteClass(classId);
+            _gameMasterService.DeleteClass(id);
             return Ok();
         }
     }

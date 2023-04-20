@@ -20,21 +20,9 @@ namespace CharacterSheetApi.Services
 
         public void CreateArmor(CreateArmorDto dto)
         {
-            /*
-            var armor = new Armor();
-
-            armor.Name = dto.Name;
-            armor.ArmorPoints = dto.ArmorPoints;
-            armor.Weight = dto.Weight;
-
-            _context.Armors.Add(armor);
-            var dupa = armor.BodyLocations;
-            */
             var armor = _mapper.Map<Armor>(dto);
             armor.BodyLocations = _context.BodyLocations.ToList().Join(dto.BodyLocations, c => c.BodyLocationsId, d => d, (c, d) => c).ToList();
-            armor.ArmorTypeId = dto.ArmorType;
             _context.Armors.Add(armor);
-
             _context.SaveChanges();
         }
 
@@ -47,13 +35,7 @@ namespace CharacterSheetApi.Services
 
         public void CreateWeapon(CreateWeaponDto dto)
         {
-            var weapon = new Weapon();
-            weapon.Name = dto.Name;
-            weapon.Weight = dto.Weight;
-            weapon.WeaponStrength = dto.WeaponStrenght;
-            weapon.Range = dto.Range;
-            weapon.ReloadTime = dto.ReloadTime;
-            weapon.WeaponCategoryId = dto.WeaponCategory;
+            var weapon = _mapper.Map<Weapon>(dto);
             weapon.WeaponCharacteristics = _context.WeaponsCharacteristics.ToList().Join(dto.WeaponCharacteristics, c => c.WeaponCharacteristicsId, d => d, (c, d) => c).ToList();
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
@@ -68,10 +50,7 @@ namespace CharacterSheetApi.Services
 
         public void CreateEquipment(CreateEquipmentDto dto)
         {
-            var equipment = new Equipment();
-            equipment.Name = dto.Name;
-            equipment.Description = dto.Description;
-            equipment.Weight = dto.Weight;
+            var equipment = _mapper.Map<Equipment>(dto);
             _context.Equipments.Add(equipment);
             _context.SaveChanges();
         }
@@ -85,9 +64,7 @@ namespace CharacterSheetApi.Services
 
         public void CreateAbility(CreateAbilityDto dto)
         {
-            var ability = new Ability();
-            ability.Name = dto.Name;
-            ability.Description = dto.Description;
+            var ability = _mapper.Map<Ability>(dto);
             _context.Abilities.Add(ability);
             _context.SaveChanges();
         }
@@ -101,9 +78,7 @@ namespace CharacterSheetApi.Services
 
         public void CreateSkill(CreateSkillDto dto)
         {
-            var skill = new Skill();
-            skill.Name = dto.Name;
-            skill.SkillLevelId = dto.SkillLevelId;
+            var skill = _mapper.Map<Skill>(dto);
             _context.Skills.Add(skill);
             _context.SaveChanges();
         }
@@ -117,8 +92,7 @@ namespace CharacterSheetApi.Services
 
         public void CreateClass(CreateClassDto dto)
         {
-            var newClass = new Class();
-            newClass.Name = dto.Name;
+            var newClass = _mapper.Map<Class>(dto);
             _context.Classes.Add(newClass);
             _context.SaveChanges();
         }

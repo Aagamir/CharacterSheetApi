@@ -1,4 +1,5 @@
-﻿using CharacterSheetApi.Entities;
+﻿using AutoMapper;
+using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
 using CharacterSheetApi.Exceptions;
 using CharacterSheetApi.Models;
@@ -11,20 +12,54 @@ namespace CharacterSheetApi.Services
     {
         private readonly Context _context;
         private readonly IUserContextService _userContextService;
+        private readonly IMapper _mapper;
 
-        public PlayerService(Context context, IUserContextService userContextService)
+        public PlayerService(Context context, IUserContextService userContextService, IMapper mapper)
         {
             _context = context;
             _userContextService = userContextService;
+            _mapper = mapper;
         }
+
+        public int CreatePlayerInfo(CreatePlayerInfoDto dto)
+        {
+            var playerInfo = _mapper.Map<PlayerInfo>(dto);
+            _context.PlayerInfo.Add(playerInfo);
+            _context.SaveChanges();
+            return playerInfo.Id;
+        }
+
+        public int CreateCharacterInfo(CreateCharacterInfoDto dto)
+        {
+            var characterInfo = new CharacterInfo();
+            characterInfo.PlayerInfo = _context.PlayerInfo.FirstOrDefault(c => c.Id == dto.PlayerInfoId);
+            characterInfo.ExpiriencePoints = _context.ExpiriencePoints.FirstOrDefault(c => c.Id == dto.ExpiriencePointsId);
+            characterInfo.CharacterDescription = _context.CharacterDescriptions.FirstOrDefault(c => c.Id == dto.CharacterDescriptionId);
+            characterInfo.Class = _context.Class.FirstOrDefault(c => c.Id == dto.ClassId);
+            characterInfo.LastClass = _context.LastClass.FirstOrDefault(c => c.Id == dto.LastClassId);
+            characterInfo.CharacterDescription.BaseStats = characterInfo.CharacterDescription.BaseStats;
+            characterInfo.CharacterDescription.CurrentStats = characterInfo.CharacterDescription.CurrentStats;
+            characterInfo.MonetaryWealth = _context.MonetaryWealth.FirstOrDefault(c => c.Id == dto.MonetaryWealthId);
+            characterInfo.Name = dto.Name;
+            characterInfo.Weapons = new List<Weapon>();
+            characterInfo.Armor = new List<Armor>();
+            characterInfo.Skills = new List<Skill>();
+            characterInfo.Abilities = new List<Ability>();
+            characterInfo.Equipment = new List<Equipment>();
+            _context.CharacterInfos.AddRange(characterInfo);
+            _context.SaveChanges();
+            return characterInfo.Id;
+        }
+
+        //private void CharacterInfoMap
 
         public int CreateSheet(CreateSheetDto dto)
         {
-            var characterSheet = new CharacterSheet();
-            characterSheet.Name = dto.Name;
-            characterSheet.RpgSystemId = dto.RpgSystem;
+            var characterSheet = _mapper.Map<CharacterSheet>(dto);
+            //characterSheet.Name = dto.Name;
+            //characterSheet.RpgSystemId = dto.RpgSystemId;
+            //characterSheet.CreatorName = dto.CreatorName;
             characterSheet.DateOfCreation = DateTime.Now;
-            characterSheet.CreatorName = dto.CreatorName;
             characterSheet.CharacterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
             _context.CharacterSheets.Add(characterSheet);
             _context.SaveChanges();
@@ -55,11 +90,14 @@ namespace CharacterSheetApi.Services
             var currentStats = new CurrentStats();
             var race = dto.RaceId;
             int raceIdNumber = random.Next(3);
-            characterDescription.RaceId = dto.RaceId;//(RaceId)raceIdNumber;
+            characterDescription.RaceId = dto.RaceId;
+            characterDescription.Age = dto.Age;
+            characterDescription.PlaceOfBirth = dto.PlaceOfBirth;
+            characterDescription.Weight = dto.Weight;
+            characterDescription.CharacteriticSigns = dto.CharacteriticSigns;
             characterDescription.EyeColorId = (EyeColorId)random.Next(14);
             characterDescription.HairColorId = (HairColorId)random.Next(16);
             characterDescription.StarSignId = (StarSignId)random.Next(20);
-            characterDescription.Weight = dto.Weight;
             switch (characterDescription.RaceId)
             {
                 case RaceId.Human:
@@ -81,9 +119,6 @@ namespace CharacterSheetApi.Services
             int[,] SiblingArray = new int[,] { { 0, 0, 0, 1 }, { 1, 1, 0, 2 }, { 1, 1, 0, 2 }, { 2, 1, 1, 3 }, { 2, 1, 1, 3 }, { 3, 2, 1, 4 }, { 3, 2, 1, 4 }, { 4, 2, 2, 5 }, { 4, 2, 2, 5 }, { 5, 3, 3, 6 } };
             characterDescription.Siblings = SiblingArray[random.Next(0, 9), raceIdNumber];
             characterDescription.GenderId = dto.GenderId;
-            characterDescription.Age = dto.Age;
-            characterDescription.PlaceOfBirth = dto.PlaceOfBirth;
-            characterDescription.CharacteriticSigns = dto.CharacteriticSigns;
 
             if (race == RaceId.Human)
             {
@@ -184,9 +219,6 @@ namespace CharacterSheetApi.Services
             var stats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.StatsId);
             var current = _context.CurrentStats.FirstOrDefault(c => c.Id == dto.StatsId);
 
-            //foreach (int stat in dto)
-            {
-            }
             if (dto.WW != 0)
             {
                 current.WW = stats.WW = dto.WW;
@@ -246,10 +278,10 @@ namespace CharacterSheetApi.Services
 
         public int CreateMonetaryWealth(CreateMonetaryWealthDto dto)
         {
-            var monetaryWealth = new MonetaryWealth();
-            monetaryWealth.GoldCrowns = dto.GoldCrowns;
-            monetaryWealth.SilverShilling = dto.SilverShilling;
-            monetaryWealth.CopperPences = dto.CopperPences;
+            var monetaryWealth = _mapper.Map<MonetaryWealth>(dto);
+            //monetaryWealth.GoldCrowns = dto.GoldCrowns;
+            //monetaryWealth.SilverShilling = dto.SilverShilling;
+            //monetaryWealth.CopperPences = dto.CopperPences;
             _context.MonetaryWealth.Add(monetaryWealth);
             _context.SaveChanges();
             return monetaryWealth.Id;
@@ -280,9 +312,9 @@ namespace CharacterSheetApi.Services
 
         public int CreateExpiriencePoints(CreateExpiriencePointsDto dto)
         {
-            var expiriencePoints = new ExpiriencePoints();
-            expiriencePoints.CurrentPoints = dto.CurrentPoints;
-            expiriencePoints.OverallPoints = dto.OverallPoints;
+            var expiriencePoints = _mapper.Map<ExpiriencePoints>(dto);
+            //expiriencePoints.CurrentPoints = dto.CurrentPoints;
+            // expiriencePoints.OverallPoints = dto.OverallPoints;
             _context.ExpiriencePoints.Add(expiriencePoints);
             _context.SaveChanges();
             return expiriencePoints.Id;
@@ -298,39 +330,6 @@ namespace CharacterSheetApi.Services
             characterSheet.CharacterInfo.ExpiriencePoints.CurrentPoints = dto.CurrentPoints;
             characterSheet.CharacterInfo.ExpiriencePoints.OverallPoints = dto.OverallPoints;
             _context.SaveChanges();
-        }
-
-        public int CreatePlayerInfo(CreatePlayerInfoDto dto)
-        {
-            var playerInfo = new PlayerInfo();
-            playerInfo.PlayerName = dto.PlayerName;
-            playerInfo.GameMasterName = dto.GameMasterName;
-            playerInfo.CampaignName = dto.CampaignName;
-            _context.PlayerInfo.Add(playerInfo);
-            _context.SaveChanges();
-            return playerInfo.Id;
-        }
-
-        public int CreateCharacterInfo(CreateCharacterInfoDto dto)
-        {
-            var characterInfo = new CharacterInfo();
-            characterInfo.PlayerInfo = _context.PlayerInfo.FirstOrDefault(c => c.Id == dto.PlayerInfoId);
-            characterInfo.ExpiriencePoints = _context.ExpiriencePoints.FirstOrDefault(c => c.Id == dto.ExpiriencePointsId);
-            characterInfo.CharacterDescription = _context.CharacterDescriptions.FirstOrDefault(c => c.Id == dto.CharacterDescriptionId);
-            characterInfo.Class = _context.Class.FirstOrDefault(c => c.Id == dto.ClassId);
-            characterInfo.LastClass = _context.LastClass.FirstOrDefault(c => c.Id == dto.LastClassId);
-            characterInfo.CharacterDescription.BaseStats = characterInfo.CharacterDescription.BaseStats;
-            characterInfo.CharacterDescription.CurrentStats = characterInfo.CharacterDescription.CurrentStats;
-            characterInfo.MonetaryWealth = _context.MonetaryWealth.FirstOrDefault(c => c.Id == dto.MonetaryWealthId);
-            characterInfo.Name = dto.Name;
-            characterInfo.Weapons = new List<Weapon>();
-            characterInfo.Armor = new List<Armor>();
-            characterInfo.Skills = new List<Skill>();
-            characterInfo.Abilities = new List<Ability>();
-            characterInfo.Equipment = new List<Equipment>();
-            _context.CharacterInfos.AddRange(characterInfo);
-            _context.SaveChanges();
-            return characterInfo.Id;
         }
     }
 }
