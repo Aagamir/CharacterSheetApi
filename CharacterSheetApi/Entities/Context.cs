@@ -10,16 +10,16 @@ namespace CharacterSheetApi.Entities
 
         public DbSet<Ability> Abilities { get; set; }
         public DbSet<Armor> Armors { get; set; }
-        public DbSet<Stats> BaseStats { get; set; }
+        public DbSet<BaseStats> BaseStats { get; set; }
         public DbSet<CharacterDescription> CharacterDescriptions { get; set; }
         public DbSet<CharacterInfo> CharacterInfos { get; set; }
         public DbSet<CharacterSheet> CharacterSheets { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Class> Class { get; set; }
-        public DbSet<Stats> CurrentStats { get; set; }
+        public DbSet<CurrentStats> CurrentStats { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<ExpiriencePoints> ExpiriencePoints { get; set; }
-        public DbSet<Stats> GrowthStats { get; set; }
+        public DbSet<GrowthStats> GrowthStats { get; set; }
         public DbSet<LastClass> LastClass { get; set; }
         public DbSet<MonetaryWealth> MonetaryWealth { get; set; }
         public DbSet<PlayerInfo> PlayerInfo { get; set; }

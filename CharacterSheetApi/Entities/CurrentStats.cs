@@ -1,6 +1,6 @@
 ﻿namespace CharacterSheetApi.Entities
 {
-    public class Stats
+    public class CurrentStats
     {
         public int Id { get; set; }
 

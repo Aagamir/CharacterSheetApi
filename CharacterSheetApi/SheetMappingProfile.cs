@@ -2,6 +2,7 @@
 using CharacterSheetApi.Entities;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
+using CharacterSheetApi.Models.playerDtos;
 using CharacterSheetApi.Services;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace CharacterSheetApi
             CreateMap<CreateMonetaryWealthDto, MonetaryWealth>();
 
             CreateMap<CreateExpiriencePointsDto, ExpiriencePoints>();
+
+            CreateMap<ChangeCharacterDescriptionDto, CharacterDescription>();
         }
     }
 }

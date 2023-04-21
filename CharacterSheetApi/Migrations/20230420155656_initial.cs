@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CharacterSheetApi.Migrations
 {
     /// <inheritdoc />
-    public partial class kutazz : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -269,18 +269,6 @@ namespace CharacterSheetApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.RoleId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RpgSystem",
                 columns: table => new
                 {
@@ -314,6 +302,22 @@ namespace CharacterSheetApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StarSign", x => x.StarSignId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -359,28 +363,6 @@ namespace CharacterSheetApi.Migrations
                         column: x => x.ArmorTypeId,
                         principalTable: "ArmorType",
                         principalColumn: "ArmorTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "RoleId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -485,10 +467,10 @@ namespace CharacterSheetApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
-                    WeaponCategoryId = table.Column<int>(type: "int", nullable: false),
                     WeaponStrength = table.Column<int>(type: "int", nullable: false),
                     Range = table.Column<int>(type: "int", nullable: false),
-                    ReloadTime = table.Column<int>(type: "int", nullable: false)
+                    ReloadTime = table.Column<int>(type: "int", nullable: false),
+                    WeaponCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -733,8 +715,8 @@ namespace CharacterSheetApi.Migrations
                     RpgSystemId = table.Column<int>(type: "int", nullable: false),
                     DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CharacterInfoId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: true)
+                    UsersId = table.Column<int>(type: "int", nullable: false),
+                    CharacterInfoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -755,7 +737,8 @@ namespace CharacterSheetApi.Migrations
                         name: "FK_CharacterSheets_Users_UsersId",
                         column: x => x.UsersId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -858,15 +841,6 @@ namespace CharacterSheetApi.Migrations
                     { 1, "Elf" },
                     { 2, "Dwarf" },
                     { 3, "Hafling" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "RoleId", "Name" },
-                values: new object[,]
-                {
-                    { 0, "Admin" },
-                    { 1, "User" }
                 });
 
             migrationBuilder.InsertData(
@@ -1084,11 +1058,6 @@ namespace CharacterSheetApi.Migrations
                 column: "SkillLevelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Weapons_WeaponCategoryId",
                 table: "Weapons",
                 column: "WeaponCategoryId");
@@ -1179,9 +1148,6 @@ namespace CharacterSheetApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "PlayerInfo");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "WeaponCategory");

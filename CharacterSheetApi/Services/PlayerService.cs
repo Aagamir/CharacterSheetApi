@@ -51,14 +51,9 @@ namespace CharacterSheetApi.Services
             return characterInfo.Id;
         }
 
-        //private void CharacterInfoMap
-
         public int CreateSheet(CreateSheetDto dto)
         {
             var characterSheet = _mapper.Map<CharacterSheet>(dto);
-            //characterSheet.Name = dto.Name;
-            //characterSheet.RpgSystemId = dto.RpgSystemId;
-            //characterSheet.CreatorName = dto.CreatorName;
             characterSheet.DateOfCreation = DateTime.Now;
             characterSheet.CharacterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
             _context.CharacterSheets.Add(characterSheet);
@@ -66,15 +61,15 @@ namespace CharacterSheetApi.Services
             return characterSheet.Id;
         }
 
-        public void ChangeSheet(ChangeSheetDto dto)
+        public void ChangeSheet(CreateSheetDto dto, int id)
         {
-            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == id);
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             characterSheet.Name = dto.Name;
-            characterSheet.RpgSystemId = dto.RpgSystem;
+            characterSheet.RpgSystemId = dto.RpgSystemId;
             characterSheet.CreatorName = dto.CreatorName;
             characterSheet.CharacterInfo = _context.CharacterInfos.FirstOrDefault(c => c.Id == dto.CharacterInfoId);
             characterSheet.UsersId = _userContextService.GetUserId.Value;
@@ -86,8 +81,8 @@ namespace CharacterSheetApi.Services
         {
             Random random = new Random();
             var characterDescription = new CharacterDescription();
-            var baseStats = new Stats();
-            var currentStats = new Stats();
+            var baseStats = new BaseStats();
+            var currentStats = new CurrentStats();
             var race = dto.RaceId;
             int raceIdNumber = random.Next(3);
             characterDescription.RaceId = dto.RaceId;
@@ -206,95 +201,61 @@ namespace CharacterSheetApi.Services
 
         public void ChangeCharacterDescription(ChangeCharacterDescriptionDto dto)
         {
-            //var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.Id == CharacterSheetId)
-        }
-
-        public void ChangeBaseStats(ChangeStatsDto dto)
-        {
-            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.CharacterDescription.BaseStats.Id == dto.StatsId);
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.CharacterDescription.Id == dto.CharacterDescriptionId);
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            var stats = _context.BaseStats.FirstOrDefault(c => c.Id == dto.StatsId);
-            var current = _context.CurrentStats.FirstOrDefault(c => c.Id == dto.StatsId);
+            var characterDescription = _mapper.Map<CharacterDescription>(dto);
+            _context.SaveChanges();
+        }
 
-            if (dto.WW != 0)
+        public void ChangeBaseStats(ChangeStatsDto dto, int id)
+        {
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.CharacterDescription.BaseStats.Id == id);
+            if (characterSheet.UsersId != _userContextService.GetUserId)
             {
-                current.WW = stats.WW = dto.WW;
+                throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (dto.US != 0)
+            var baseStats = _context.BaseStats.FirstOrDefault(c => c.Id == id);
+            var currentStats = _context.CurrentStats.FirstOrDefault(c => c.Id == id);
+
+            foreach (var stat in dto.GetType().GetProperties())
             {
-                current.US = stats.US = dto.US;
+                var value = stat.GetValue(dto);
+                var name = stat.Name;
+                if (value is null)
+                {
+                    continue;
+                }
+                else
+                {
+                    baseStats.GetType().GetProperty(name).SetValue(baseStats, value);
+                    currentStats.GetType().GetProperty(name).SetValue(currentStats, value);
+                }
             }
-            if (dto.K != 0)
-            {
-                current.K = stats.K = dto.K;
-            }
-            if (dto.Odp != 0)
-            {
-                current.Odp = stats.Odp = dto.Odp;
-            }
-            if (dto.Zr != 0)
-            {
-                current.Zr = stats.Zr = dto.Zr;
-            }
-            if (dto.Int != 0)
-            {
-                current.Int = stats.Int = dto.Int;
-            }
-            if (dto.SW != 0)
-            {
-                current.SW = stats.SW = dto.SW;
-            }
-            if (dto.Ogd != 0)
-            {
-                current.Ogd = stats.Ogd = dto.Ogd;
-            }
-            if (dto.A != 0)
-            {
-                current.A = stats.A = dto.A;
-            }
-            if (dto.Zyw != 0)
-            {
-                current.Zyw = stats.Zyw = dto.Zyw;
-            }
-            if (dto.Mag != 0)
-            {
-                current.Mag = stats.Mag = dto.Mag;
-            }
-            if (dto.PO != 0)
-            {
-                current.PO = stats.PO = dto.PO;
-            }
-            if (dto.PP != 0)
-            {
-                current.PP = stats.PP = dto.PP;
-            }
-            current.S = stats.S = (stats.K - stats.K % 10) / 10;
-            current.Wt = stats.Wt = (stats.Odp - stats.Odp % 10) / 10;
+
+            baseStats.S = currentStats.S = (baseStats.K - baseStats.K % 10) / 10;
+            baseStats.Wt = currentStats.Wt = (baseStats.Odp - baseStats.Odp % 10) / 10;
             _context.SaveChanges();
         }
 
         public int CreateMonetaryWealth(CreateMonetaryWealthDto dto)
         {
             var monetaryWealth = _mapper.Map<MonetaryWealth>(dto);
-            //monetaryWealth.GoldCrowns = dto.GoldCrowns;
-            //monetaryWealth.SilverShilling = dto.SilverShilling;
-            //monetaryWealth.CopperPences = dto.CopperPences;
             _context.MonetaryWealth.Add(monetaryWealth);
             _context.SaveChanges();
             return monetaryWealth.Id;
         }
 
-        public void ChangeMonetaryWealth(ChangeMonetaryWealthDto dto)
+        public void ChangeMonetaryWealth(CreateMonetaryWealthDto dto, int id)
         {
-            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.MonetaryWealth.Id == dto.MonetaryWealthId);
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.MonetaryWealth.Id == id);
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            var monetaryWealth = _context.MonetaryWealth.FirstOrDefault(x => x.Id == dto.MonetaryWealthId);
+            var monetaryWealth = _context.MonetaryWealth.FirstOrDefault(x => x.Id == id);
             if (dto.CopperPences != null)
             {
                 monetaryWealth.CopperPences = dto.CopperPences;
@@ -313,16 +274,14 @@ namespace CharacterSheetApi.Services
         public int CreateExpiriencePoints(CreateExpiriencePointsDto dto)
         {
             var expiriencePoints = _mapper.Map<ExpiriencePoints>(dto);
-            //expiriencePoints.CurrentPoints = dto.CurrentPoints;
-            // expiriencePoints.OverallPoints = dto.OverallPoints;
             _context.ExpiriencePoints.Add(expiriencePoints);
             _context.SaveChanges();
             return expiriencePoints.Id;
         }
 
-        public void ChangeExpiriencePoints(ChangeExpiriencePointsDto dto)
+        public void ChangeExpiriencePoints(CreateExpiriencePointsDto dto, int id)
         {
-            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.ExpiriencePoints.Id == dto.PointsId);
+            var characterSheet = _context.CharacterSheets.FirstOrDefault(c => c.CharacterInfo.ExpiriencePoints.Id == id);
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");

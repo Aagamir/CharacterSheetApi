@@ -262,6 +262,67 @@ namespace CharacterSheetApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CharacterSheetApi.Entities.BaseStats", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("A")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Int")
+                        .HasColumnType("int");
+
+                    b.Property<int>("K")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mag")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Odp")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ogd")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PO")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PP")
+                        .HasColumnType("int");
+
+                    b.Property<int>("S")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SW")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sz")
+                        .HasColumnType("int");
+
+                    b.Property<int>("US")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WW")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Wt")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Zr")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Zyw")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BaseStats");
+                });
+
             modelBuilder.Entity("CharacterSheetApi.Entities.BodyLocations", b =>
                 {
                     b.Property<int>("BodyLocationsId")
@@ -487,6 +548,67 @@ namespace CharacterSheetApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("CharacterSheetApi.Entities.CurrentStats", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("A")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Int")
+                        .HasColumnType("int");
+
+                    b.Property<int>("K")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mag")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Odp")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ogd")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PO")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PP")
+                        .HasColumnType("int");
+
+                    b.Property<int>("S")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SW")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sz")
+                        .HasColumnType("int");
+
+                    b.Property<int>("US")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WW")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Wt")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Zr")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Zyw")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CurrentStats");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Equipment", b =>
@@ -1110,67 +1232,6 @@ namespace CharacterSheetApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CharacterSheetApi.Entities.Stats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("A")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Int")
-                        .HasColumnType("int");
-
-                    b.Property<int>("K")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Mag")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Odp")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ogd")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PO")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PP")
-                        .HasColumnType("int");
-
-                    b.Property<int>("S")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SW")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sz")
-                        .HasColumnType("int");
-
-                    b.Property<int>("US")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WW")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Wt")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Zr")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Zyw")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Stats");
-                });
-
             modelBuilder.Entity("CharacterSheetApi.Entities.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -1513,13 +1574,13 @@ namespace CharacterSheetApi.Migrations
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterDescription", b =>
                 {
-                    b.HasOne("CharacterSheetApi.Entities.Stats", "BaseStats")
+                    b.HasOne("CharacterSheetApi.Entities.BaseStats", "BaseStats")
                         .WithMany()
                         .HasForeignKey("BaseStatsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CharacterSheetApi.Entities.Stats", "CurrentStats")
+                    b.HasOne("CharacterSheetApi.Entities.CurrentStats", "CurrentStats")
                         .WithMany()
                         .HasForeignKey("CurrentStatsId")
                         .OnDelete(DeleteBehavior.Cascade)

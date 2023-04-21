@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterSheetApi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230413083632_kutazz")]
-    partial class kutazz
+    [Migration("20230420155656_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -522,7 +522,7 @@ namespace CharacterSheetApi.Migrations
                     b.Property<int>("RpgSystemId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersId")
+                    b.Property<int>("UsersId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1025,32 +1025,6 @@ namespace CharacterSheetApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CharacterSheetApi.Entities.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 0,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            RoleId = 1,
-                            Name = "User"
-                        });
-                });
-
             modelBuilder.Entity("CharacterSheetApi.Entities.RpgSystem", b =>
                 {
                     b.Property<int>("RpgSystemId")
@@ -1285,8 +1259,6 @@ namespace CharacterSheetApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -1733,7 +1705,9 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasOne("CharacterSheetApi.Entities.Users", null)
                         .WithMany("CharacterSheets")
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CharacterInfo");
 
@@ -1743,23 +1717,12 @@ namespace CharacterSheetApi.Migrations
             modelBuilder.Entity("CharacterSheetApi.Entities.Skill", b =>
                 {
                     b.HasOne("CharacterSheetApi.Entities.SkillLevel", "SkillLevel")
-                        .WithMany()
+                        .WithMany("Skill")
                         .HasForeignKey("SkillLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("SkillLevel");
-                });
-
-            modelBuilder.Entity("CharacterSheetApi.Entities.Users", b =>
-                {
-                    b.HasOne("CharacterSheetApi.Entities.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Weapon", b =>
@@ -1791,6 +1754,11 @@ namespace CharacterSheetApi.Migrations
             modelBuilder.Entity("CharacterSheetApi.Entities.Class", b =>
                 {
                     b.Navigation("CharacterInfos");
+                });
+
+            modelBuilder.Entity("CharacterSheetApi.Entities.SkillLevel", b =>
+                {
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Users", b =>

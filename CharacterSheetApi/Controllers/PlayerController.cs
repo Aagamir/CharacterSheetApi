@@ -27,9 +27,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPut("sheet/{id}")]
-        public IActionResult ChangeSheet([FromBody] ChangeSheetDto sheetDto)
+        public IActionResult ChangeSheet([FromBody] CreateSheetDto sheetDto, [FromQuery] int id)
         {
-            _playerService.ChangeSheet(sheetDto);
+            _playerService.ChangeSheet(sheetDto, id);
             return Accepted();
         }
 
@@ -49,9 +49,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPut("base-stats/{id}")]
-        public IActionResult ChangeBaseStats([FromBody] ChangeStatsDto statsDto)
+        public IActionResult ChangeBaseStats([FromBody] ChangeStatsDto statsDto, [FromRoute] int id)
         {
-            _playerService.ChangeBaseStats(statsDto);
+            _playerService.ChangeBaseStats(statsDto, id);
             return Accepted();
         }
 
@@ -64,9 +64,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPut("monetary-wealth/{id}")]
-        public IActionResult ChangeMonetaryWealth([FromBody] ChangeMonetaryWealthDto monetaryWealthDto)
+        public IActionResult ChangeMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto, [FromRoute] int id)
         {
-            _playerService.ChangeMonetaryWealth(monetaryWealthDto);
+            _playerService.ChangeMonetaryWealth(monetaryWealthDto, id);
             return Accepted();
         }
 
@@ -79,9 +79,9 @@ namespace CharacterSheetApi.Controllers
         }
 
         [HttpPut("expirience-points/{id}")]
-        public IActionResult ChangeExpiriencePoints([FromBody] ChangeExpiriencePointsDto changeExpiriencePointsDto)
+        public IActionResult ChangeExpiriencePoints([FromBody] CreateExpiriencePointsDto changeExpiriencePointsDto, [FromRoute] int id)
         {
-            _playerService.ChangeExpiriencePoints(changeExpiriencePointsDto);
+            _playerService.ChangeExpiriencePoints(changeExpiriencePointsDto, id);
             return Accepted();
         }
 
