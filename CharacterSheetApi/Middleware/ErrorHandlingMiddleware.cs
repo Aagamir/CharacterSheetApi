@@ -21,7 +21,7 @@ namespace CharacterSheetApi.Exceptions.Middleware
             catch (ForbiddenException forbiddenException)
             {
                 context.Response.StatusCode = 403;
-                context.Response.WriteAsJsonAsync(forbiddenException.Message);
+                context.Response.WriteAsync(forbiddenException.Message);
             }
             catch (NotFoundException notFoundException)
             {
