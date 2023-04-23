@@ -4,7 +4,7 @@ namespace CharacterSheetApi.Services
 {
     public interface IUsersService
     {
-        void RegisterUser(RegisterUserDto dto);
+        int RegisterUser(RegisterUserDto dto);
 
         string GenerateLoginToken(LoginDto dto);
     }

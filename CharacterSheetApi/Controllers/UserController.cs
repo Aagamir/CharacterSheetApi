@@ -22,8 +22,8 @@ namespace CharacterSheetApi.Controllers
         [AllowAnonymous]
         public ActionResult RegisterUser([FromBody] RegisterUserDto userDto)
         {
-            _service.RegisterUser(userDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            var id = _service.RegisterUser(userDto);
+            string uri = $"api/user={id}";
             return Created(uri, "Account Created");
         }
 

@@ -21,15 +21,15 @@ namespace CharacterSheetApi.Services
             _userContextService = userContextService;
         }
 
-        public void AddWeapon(AddWeaponDto dto)
+        public void AddWeapon(List<int> weaponIds, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Weapons).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Weapons).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            foreach (var weapon in dto.WeaponIds)
+            foreach (var weapon in weaponIds)
             {
                 if (_context.Weapons.FirstOrDefault(w => w.Id == weapon) is null)
                 {
@@ -40,177 +40,169 @@ namespace CharacterSheetApi.Services
             {
                 characterInfo.Weapons = new List<Weapon>();
             }
-            var weapons = _context.Weapons.ToList().Join(dto.WeaponIds, c => c.Id, d => d, (c, d) => c).ToList();
+            var weapons = _context.Weapons.ToList().Join(weaponIds, c => c.Id, d => d, (c, d) => c).ToList();
             characterInfo.Weapons.AddRange(weapons);
             _context.SaveChanges();
         }
 
-        public void DeleteWeapon(DeleteWeaponDto dto)
+        public void DeleteWeapon(int weaponId, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Weapons).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Weapons).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
-            {
-                throw new NotFoundException("Wrong weapon Id");
-            }
-            var weapon = characterInfo.Weapons.FirstOrDefault(a => a.Id == dto.WeaponId);
+            var weapon = characterInfo.Weapons.FirstOrDefault(a => a.Id == weaponId);
             characterInfo.Weapons.Remove(weapon);
             _context.SaveChanges();
         }
 
-        public void AddArmor(AddArmorDto dto)
+        public void AddArmor(List<int> armorIds, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Armor).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Armor).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
+            foreach (var armor in armorIds)
             {
-                throw new NotFoundException("Wrong armor Id");
+                if (_context.Armors.FirstOrDefault(w => w.Id == armor) is null)
+                {
+                    throw new NotFoundException("Wrong weapon Id");
+                }
             }
             if (characterInfo.Armor is null)
             {
                 characterInfo.Armor = new List<Armor>();
             }
-            List<Armor> armors = _context.Armors.ToList().Join(dto.ArmorIds, c => c.Id, d => d, (c, d) => c).ToList();
+            List<Armor> armors = _context.Armors.ToList().Join(armorIds, c => c.Id, d => d, (c, d) => c).ToList();
             characterInfo.Armor.AddRange(armors);
             _context.SaveChanges();
         }
 
-        public void DeleteArmor(DeleteArmorDto dto)
+        public void DeleteArmor(int armorId, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Armor).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Armor).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
-            {
-                throw new NotFoundException("Wrong armor Id");
-            }
-            var armor = characterInfo.Armor.FirstOrDefault(a => a.Id == dto.ArmorId);
+            var armor = characterInfo.Armor.FirstOrDefault(a => a.Id == armorId);
             characterInfo.Armor.Remove(armor);
             _context.SaveChanges();
         }
 
-        public void AddEquipment(AddEquipmentDto dto)
+        public void AddEquipment(List<int> equipmentIds, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Equipment).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Equipment).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
+            foreach (var equipment in equipmentIds)
             {
-                throw new NotFoundException("Wrong equipment Id");
+                if (_context.Equipments.FirstOrDefault(w => w.Id == equipment) is null)
+                {
+                    throw new NotFoundException("Wrong weapon Id");
+                }
             }
             if (characterInfo.Equipment is null)
             {
                 characterInfo.Equipment = new List<Equipment>();
             }
-            List<Equipment> equipments = _context.Equipments.ToList().Join(dto.EquipmentIds, c => c.Id, d => d, (c, d) => c).ToList();
+            List<Equipment> equipments = _context.Equipments.ToList().Join(equipmentIds, c => c.Id, d => d, (c, d) => c).ToList();
             characterInfo.Equipment.AddRange(equipments);
             _context.SaveChanges();
         }
 
-        public void DeleteEquipment(DeleteEquipmentDto dto)
+        public void DeleteEquipment(int equipmentId, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Equipment).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Equipment).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
-            {
-                throw new NotFoundException("Wrong equipment Id");
-            }
-            var equipment = characterInfo.Equipment.FirstOrDefault(a => a.Id == dto.EquipmentId);
+            var equipment = characterInfo.Equipment.FirstOrDefault(a => a.Id == equipmentId);
             characterInfo.Equipment.Remove(equipment);
             _context.SaveChanges();
         }
 
-        public void AddSkill(AddSkillDto dto)
+        public void AddSkill(List<int> skillIds, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Skills).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Skills).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
+            foreach (var skill in skillIds)
             {
-                throw new NotFoundException("Wrong skill Id");
+                if (_context.Skills.FirstOrDefault(w => w.Id == skill) is null)
+                {
+                    throw new NotFoundException("Wrong weapon Id");
+                }
             }
             if (characterInfo.Skills is null)
             {
                 characterInfo.Skills = new List<Skill>();
             }
             var dupa = _context.Skills;
-            var skills = _context.Skills.ToList().Join(dto.SkillIds, c => c.Id, d => d, (c, d) => c).ToList();
+            var skills = _context.Skills.ToList().Join(skillIds, c => c.Id, d => d, (c, d) => c).ToList();
             characterInfo.Skills.AddRange(skills);
             _context.SaveChanges();
         }
 
-        public void DeleteSkill(DeleteSkillDto dto)
+        public void DeleteSkill(int skillId, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Skills).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Skills).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
-            {
-                throw new NotFoundException("Wrong skill Id");
-            }
-            var skill = characterInfo.Skills.FirstOrDefault(a => a.Id == dto.SkillId);
+            var skill = characterInfo.Skills.FirstOrDefault(a => a.Id == skillId);
             characterInfo.Skills.Remove(skill);
             _context.SaveChanges();
         }
 
-        public void AddAbility(AddAbilityDto dto)
+        public void AddAbility(List<int> abilityIds, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Abilities).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Abilities).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
+            foreach (var ability in abilityIds)
             {
-                throw new NotFoundException("Wrong ability Id");
+                if (_context.Abilities.FirstOrDefault(w => w.Id == ability) is null)
+                {
+                    throw new NotFoundException("Wrong weapon Id");
+                }
             }
             if (characterInfo.Abilities is null)
             {
                 characterInfo.Abilities = new List<Ability>();
             }
-            List<Ability> abilities = _context.Abilities.ToList().Join(dto.AbilityIds, c => c.Id, d => d, (c, d) => c).ToList();
+            List<Ability> abilities = _context.Abilities.ToList().Join(abilityIds, c => c.Id, d => d, (c, d) => c).ToList();
             characterInfo.Abilities.AddRange(abilities);
             _context.SaveChanges();
         }
 
-        public void DeleteAbility(DeleteAbilityDto dto)
+        public void DeleteAbility(int abilityId, int id)
         {
-            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Abilities).FirstOrDefault(c => c.Id == dto.CharacterSheetId);
+            var characterSheet = _context.CharacterSheets.Include(c => c.CharacterInfo).ThenInclude(c => c.Abilities).FirstOrDefault(c => c.Id == id);
             var characterInfo = characterSheet.CharacterInfo;
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
-            if (characterInfo is null)
-            {
-                throw new NotFoundException("Wrong ability Id");
-            }
-            var ability = characterInfo.Abilities.FirstOrDefault(a => a.Id == dto.abilityId);
+            var ability = characterInfo.Abilities.FirstOrDefault(a => a.Id == abilityId);
             characterInfo.Abilities.Remove(ability);
             _context.SaveChanges();
         }

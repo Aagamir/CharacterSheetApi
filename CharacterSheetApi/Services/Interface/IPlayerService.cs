@@ -1,5 +1,7 @@
-﻿using CharacterSheetApi.Models;
+﻿using CharacterSheetApi.Entities;
+using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.playerDtos;
+using CharacterSheetApi.Models.PlayerDtos;
 
 namespace CharacterSheetApi.Services
 {
@@ -7,7 +9,7 @@ namespace CharacterSheetApi.Services
     {
         int CreateSheet(CreateSheetDto dto);
 
-        void ChangeSheet(ChangeSheetDto dto, int id);
+        void ChangeSheet(CreateSheetDto sheetDto, int id);
 
         int CreateCharacterDescription(CreateDescriptionDto dto);
 
@@ -26,5 +28,15 @@ namespace CharacterSheetApi.Services
         int CreatePlayerInfo(CreatePlayerInfoDto dto);
 
         int CreateCharacterInfo(CreateCharacterInfoDto dto);
+
+        List<GetAllWeaponsDto> GetAllWeapons();
+
+        List<GetAllArmorsDto> GetAllArmors();
+
+        List<GetAllEquipmentsDto> GetAllEquipments();
+
+        List<GetAllSkillsDto> GetAllSkills();
+
+        List<GetAllAbilitiesDto> GetAllAbilities();
     }
 }

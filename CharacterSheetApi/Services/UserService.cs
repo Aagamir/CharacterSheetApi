@@ -23,7 +23,7 @@ namespace CharacterSheetApi.Services
             _authenticationSettings = authenticationSettings;
         }
 
-        public void RegisterUser(RegisterUserDto dto)
+        public int RegisterUser(RegisterUserDto dto)
         {
             Users user = new Users();
             user.Name = dto.Name;
@@ -33,6 +33,7 @@ namespace CharacterSheetApi.Services
 
             _context.Users.Add(user);
             _context.SaveChanges();
+            return user.Id;
         }
 
         public string GenerateLoginToken(LoginDto dto)

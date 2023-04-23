@@ -34,7 +34,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("CharacterInfoId");
 
-                    b.ToTable("AbilityCharacterInfo");
+                    b.ToTable("AbilityCharacterInfo", (string)null);
                 });
 
             modelBuilder.Entity("ArmorBodyLocations", b =>
@@ -49,7 +49,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("BodyLocationsId");
 
-                    b.ToTable("ArmorBodyLocations");
+                    b.ToTable("ArmorBodyLocations", (string)null);
                 });
 
             modelBuilder.Entity("ArmorCharacterInfo", b =>
@@ -64,7 +64,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("CharacterInfoId");
 
-                    b.ToTable("ArmorCharacterInfo");
+                    b.ToTable("ArmorCharacterInfo", (string)null);
                 });
 
             modelBuilder.Entity("CharacterInfoEquipment", b =>
@@ -79,7 +79,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("EquipmentId");
 
-                    b.ToTable("CharacterInfoEquipment");
+                    b.ToTable("CharacterInfoEquipment", (string)null);
                 });
 
             modelBuilder.Entity("CharacterInfoSkill", b =>
@@ -94,7 +94,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("SkillsId");
 
-                    b.ToTable("CharacterInfoSkill");
+                    b.ToTable("CharacterInfoSkill", (string)null);
                 });
 
             modelBuilder.Entity("CharacterInfoWeapon", b =>
@@ -109,7 +109,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("WeaponsId");
 
-                    b.ToTable("CharacterInfoWeapon");
+                    b.ToTable("CharacterInfoWeapon", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Ability", b =>
@@ -130,7 +130,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Abilities");
+                    b.ToTable("Abilities", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Armor", b =>
@@ -158,7 +158,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("ArmorTypeId");
 
-                    b.ToTable("Armors");
+                    b.ToTable("Armors", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.ArmorType", b =>
@@ -172,7 +172,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("ArmorTypeId");
 
-                    b.ToTable("ArmorType");
+                    b.ToTable("ArmorType", (string)null);
 
                     b.HasData(
                         new
@@ -320,7 +320,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BaseStats");
+                    b.ToTable("BaseStats", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.BodyLocations", b =>
@@ -334,7 +334,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("BodyLocationsId");
 
-                    b.ToTable("BodyLocations");
+                    b.ToTable("BodyLocations", (string)null);
 
                     b.HasData(
                         new
@@ -444,7 +444,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("StarSignId");
 
-                    b.ToTable("CharacterDescriptions");
+                    b.ToTable("CharacterDescriptions", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterInfo", b =>
@@ -491,7 +491,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("PlayerInfoId");
 
-                    b.ToTable("CharacterInfos");
+                    b.ToTable("CharacterInfos", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CharacterSheet", b =>
@@ -530,7 +530,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("CharacterSheets");
+                    b.ToTable("CharacterSheets", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Class", b =>
@@ -547,7 +547,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Class");
+                    b.ToTable("Class", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.CurrentStats", b =>
@@ -608,7 +608,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CurrentStats");
+                    b.ToTable("CurrentStats", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Equipment", b =>
@@ -631,7 +631,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Equipments");
+                    b.ToTable("Equipments", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.ExpiriencePoints", b =>
@@ -650,7 +650,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExpiriencePoints");
+                    b.ToTable("ExpiriencePoints", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.EyeColor", b =>
@@ -664,7 +664,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("EyeColorId");
 
-                    b.ToTable("EyeColor");
+                    b.ToTable("EyeColor", (string)null);
 
                     b.HasData(
                         new
@@ -750,7 +750,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("GenderId");
 
-                    b.ToTable("Gender");
+                    b.ToTable("Gender", (string)null);
 
                     b.HasData(
                         new
@@ -823,7 +823,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GrowthStats");
+                    b.ToTable("GrowthStats", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.HairColor", b =>
@@ -837,7 +837,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("HairColorId");
 
-                    b.ToTable("HairColor");
+                    b.ToTable("HairColor", (string)null);
 
                     b.HasData(
                         new
@@ -936,7 +936,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LastClass");
+                    b.ToTable("LastClass", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.MonetaryWealth", b =>
@@ -958,7 +958,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MonetaryWealth");
+                    b.ToTable("MonetaryWealth", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.PlayerInfo", b =>
@@ -983,7 +983,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlayerInfo");
+                    b.ToTable("PlayerInfo", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Race", b =>
@@ -997,7 +997,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("RaceId");
 
-                    b.ToTable("Races");
+                    b.ToTable("Races", (string)null);
 
                     b.HasData(
                         new
@@ -1033,7 +1033,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("RpgSystemId");
 
-                    b.ToTable("RpgSystem");
+                    b.ToTable("RpgSystem", (string)null);
 
                     b.HasData(
                         new
@@ -1082,7 +1082,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("SkillLevelId");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.SkillLevel", b =>
@@ -1096,7 +1096,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("SkillLevelId");
 
-                    b.ToTable("SkillLevel");
+                    b.ToTable("SkillLevel", (string)null);
 
                     b.HasData(
                         new
@@ -1127,7 +1127,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("StarSignId");
 
-                    b.ToTable("StarSign");
+                    b.ToTable("StarSign", (string)null);
 
                     b.HasData(
                         new
@@ -1257,7 +1257,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.Weapon", b =>
@@ -1291,7 +1291,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("WeaponCategoryId");
 
-                    b.ToTable("Weapons");
+                    b.ToTable("Weapons", (string)null);
                 });
 
             modelBuilder.Entity("CharacterSheetApi.Entities.WeaponCategory", b =>
@@ -1305,7 +1305,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("WeaponCategoryId");
 
-                    b.ToTable("WeaponCategory");
+                    b.ToTable("WeaponCategory", (string)null);
 
                     b.HasData(
                         new
@@ -1381,7 +1381,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasKey("WeaponCharacteristicsId");
 
-                    b.ToTable("WeaponsCharacteristics");
+                    b.ToTable("WeaponsCharacteristics", (string)null);
 
                     b.HasData(
                         new
@@ -1468,7 +1468,7 @@ namespace CharacterSheetApi.Migrations
 
                     b.HasIndex("WeaponsId");
 
-                    b.ToTable("WeaponWeaponCharacteristics");
+                    b.ToTable("WeaponWeaponCharacteristics", (string)null);
                 });
 
             modelBuilder.Entity("AbilityCharacterInfo", b =>

@@ -3,6 +3,7 @@ using CharacterSheetApi.Entities;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
 using CharacterSheetApi.Models.playerDtos;
+using CharacterSheetApi.Models.PlayerDtos;
 using CharacterSheetApi.Services;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,21 @@ namespace CharacterSheetApi
             CreateMap<CreateExpiriencePointsDto, ExpiriencePoints>();
 
             CreateMap<ChangeCharacterDescriptionDto, CharacterDescription>();
+
+            CreateMap<Weapon, GetAllWeaponsDto>()
+                .ForMember(x => x.WeaponCategory, opt => opt.Ignore())
+                .ForMember(x => x.WeaponCharacteristics, opt => opt.Ignore());
+
+            CreateMap<Armor, GetAllArmorsDto>()
+                .ForMember(x => x.ArmorType, opt => opt.Ignore())
+                .ForMember(x => x.BodyLocations, opt => opt.Ignore());
+
+            CreateMap<Equipment, GetAllEquipmentsDto>();
+
+            CreateMap<Skill, GetAllSkillsDto>()
+                .ForMember(x => x.SkillLevel, opt => opt.Ignore());
+
+            CreateMap<Ability, GetAllAbilitiesDto>();
         }
     }
 }

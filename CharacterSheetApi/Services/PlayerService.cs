@@ -4,6 +4,7 @@ using CharacterSheetApi.Enums;
 using CharacterSheetApi.Exceptions;
 using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.playerDtos;
+using CharacterSheetApi.Models.PlayerDtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace CharacterSheetApi.Services
@@ -289,6 +290,85 @@ namespace CharacterSheetApi.Services
             characterSheet.CharacterInfo.ExpiriencePoints.CurrentPoints = dto.CurrentPoints;
             characterSheet.CharacterInfo.ExpiriencePoints.OverallPoints = dto.OverallPoints;
             _context.SaveChanges();
+        }
+
+        //POZAMIENIAC ŻEBY NIE BYŁO WIDAĆ LIST CHARACTER INFO
+
+        public List<GetAllWeaponsDto> GetAllWeapons()
+        {
+            var weapons = _context.Weapons.Include(w => w.WeaponCategory).Include(w => w.WeaponCharacteristics).ToList();
+            var dto = new List<GetAllWeaponsDto>();
+            foreach (Weapon weapon in weapons)
+            {
+                var map = _mapper.Map<GetAllWeaponsDto>(weapon);
+                map.WeaponCategory = weapon.WeaponCategory.Name;
+                var characteristics = new List<String>();
+                foreach (var character in weapon.WeaponCharacteristics)
+                {
+                    var name = weapon.WeaponCharacteristics.FirstOrDefault(c => c.WeaponCharacteristicsId == character.WeaponCharacteristicsId).Name;
+                    characteristics.Add(name);
+                }
+                map.WeaponCharacteristics = characteristics;
+                dto.Add(map);
+            }
+            return dto;
+        }
+
+        public List<GetAllArmorsDto> GetAllArmors()
+        {
+            var armors = _context.Armors.Include(a => a.ArmorType).Include(a => a.BodyLocations).ToList();
+            var dto = new List<GetAllArmorsDto>();
+            foreach (Armor armor in armors)
+            {
+                var map = _mapper.Map<GetAllArmorsDto>(armor);
+                map.ArmorType = armor.ArmorType.Name;
+                var locations = new List<String>();
+                foreach (var location in armor.BodyLocations)
+                {
+                    var name = armor.BodyLocations.FirstOrDefault(c => c.BodyLocationsId == location.BodyLocationsId).Name;
+                    locations.Add(name);
+                }
+                map.BodyLocations = locations;
+                dto.Add(map);
+            }
+            return dto;
+        }
+
+        public List<GetAllEquipmentsDto> GetAllEquipments()
+        {
+            var equipments = _context.Equipments.ToList();
+            var dto = new List<GetAllEquipmentsDto>();
+            foreach (Equipment equipment in equipments)
+            {
+                var map = _mapper.Map<GetAllEquipmentsDto>(equipment);
+                dto.Add(map);
+            }
+            return dto;
+        }
+
+        public List<GetAllSkillsDto> GetAllSkills()
+        {
+            var skills = _context.Skills.Include(s => s.SkillLevel).ToList();
+            var dto = new List<GetAllSkillsDto>();
+            foreach (Skill skill in skills)
+            {
+                var map = _mapper.Map<GetAllSkillsDto>(skill);
+                map.SkillLevel = skill.SkillLevel.Name;
+                dto.Add(map);
+            }
+            return dto;
+        }
+
+        public List<GetAllAbilitiesDto> GetAllAbilities()
+        {
+            var abilities = _context.Abilities.ToList();
+            var dto = new List<GetAllAbilitiesDto>();
+            foreach (Ability ability in abilities)
+            {
+                var map = _mapper.Map<GetAllAbilitiesDto>(ability);
+                dto.Add(map);
+            }
+            return dto;
         }
     }
 }

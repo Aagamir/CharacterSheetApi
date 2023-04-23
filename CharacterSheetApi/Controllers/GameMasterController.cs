@@ -20,22 +20,24 @@ namespace CharacterSheetApi.Controllers
         [HttpPost("armor")]
         public IActionResult CreateArmor([FromBody] CreateArmorDto armorDto)
         {
-            _gameMasterService.CreateArmor(armorDto);
-            return Ok();
+            int id = _gameMasterService.CreateArmor(armorDto);
+            string uri = $"api/armor={id}";
+            return Created(uri, "Armor Created");
         }
 
         [HttpDelete("armor/{id}")]
         public IActionResult DeleteArmor([FromRoute] int id)
         {
             _gameMasterService.DeleteArmor(id);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("weapon")]
         public IActionResult CreateWeapon([FromBody] CreateWeaponDto weaponDto)
         {
-            _gameMasterService.CreateWeapon(weaponDto);
-            return Ok();
+            int id = _gameMasterService.CreateWeapon(weaponDto);
+            string uri = $"api/weapon={id}";
+            return Created(uri, "Weapon Created");
         }
 
         [HttpDelete("weapon/{id}")]
@@ -48,8 +50,9 @@ namespace CharacterSheetApi.Controllers
         [HttpPost("equipment")]
         public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
-            _gameMasterService.CreateEquipment(equipmentDto);
-            return Ok();
+            int id = _gameMasterService.CreateEquipment(equipmentDto);
+            string uri = $"api/equipment={id}";
+            return Created(uri, "Equipment Created");
         }
 
         [HttpDelete("equipment/{id}")]
@@ -62,8 +65,9 @@ namespace CharacterSheetApi.Controllers
         [HttpPost("ability")]
         public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
-            _gameMasterService.CreateAbility(abilityDto);
-            return Ok();
+            int id = _gameMasterService.CreateAbility(abilityDto);
+            string uri = $"api/ability={id}";
+            return Created(uri, "Ability Created");
         }
 
         [HttpDelete("ability/{id}")]
@@ -76,8 +80,9 @@ namespace CharacterSheetApi.Controllers
         [HttpPost("skill")]
         public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
-            _gameMasterService.CreateSkill(skillDto);
-            return Ok();
+            int id = _gameMasterService.CreateSkill(skillDto);
+            string uri = $"api/skill={id}";
+            return Created(uri, "Skill Created");
         }
 
         [HttpDelete("skill/{id}")]
@@ -90,8 +95,9 @@ namespace CharacterSheetApi.Controllers
         [HttpPost("class")]
         public IActionResult CreateClass([FromBody] CreateClassDto classDto)
         {
-            _gameMasterService.CreateClass(classDto);
-            return Ok();
+            int id = _gameMasterService.CreateClass(classDto);
+            string uri = $"api/class={id}";
+            return Created(uri, "Class Created");
         }
 
         [HttpDelete("class/{id}")]

@@ -18,12 +18,13 @@ namespace CharacterSheetApi.Services
             _mapper = mapper;
         }
 
-        public void CreateArmor(CreateArmorDto dto)
+        public int CreateArmor(CreateArmorDto dto)
         {
             var armor = _mapper.Map<Armor>(dto);
             armor.BodyLocations = _context.BodyLocations.ToList().Join(dto.BodyLocations, c => c.BodyLocationsId, d => d, (c, d) => c).ToList();
             _context.Armors.Add(armor);
             _context.SaveChanges();
+            return armor.Id;
         }
 
         public void DeleteArmor(int armorId)
@@ -33,12 +34,13 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
         }
 
-        public void CreateWeapon(CreateWeaponDto dto)
+        public int CreateWeapon(CreateWeaponDto dto)
         {
             var weapon = _mapper.Map<Weapon>(dto);
             weapon.WeaponCharacteristics = _context.WeaponsCharacteristics.ToList().Join(dto.WeaponCharacteristics, c => c.WeaponCharacteristicsId, d => d, (c, d) => c).ToList();
             _context.Weapons.Add(weapon);
             _context.SaveChanges();
+            return weapon.Id;
         }
 
         public void DeleteWeapon(int weaponId)
@@ -48,11 +50,12 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
         }
 
-        public void CreateEquipment(CreateEquipmentDto dto)
+        public int CreateEquipment(CreateEquipmentDto dto)
         {
             var equipment = _mapper.Map<Equipment>(dto);
             _context.Equipments.Add(equipment);
             _context.SaveChanges();
+            return equipment.Id;
         }
 
         public void DeleteEquipment(int equipmentId)
@@ -62,11 +65,12 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
         }
 
-        public void CreateAbility(CreateAbilityDto dto)
+        public int CreateAbility(CreateAbilityDto dto)
         {
             var ability = _mapper.Map<Ability>(dto);
             _context.Abilities.Add(ability);
             _context.SaveChanges();
+            return ability.Id;
         }
 
         public void DeleteAbility(int abilityId)
@@ -76,11 +80,12 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
         }
 
-        public void CreateSkill(CreateSkillDto dto)
+        public int CreateSkill(CreateSkillDto dto)
         {
             var skill = _mapper.Map<Skill>(dto);
             _context.Skills.Add(skill);
             _context.SaveChanges();
+            return skill.Id;
         }
 
         public void DeleteSkill(int skillId)
@@ -90,11 +95,12 @@ namespace CharacterSheetApi.Services
             _context.SaveChanges();
         }
 
-        public void CreateClass(CreateClassDto dto)
+        public int CreateClass(CreateClassDto dto)
         {
             var newClass = _mapper.Map<Class>(dto);
             _context.Classes.Add(newClass);
             _context.SaveChanges();
+            return newClass.Id;
         }
 
         public void DeleteClass(int classId)

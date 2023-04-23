@@ -21,73 +21,73 @@ namespace CharacterSheetApi.Controllers
             _characterSheetService = characterSheetService;
         }
 
-        [HttpPost("weapon/{id}")]
-        public IActionResult AddWeapon([FromBody] AddWeaponDto weaponDto)
+        [HttpPost("weapon/sheet={id}")]
+        public IActionResult AddWeapon([FromBody] List<int> weaponIds, [FromRoute] int id)
         {
-            _characterSheetService.AddWeapon(weaponDto);
+            _characterSheetService.AddWeapon(weaponIds, id);
             return Ok();
         }
 
-        [HttpDelete("weapon/{id}")]
-        public IActionResult DeleteWeapon([FromBody] DeleteWeaponDto weaponDto)
+        [HttpDelete("weapon/sheet=/{id}")]
+        public IActionResult DeleteWeapon([FromBody] int weaponId, [FromRoute] int id)
         {
-            _characterSheetService.DeleteWeapon(weaponDto);
+            _characterSheetService.DeleteWeapon(weaponId, id);
+            return NoContent();
+        }
+
+        [HttpPost("armor/sheet=/{id}")]
+        public IActionResult AddArmor([FromBody] List<int> armorIds, [FromRoute] int id)
+        {
+            _characterSheetService.AddArmor(armorIds, id);
             return Ok();
         }
 
-        [HttpPost("armor/{id}")]
-        public IActionResult AddArmor([FromBody] AddArmorDto armorDto)
+        [HttpDelete("armor/sheet=/{id}")]
+        public IActionResult DeleteArmor([FromBody] int armorId, [FromRoute] int id)
         {
-            _characterSheetService.AddArmor(armorDto);
+            _characterSheetService.DeleteArmor(armorId, id);
+            return NoContent();
+        }
+
+        [HttpPost("equipment/sheet=/{id}")]
+        public IActionResult AddEquipment([FromBody] List<int> equipmentIds, [FromRoute] int id)
+        {
+            _characterSheetService.AddEquipment(equipmentIds, id);
             return Ok();
         }
 
-        [HttpDelete("armor/{id}")]
-        public IActionResult DeleteArmor([FromBody] DeleteArmorDto armorDto)
+        [HttpDelete("equipment/sheet=/{id}")]
+        public IActionResult DeleteEquipment([FromBody] int equipmentId, [FromRoute] int id)
         {
-            _characterSheetService.DeleteArmor(armorDto);
+            _characterSheetService?.DeleteEquipment(equipmentId, id);
+            return NoContent();
+        }
+
+        [HttpPost("skill/sheet=/{id}")]
+        public IActionResult AddSkill([FromBody] List<int> skillIds, [FromRoute] int id)
+        {
+            _characterSheetService.AddSkill(skillIds, id);
             return Ok();
         }
 
-        [HttpPost("equipment/{id}")]
-        public IActionResult AddEquipment([FromBody] AddEquipmentDto equipmentDto)
+        [HttpDelete("skill/sheet=/{id}")]
+        public IActionResult DeleteSkill([FromBody] int skillId, [FromRoute] int id)
         {
-            _characterSheetService.AddEquipment(equipmentDto);
+            _characterSheetService.DeleteSkill(skillId, id);
+            return NoContent();
+        }
+
+        [HttpPost("ability/sheet=/{id}")]
+        public IActionResult AddAbilty([FromBody] List<int> abilityIds, [FromRoute] int id)
+        {
+            _characterSheetService.AddAbility(abilityIds, id);
             return Ok();
         }
 
-        [HttpDelete("equipment/{id}")]
-        public IActionResult DeleteEquipment([FromBody] DeleteEquipmentDto equipmentDto)
+        [HttpDelete("ability/sheet=/{id}")]
+        public IActionResult DeleteAbility([FromBody] int abilityId, [FromRoute] int id)
         {
-            _characterSheetService?.DeleteEquipment(equipmentDto);
-            return Ok();
-        }
-
-        [HttpPost("skill/{id}")]
-        public IActionResult AddSkill([FromBody] AddSkillDto skillDto)
-        {
-            _characterSheetService.AddSkill(skillDto);
-            return Ok();
-        }
-
-        [HttpDelete("skill/{id}")]
-        public IActionResult AddSkill([FromBody] DeleteSkillDto skillDto)
-        {
-            _characterSheetService.DeleteSkill(skillDto);
-            return Ok();
-        }
-
-        [HttpPost("ability/{id}")]
-        public IActionResult AddAbilty([FromBody] AddAbilityDto abilityDto)
-        {
-            _characterSheetService.AddAbility(abilityDto);
-            return Ok();
-        }
-
-        [HttpDelete("ability/{id}")]
-        public IActionResult DeleteAbility([FromBody] DeleteAbilityDto abilityDto)
-        {
-            _characterSheetService.DeleteAbility(abilityDto);
+            _characterSheetService.DeleteAbility(abilityId, id);
             return NoContent();
         }
 

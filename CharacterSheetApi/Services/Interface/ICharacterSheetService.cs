@@ -1,4 +1,5 @@
-﻿using CharacterSheetApi.Models;
+﻿using CharacterSheetApi.Entities;
+using CharacterSheetApi.Models;
 using CharacterSheetApi.Models.CharacterSheetDtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,16 +7,26 @@ namespace CharacterSheetApi.Services
 {
     public interface ICharacterSheetService
     {
-        void AddWeapon (AddWeaponDto dto);
-        void DeleteWeapon(DeleteWeaponDto dto);
-        void AddArmor(AddArmorDto dto);
-        void DeleteArmor(DeleteArmorDto dto);
-        void AddEquipment(AddEquipmentDto dto);
-        void DeleteEquipment(DeleteEquipmentDto dto);
-        void AddSkill(AddSkillDto dto);
-        void DeleteSkill(DeleteSkillDto dto);
-        void AddAbility(AddAbilityDto dto);
-        void DeleteAbility(DeleteAbilityDto dto);
+        void AddWeapon(List<int> weaponIds, int id);
+
+        void DeleteWeapon(int weaponId, int id);
+
+        void AddArmor(List<int> armorIds, int id);
+
+        void DeleteArmor(int armorid, int id);
+
+        void AddEquipment(List<int> equipmentIds, int id);
+
+        void DeleteEquipment(int equipmentIds, int id);
+
+        void AddSkill(List<int> skillids, int id);
+
+        void DeleteSkill(int skillId, int id);
+
+        void AddAbility(List<int> AddAbility, int id);
+
+        void DeleteAbility(int abilityId, int id);
+
         FileStreamResult PrintSheet(int characterSheetId);
     }
 }

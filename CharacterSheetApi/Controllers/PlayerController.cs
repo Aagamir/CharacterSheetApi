@@ -100,5 +100,40 @@ namespace CharacterSheetApi.Controllers
             string uri = $"https://www.test.com/api/sheet=test";
             return Created(uri, newCharacterInfoId);
         }
+
+        [HttpGet("weapon")]
+        public IActionResult GetAllWeapons()
+        {
+            var weapons = _playerService.GetAllWeapons();
+            return Ok(weapons);
+        }
+
+        [HttpGet("armor")]
+        public IActionResult GetAllArmors()
+        {
+            var armors = _playerService.GetAllArmors();
+            return Ok(armors);
+        }
+
+        [HttpGet("equipment")]
+        public IActionResult GetAllEquipments()
+        {
+            var equipments = _playerService.GetAllEquipments();
+            return Ok(equipments);
+        }
+
+        [HttpGet("skill")]
+        public IActionResult GetAllSkills()
+        {
+            var skills = _playerService.GetAllSkills();
+            return Ok(skills);
+        }
+
+        [HttpGet("ability")]
+        public IActionResult GetAllAbilities()
+        {
+            var abilities = _playerService.GetAllAbilities();
+            return Ok(abilities);
+        }
     }
 }
