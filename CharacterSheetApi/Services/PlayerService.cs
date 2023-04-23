@@ -232,7 +232,6 @@ namespace CharacterSheetApi.Services
             }
             var baseStats = _context.BaseStats.FirstOrDefault(c => c.Id == id);
             var currentStats = _context.CurrentStats.FirstOrDefault(c => c.Id == id);
-
             foreach (var stat in dto.GetType().GetProperties())
             {
                 var value = stat.GetValue(dto);
@@ -273,17 +272,18 @@ namespace CharacterSheetApi.Services
             {
                 throw new NotFoundException("Monetary wealth not found");
             }
-            if (dto.CopperPences != null)
+            foreach (var coin in dto.GetType().GetProperties())
             {
-                monetaryWealth.CopperPences = dto.CopperPences;
-            }
-            if (dto.SilverShilling != null)
-            {
-                monetaryWealth.SilverShilling = dto.SilverShilling;
-            }
-            if (dto.GoldCrowns != null)
-            {
-                monetaryWealth.GoldCrowns = dto.GoldCrowns;
+                var value = coin.GetValue(dto);
+                var name = coin.Name;
+                if (value is null)
+                {
+                    continue;
+                }
+                else
+                {
+                    monetaryWealth.GetType().GetProperty(name).SetValue(monetaryWealth, value);
+                }
             }
             _context.SaveChanges();
         }

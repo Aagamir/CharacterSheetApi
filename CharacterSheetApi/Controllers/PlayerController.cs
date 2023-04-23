@@ -22,7 +22,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateSheet([FromBody] CreateSheetDto sheetDto)
         {
             int newSheetId = _playerService.CreateSheet(sheetDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            string uri = Url.Action("sheet");
             return Created(uri, newSheetId);
         }
 
@@ -37,7 +37,7 @@ namespace CharacterSheetApi.Controllers
         public ActionResult CreateCharacterDescription([FromBody] CreateDescriptionDto characterDescriptionDto)
         {
             int newDescriptionId = _playerService.CreateCharacterDescription(characterDescriptionDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            string uri = Url.Action("description");
             return Created(uri, newDescriptionId);
         }
 
@@ -59,7 +59,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateMonetaryWealth([FromBody] CreateMonetaryWealthDto monetaryWealthDto)
         {
             int newMonetaryWealthId = _playerService.CreateMonetaryWealth(monetaryWealthDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            string uri = Url.Action("wealth");
             return Created(uri, newMonetaryWealthId);
         }
 
@@ -74,7 +74,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateExpiriencePoints([FromBody] CreateExpiriencePointsDto expiriencePointsDto)
         {
             int newExpiriencePointsId = _playerService.CreateExpiriencePoints(expiriencePointsDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            string uri = Url.Action("expirience");
             return Created(uri, newExpiriencePointsId);
         }
 
@@ -89,7 +89,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreatePlayerInfo([FromBody] CreatePlayerInfoDto playerInfoDto)
         {
             int newPlayerInfoId = _playerService.CreatePlayerInfo(playerInfoDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            string uri = Url.Action("player-info");
             return Created(uri, newPlayerInfoId);
         }
 
@@ -97,7 +97,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateCharacterInfo([FromBody] CreateCharacterInfoDto characterInfoDto)
         {
             int newCharacterInfoId = _playerService.CreateCharacterInfo(characterInfoDto);
-            string uri = $"https://www.test.com/api/sheet=test";
+            string uri = Url.Action("character-info");
             return Created(uri, newCharacterInfoId);
         }
 

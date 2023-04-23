@@ -21,7 +21,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateArmor([FromBody] CreateArmorDto armorDto)
         {
             int id = _gameMasterService.CreateArmor(armorDto);
-            string uri = Url.Action();
+            string uri = Url.Action("armor");
             return Created(uri, "Armor Created");
         }
 
@@ -36,7 +36,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateWeapon([FromBody] CreateWeaponDto weaponDto)
         {
             int id = _gameMasterService.CreateWeapon(weaponDto);
-            string uri = Url.Action();
+            string uri = Url.Action("weapon");
             return Created(uri, "Weapon Created");
         }
 
@@ -51,7 +51,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateEquipment([FromBody] CreateEquipmentDto equipmentDto)
         {
             int id = _gameMasterService.CreateEquipment(equipmentDto);
-            string uri = Url.Action();
+            string uri = Url.Action("equipment");
             return Created(uri, "Weapon Created");
         }
 
@@ -66,7 +66,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateAblity([FromBody] CreateAbilityDto abilityDto)
         {
             int id = _gameMasterService.CreateAbility(abilityDto);
-            string uri = Url.Action();
+            string uri = Url.Action("ability");
             return Created(uri, "Weapon Created");
         }
 
@@ -81,7 +81,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateSkill([FromBody] CreateSkillDto skillDto)
         {
             int id = _gameMasterService.CreateSkill(skillDto);
-            string uri = Url.Action();
+            string uri = Url.Action("skill");
             return Created(uri, "Weapon Created");
         }
 
@@ -96,7 +96,7 @@ namespace CharacterSheetApi.Controllers
         public IActionResult CreateClass([FromBody] CreateClassDto classDto)
         {
             int id = _gameMasterService.CreateClass(classDto);
-            string uri = Url.Action();
+            string uri = Url.Action("class");
             return Created(uri, "Class Created");
         }
 
