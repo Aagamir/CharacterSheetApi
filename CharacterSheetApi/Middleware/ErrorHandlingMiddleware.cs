@@ -18,6 +18,16 @@ namespace CharacterSheetApi.Exceptions.Middleware
             {
                 await next.Invoke(context);
             }
+            catch (ForbiddenException forbiddenException)
+            {
+                context.Response.StatusCode = 403;
+                context.Response.WriteAsJsonAsync(forbiddenException.Message);
+            }
+            catch (NotFoundException notFoundException)
+            {
+                context.Response.StatusCode = 404;
+                context.Response.WriteAsync(notFoundException.Message);
+            }
             catch (Exception e)
             {
                 context.Response.StatusCode = 418;

@@ -54,6 +54,10 @@ namespace CharacterSheetApi.Services
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             var weapon = characterInfo.Weapons.FirstOrDefault(a => a.Id == weaponId);
+            if (weapon is null)
+            {
+                throw new NotFoundException("Weapon not found");
+            }
             characterInfo.Weapons.Remove(weapon);
             _context.SaveChanges();
         }
@@ -91,6 +95,10 @@ namespace CharacterSheetApi.Services
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             var armor = characterInfo.Armor.FirstOrDefault(a => a.Id == armorId);
+            if (armor is null)
+            {
+                throw new NotFoundException("Armor not found");
+            }
             characterInfo.Armor.Remove(armor);
             _context.SaveChanges();
         }
@@ -128,6 +136,10 @@ namespace CharacterSheetApi.Services
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             var equipment = characterInfo.Equipment.FirstOrDefault(a => a.Id == equipmentId);
+            if (equipment is null)
+            {
+                throw new NotFoundException("Equipment not found");
+            }
             characterInfo.Equipment.Remove(equipment);
             _context.SaveChanges();
         }
@@ -166,6 +178,10 @@ namespace CharacterSheetApi.Services
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             var skill = characterInfo.Skills.FirstOrDefault(a => a.Id == skillId);
+            if (skill is null)
+            {
+                throw new NotFoundException("Skill not found");
+            }
             characterInfo.Skills.Remove(skill);
             _context.SaveChanges();
         }
@@ -203,6 +219,10 @@ namespace CharacterSheetApi.Services
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             var ability = characterInfo.Abilities.FirstOrDefault(a => a.Id == abilityId);
+            if (ability is null)
+            {
+                throw new NotFoundException("Ability not found");
+            }
             characterInfo.Abilities.Remove(ability);
             _context.SaveChanges();
         }

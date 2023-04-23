@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CharacterSheetApi.Entities;
 using CharacterSheetApi.Enums;
+using CharacterSheetApi.Exceptions;
 using CharacterSheetApi.Models;
 
 namespace CharacterSheetApi.Services
@@ -30,6 +31,10 @@ namespace CharacterSheetApi.Services
         public void DeleteArmor(int armorId)
         {
             var armor = _context.Armors.FirstOrDefault(c => c.Id == armorId);
+            if (armor is null)
+            {
+                throw new NotFoundException("Armor not found");
+            }
             _context.Armors.Remove(armor);
             _context.SaveChanges();
         }
@@ -46,6 +51,10 @@ namespace CharacterSheetApi.Services
         public void DeleteWeapon(int weaponId)
         {
             var weapon = _context.Weapons.FirstOrDefault(c => c.Id == weaponId);
+            if (weapon is null)
+            {
+                throw new NotFoundException("Weapon not found");
+            }
             _context.Weapons.Remove(weapon);
             _context.SaveChanges();
         }
@@ -61,6 +70,10 @@ namespace CharacterSheetApi.Services
         public void DeleteEquipment(int equipmentId)
         {
             var equipment = _context.Equipments.FirstOrDefault(c => c.Id == equipmentId);
+            if (equipment is null)
+            {
+                throw new NotFoundException("Equipment not found");
+            }
             _context.Equipments.Remove(equipment);
             _context.SaveChanges();
         }
@@ -76,6 +89,10 @@ namespace CharacterSheetApi.Services
         public void DeleteAbility(int abilityId)
         {
             var ability = _context.Abilities.FirstOrDefault(c => c.Id == abilityId);
+            if (ability is null)
+            {
+                throw new NotFoundException("Ability not found");
+            }
             _context.Abilities.Remove(ability);
             _context.SaveChanges();
         }
@@ -91,6 +108,10 @@ namespace CharacterSheetApi.Services
         public void DeleteSkill(int skillId)
         {
             var skill = _context.Skills.FirstOrDefault(c => c.Id == skillId);
+            if (skill is null)
+            {
+                throw new NotFoundException("Skill not found");
+            }
             _context.Skills.Remove(skill);
             _context.SaveChanges();
         }
@@ -106,6 +127,10 @@ namespace CharacterSheetApi.Services
         public void DeleteClass(int classId)
         {
             var classe = _context.Class.FirstOrDefault(c => c.Id == classId);
+            if (classe is null)
+            {
+                throw new NotFoundException("Class not found");
+            }
             _context.Classes.Remove(classe);
             _context.SaveChanges();
         }

@@ -23,7 +23,7 @@ namespace CharacterSheetApi.Controllers
         public ActionResult RegisterUser([FromBody] RegisterUserDto userDto)
         {
             var id = _service.RegisterUser(userDto);
-            string uri = $"api/user={id}";
+            string uri = Url.Action();
             return Created(uri, "Account Created");
         }
 

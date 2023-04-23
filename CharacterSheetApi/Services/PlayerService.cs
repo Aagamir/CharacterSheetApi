@@ -69,6 +69,10 @@ namespace CharacterSheetApi.Services
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
+            if (characterSheet is null)
+            {
+                throw new NotFoundException("Sheet not found");
+            }
             characterSheet.Name = dto.Name;
             characterSheet.RpgSystemId = dto.RpgSystemId;
             characterSheet.CreatorName = dto.CreatorName;
@@ -207,6 +211,10 @@ namespace CharacterSheetApi.Services
             {
                 throw new ForbiddenException("Nie masz uprawnień");
             }
+            if (characterSheet is null)
+            {
+                throw new NotFoundException("Sheet not found");
+            }
             var characterDescription = _mapper.Map<CharacterDescription>(dto);
             _context.SaveChanges();
         }
@@ -217,6 +225,10 @@ namespace CharacterSheetApi.Services
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
+            }
+            if (characterSheet is null)
+            {
+                throw new NotFoundException("Sheet not found");
             }
             var baseStats = _context.BaseStats.FirstOrDefault(c => c.Id == id);
             var currentStats = _context.CurrentStats.FirstOrDefault(c => c.Id == id);
@@ -257,6 +269,10 @@ namespace CharacterSheetApi.Services
                 throw new ForbiddenException("Nie masz uprawnień");
             }
             var monetaryWealth = _context.MonetaryWealth.FirstOrDefault(x => x.Id == id);
+            if (monetaryWealth is null)
+            {
+                throw new NotFoundException("Monetary wealth not found");
+            }
             if (dto.CopperPences != null)
             {
                 monetaryWealth.CopperPences = dto.CopperPences;
@@ -286,6 +302,10 @@ namespace CharacterSheetApi.Services
             if (characterSheet.UsersId != _userContextService.GetUserId)
             {
                 throw new ForbiddenException("Nie masz uprawnień");
+            }
+            if (characterSheet is null)
+            {
+                throw new NotFoundException("Sheet not found");
             }
             characterSheet.CharacterInfo.ExpiriencePoints.CurrentPoints = dto.CurrentPoints;
             characterSheet.CharacterInfo.ExpiriencePoints.OverallPoints = dto.OverallPoints;
