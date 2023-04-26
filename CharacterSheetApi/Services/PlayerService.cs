@@ -89,7 +89,7 @@ namespace CharacterSheetApi.Services
             var baseStats = new BaseStats();
             var currentStats = new CurrentStats();
             var race = dto.RaceId;
-            int raceIdNumber = random.Next(3);
+            int raceIdNumber = int.Parse(race.ToString());
             characterDescription.RaceId = dto.RaceId;
             characterDescription.Age = dto.Age;
             characterDescription.PlaceOfBirth = dto.PlaceOfBirth;
@@ -98,6 +98,7 @@ namespace CharacterSheetApi.Services
             characterDescription.EyeColorId = (EyeColorId)random.Next(14);
             characterDescription.HairColorId = (HairColorId)random.Next(16);
             characterDescription.StarSignId = (StarSignId)random.Next(20);
+
             switch (characterDescription.RaceId)
             {
                 case RaceId.Human:
@@ -116,10 +117,48 @@ namespace CharacterSheetApi.Services
                     characterDescription.Height = 100 + random.Next(1, 10) + random.Next(1, 10);
                     break;
             }
-            int[,] SiblingArray = new int[,] { { 0, 0, 0, 1 }, { 1, 1, 0, 2 }, { 1, 1, 0, 2 }, { 2, 1, 1, 3 }, { 2, 1, 1, 3 }, { 3, 2, 1, 4 }, { 3, 2, 1, 4 }, { 4, 2, 2, 5 }, { 4, 2, 2, 5 }, { 5, 3, 3, 6 } };
+            int[,] SiblingArray = new int[,] {
+                { 0, 0, 0, 1 },
+                { 1, 1, 0, 2 },
+                { 1, 1, 0, 2 },
+                { 2, 1, 1, 3 },
+                { 2, 1, 1, 3 },
+                { 3, 2, 1, 4 },
+                { 3, 2, 1, 4 },
+                { 4, 2, 2, 5 },
+                { 4, 2, 2, 5 },
+                { 5, 3, 3, 6 }};
             characterDescription.Siblings = SiblingArray[random.Next(0, 9), raceIdNumber];
             characterDescription.GenderId = dto.GenderId;
 
+            int[,] statsArray = new int[,] {
+                { 20, 20, 30, 10},
+                { 20, 30, 20, 30},
+                { 20, 20, 20, 10},
+                { 20, 20, 30, 10},
+                { 20, 30, 10, 30},
+                { 20, 20, 20, 20},
+                { 20, 20, 20, 20},
+                { 20, 20, 10, 30}
+            };
+            currentStats.WW = baseStats.WW = statsArray[raceIdNumber, 0] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.US = baseStats.US = statsArray[raceIdNumber, 1] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.K = baseStats.K = statsArray[raceIdNumber, 2] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.Odp = baseStats.Odp = statsArray[raceIdNumber, 3] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.Zr = baseStats.Zr = statsArray[raceIdNumber, 4] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.Int = baseStats.Int = statsArray[raceIdNumber, 5] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.SW = baseStats.SW = statsArray[raceIdNumber, 6] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.Ogd = baseStats.Ogd = statsArray[raceIdNumber, 7] + random.Next(1, 10) + random.Next(1, 10);
+            currentStats.A = baseStats.A = 1;
+            currentStats.Zyw = baseStats.Zyw = random.Next(1, 10);
+            currentStats.S = baseStats.S = (baseStats.K - baseStats.K % 10) / 10;
+            currentStats.Wt = baseStats.Wt = (baseStats.Odp - baseStats.Odp % 10) / 10;
+            currentStats.Sz = baseStats.Sz = 0;
+            currentStats.Mag = baseStats.Mag = 0;
+            currentStats.PO = baseStats.PO = 0;
+            currentStats.PP = baseStats.PP = random.Next(1, 4);
+
+            /*
             if (race == RaceId.Human)
             {
                 currentStats.WW = baseStats.WW = 20 + random.Next(1, 10) + random.Next(1, 10);
@@ -196,6 +235,7 @@ namespace CharacterSheetApi.Services
                 currentStats.PO = baseStats.PO = 0;
                 currentStats.PP = baseStats.PP = random.Next(1, 4);
             }
+            */
             characterDescription.BaseStats = baseStats;
             characterDescription.CurrentStats = currentStats;
             _context.CharacterDescriptions.Add(characterDescription);
